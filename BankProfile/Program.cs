@@ -13,6 +13,7 @@ namespace BankProfile
         private string address;
         private double accountNumber;
         private float accountBalance;
+        private float savingsInterestRate;
 
         public Profile(string _firstName, string _middleName, string _lastName, int _age, string _socialSecurity, string _birthDate, string _address, float _accountBalance)
         {
@@ -26,12 +27,15 @@ namespace BankProfile
             address = _address;
             accountNumber = rnd.Next(10000, 50000);
             accountBalance = _accountBalance;
+            savingsInterestRate = .02f;
 
         }
 
         //public void depositMoney(float _accountNumber, ref float _accountBalance)
-        public void depositMoney()
+        public void depositMoney(Profile client)
         {
+            Profile Client;
+            Client = client;
             float depositAmount;
             //accountBalance = _accountBalance;
             double inputAccount;
@@ -46,6 +50,7 @@ namespace BankProfile
                 depositAmount = float.Parse(Console.ReadLine());
                 accountBalance += depositAmount;
                 Console.WriteLine("Your account balance is now: {0}", accountBalance);
+                Client.mainMenu(Client);
             }
             else
             {
@@ -54,33 +59,68 @@ namespace BankProfile
                 retry = Console.ReadLine();
                 if (retry == "yes")
                 {
-                    depositMoney();
+                    Client.depositMoney(client);
                 }
                 else
                 {
                     Console.WriteLine("L8tr bruh");
+                    Client.mainMenu(Client);
                 }
             }
 
         }
 
-        public static void Main()
+        public void withrawMoney()
         {
-            //Random rnd = new Random();
-            //Double _accountNumber = rnd.Next(10000, 50000);
-            //Console.WriteLine("Hello, your account number is: {0}", _accountNumber);
+
+        }
+
+        public void displayBalance()
+        {
+            Console.WriteLine("Your current account balance is {0}", accountBalance);
+            
+
+        }
+
+        public void calculateInterest(Profile client)
+        {
+            Profile Client;
+            Client = client;
+            int months;
+            float currentBalance = accountBalance;
+            float nextMonth;
+            Console.WriteLine("Hi, {0} how many months ahead do you want to calculate?", firstName);
+            months = int.Parse(Console.ReadLine());
+            for (int i = 0; i < months; i++)
+            {
+                currentBalance = (currentBalance * savingsInterestRate) + currentBalance;
+                nextMonth = currentBalance;
+            }
+            
+            Console.WriteLine("In {0} months you will have {1} in your account", months, currentBalance);
+            Client.mainMenu(Client);
+
+        }
+        
+        public void exitSession(Profile client)
+        {
+            Profile Client;
+            Client = client;
+
+            Console.WriteLine("Thank you {0} for using Bank of Tyler!!! Have a great day! Uwu ^_^", Client.firstName);
+        }
+
+        public void mainMenu(Profile client)
+        {
+            Profile Client;
+            Client = client;
             int choice;
-            Profile Client = new Profile("Tyler", "J", "Rubin", 25, "625-13-3271", "04/15/1995", "9518 Lavender Star Drive",17.5f);
-            Console.WriteLine("Welcome {0}", Client.firstName);
-            Console.WriteLine("Your Bank Account Number is: {0}", Client.accountNumber);
-            Console.WriteLine("Your account balance is currently {0}", Client.accountBalance);
-            Console.WriteLine("Some basic account information is: DOB: {0}, SSN: {1}, Address: {2} ", Client.birthDate, Client.socialSecurity, Client.address);
-            Console.WriteLine("Please select an option: 1: Deposit | 2: Withdraw | 3: Account Balance");
+            Console.WriteLine("Please select an option: 1: Deposit | 2: Withdraw | 3: Account Balance | 4: Calculate Future Balance | 5: Exit Session/Return Card");
             choice = int.Parse(Console.ReadLine());
-            switch(choice)
+            switch (choice)
             {
                 case 1:
-                    Client.depositMoney();
+                    Client.depositMoney(Client);
                     break;
 
                 case 2:
@@ -91,10 +131,26 @@ namespace BankProfile
 
                     break;
 
+                case 4:
+                    Client.calculateInterest(Client);
+                    break;
+
+                case 5:
+                    Client.exitSession(Client);
+                    break;
+
 
             }
+        }
+        public static void Main()
+        {
+            Profile Client = new Profile("Tyler", "J", "Rubin", 25, "625-13-3271", "04/15/1995", "9518 Lavender Star Drive",17.5f);
+            Console.WriteLine("Welcome {0}", Client.firstName);
+            Console.WriteLine("Your Bank Account Number is: {0}", Client.accountNumber);
+            Console.WriteLine("Your account balance is currently {0}", Client.accountBalance);
+            Console.WriteLine("Some basic account information is: DOB: {0}, SSN: {1}, Address: {2} ", Client.birthDate, Client.socialSecurity, Client.address);
+            Client.mainMenu(Client);
             
-
         }
     }
 
