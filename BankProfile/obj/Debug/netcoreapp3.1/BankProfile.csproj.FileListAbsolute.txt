@@ -1,0 +1,11 @@
+C:\Git\Bank\BankProfile\obj\Debug\netcoreapp3.1\BankProfile.csprojAssemblyReference.cache
+C:\Git\Bank\BankProfile\obj\Debug\netcoreapp3.1\BankProfile.AssemblyInfoInputs.cache
+C:\Git\Bank\BankProfile\obj\Debug\netcoreapp3.1\BankProfile.AssemblyInfo.cs
+C:\Git\Bank\BankProfile\bin\Debug\netcoreapp3.1\BankProfile.exe
+C:\Git\Bank\BankProfile\bin\Debug\netcoreapp3.1\BankProfile.deps.json
+C:\Git\Bank\BankProfile\bin\Debug\netcoreapp3.1\BankProfile.runtimeconfig.json
+C:\Git\Bank\BankProfile\bin\Debug\netcoreapp3.1\BankProfile.runtimeconfig.dev.json
+C:\Git\Bank\BankProfile\bin\Debug\netcoreapp3.1\BankProfile.dll
+C:\Git\Bank\BankProfile\bin\Debug\netcoreapp3.1\BankProfile.pdb
+C:\Git\Bank\BankProfile\obj\Debug\netcoreapp3.1\BankProfile.dll
+C:\Git\Bank\BankProfile\obj\Debug\netcoreapp3.1\BankProfile.pdb
