@@ -31,13 +31,11 @@ namespace BankProfile
 
         }
 
-        //public void depositMoney(float _accountNumber, ref float _accountBalance)
         public void depositMoney(Profile client)
         {
             Profile Client;
             Client = client;
             float depositAmount;
-            //accountBalance = _accountBalance;
             double inputAccount;
             string retry;
 
@@ -70,16 +68,41 @@ namespace BankProfile
 
         }
 
-        public void withrawMoney()
+        public void withrawMoney(Profile client)
+        {
+            Profile Client;
+            Client = client;
+            float widthdrawAmount;
+            string response;
+
+            Console.WriteLine("How much would you like to widthdraw?");
+            widthdrawAmount = float.Parse(Console.ReadLine());
+            Console.WriteLine("{0} has been dispensed from the machine", widthdrawAmount);
+            accountBalance = accountBalance - widthdrawAmount;
+            Console.WriteLine("Would you like to know your current balanced?");
+            response = Console.ReadLine();
+            if (response == "yes")
+            {
+                displayBalance(Client);
+                Client.mainMenu(Client);
+            }
+            else
+            {
+                Client.mainMenu(Client);
+            }
+        }
+
+        public void transferMoney()
         {
 
         }
 
-        public void displayBalance()
+        public void displayBalance(Profile client)
         {
+            Profile Client;
+            Client = client;
             Console.WriteLine("Your current account balance is {0}", accountBalance);
-            
-
+            Client.mainMenu(Client);
         }
 
         public void calculateInterest(Profile client)
@@ -124,11 +147,11 @@ namespace BankProfile
                     break;
 
                 case 2:
-
+                    Client.withrawMoney(Client);
                     break;
 
                 case 3:
-
+                    Client.displayBalance(Client);
                     break;
 
                 case 4:
