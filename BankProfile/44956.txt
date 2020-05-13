@@ -1,0 +1,10 @@
+First Name: John
+Middle Name: J
+Last Name: Richardson
+age: 26
+SSN: 123-132-1412
+DOB: 01/19/2020
+Address: 123 Avenue Street
+Account Number: 44956
+Account Balance: 44956
+Saving Account Interest Rate: 0.02%

@@ -1,0 +1,10 @@
+First Name: Reeedus
+Middle Name: Mc
+Last Name: Seedus
+age: 99
+SSN: 111-111-1111
+DOB: 01/01/0001
+Address: 123 EVER
+Account Number: 22325
+Account Balance: 22325
+Saving Account Interest Rate: 0.02%

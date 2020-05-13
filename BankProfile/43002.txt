@@ -1,0 +1,10 @@
+First Name: Tyler
+Middle Name: J
+Last Name: Rubin
+age: 25
+SSN: 123-123-1234
+DOB: 04/15/1995
+Address: 9518 Lavender Star Drive
+Account Number: 43002
+Account Balance: 43002
+Saving Account Interest Rate: 0.02

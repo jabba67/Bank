@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace BankProfile
 {
@@ -15,6 +16,19 @@ namespace BankProfile
         private float accountBalance;
         private float savingsInterestRate;
 
+        public Profile ()
+        {
+            firstName = "";
+            middleName = "";
+            lastName = "";
+            age = 0;
+            socialSecurity = "";
+            birthDate = "";
+            address = "";
+            accountNumber = 0;
+            accountBalance = 0;
+            savingsInterestRate = 0;
+    }
         public Profile(string _firstName, string _middleName, string _lastName, int _age, string _socialSecurity, string _birthDate, string _address, float _accountBalance)
         {
             Random rnd = new Random();
@@ -25,10 +39,143 @@ namespace BankProfile
             socialSecurity = _socialSecurity;
             birthDate = _birthDate;
             address = _address;
-            accountNumber = rnd.Next(10000, 50000);
             accountBalance = _accountBalance;
-            savingsInterestRate = .02f;
 
+        }
+
+        public void loginExistingClient(double _accountNumber, Profile client)
+        {
+            Profile Client;
+            Client = client;
+            bool exists;
+            //Profile Client = new Profile(firstName, middleName, lastName, age, socialSecurity, birthDate, address, accountBalance);
+            double existingAccountNumber = _accountNumber;
+            string attemptedFileAccess = "C:\\Git\\Bank\\BankProfile\\" + existingAccountNumber+ ".txt";
+            //Console.WriteLine("The composed string reads as {0}", attemptedFileAccess);
+            Console.WriteLine(File.Exists(attemptedFileAccess) ? exists = true : exists = false); //Check to see if the client already exists
+            if (exists == true)
+            {
+                using System.IO.StreamReader file = new StreamReader(attemptedFileAccess);
+                int counter = 1;
+                for (int i = 0; i <=10; i++)
+                {
+                    switch (counter)
+                    {
+                        case 1:
+                            Client.firstName = file.ReadLine();
+                            counter++;
+                            break;
+                        case 2:
+                            Client.middleName = file.ReadLine();
+                            counter++;
+                            break;
+                        case 3:
+                            Client.lastName = file.ReadLine();
+                            counter++;
+                            break;
+                        case 4:
+                            Client.age = Convert.ToInt32(file.ReadLine());
+                            counter++;
+                            break;
+                        case 5:
+                            Client.socialSecurity = Convert.ToString(file.ReadLine());
+                            counter++;
+                            break;
+                        case 6:
+                            Client.birthDate = file.ReadLine();
+                            counter++;
+                            break;
+                        case 7:
+                            Client.address = file.ReadLine();
+                            counter++;
+                            break;
+                        case 8:
+                            Client.accountNumber = Convert.ToDouble(file.ReadLine());
+                            counter++;
+                            break;
+                        case 9:
+                            Client.accountBalance = float.Parse(file.ReadLine());
+                            counter++;
+                            break;
+                        case 10:
+                            Client.savingsInterestRate = Convert.ToSingle(file.ReadLine());
+                            counter++;
+                            break;
+                    }
+                }
+            }
+
+            Console.WriteLine("Testing that we got all the info:");
+            Console.WriteLine(Client.firstName);
+            Console.WriteLine(Client.middleName);
+            Console.WriteLine(Client.lastName);
+            Console.WriteLine(Client.age);
+            Console.WriteLine(Client.socialSecurity);
+            Console.WriteLine(Client.birthDate);
+            Console.WriteLine(Client.address);
+            Console.WriteLine(Client.accountNumber);
+            Console.WriteLine(Client.accountBalance);
+            Console.WriteLine(Client.savingsInterestRate);
+            Client.mainMenu(Client);
+
+        }
+        public void newClient(Profile client)
+        {
+            Profile Client;
+            Client = client;
+            Random rnd = new Random();
+            /*string firstName;
+            string middleName;
+            string lastName;
+            int age;
+            string socialSecurity;
+            string birthDate;
+            string address;
+            float accountBalance;*/
+            Client.accountNumber = rnd.Next(10000, 50000);
+            Client.savingsInterestRate = .02f;
+
+
+            Console.WriteLine("New Client, what's your first name?");
+            Client.firstName = Console.ReadLine();
+
+            Console.WriteLine("{0}, what's your middle name?", firstName);
+            Client.middleName = Console.ReadLine();
+
+            Console.WriteLine("{0}, what's your last name?", firstName);
+            Client.lastName = Console.ReadLine();
+
+            Console.WriteLine("{0}, what's your age?", firstName);
+            Client.age = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("{0}, what's your Social Security Number?", firstName);
+            Client.socialSecurity = Console.ReadLine();
+
+            Console.WriteLine("{0}, what's your birth date?", firstName);
+            Client.birthDate = Console.ReadLine();
+
+            Console.WriteLine("{0}, what's your address?", firstName);
+            Client.address = Console.ReadLine();
+
+            Console.WriteLine("{0}, what's your starting balance?", firstName);
+            Client.accountBalance = float.Parse(Console.ReadLine());
+
+            string ComposedFileName = "C:\\Git\\Bank\\BankProfile\\" + accountNumber + ".txt";
+            Console.WriteLine("The composed string reads as {0}", ComposedFileName);
+            Console.WriteLine(File.Exists(ComposedFileName) ? "Client exists." : "Client does not exist."); //Check to see if the client already exists
+            using System.IO.StreamWriter file = new System.IO.StreamWriter(ComposedFileName);
+
+            file.WriteLine(Client.firstName);
+            file.WriteLine(Client.middleName);
+            file.WriteLine(Client.lastName);
+            file.WriteLine(Client.age);
+            file.WriteLine(Client.socialSecurity);
+            file.WriteLine(Client.birthDate);
+            file.WriteLine(Client.address);
+            file.WriteLine(Client.accountNumber);
+            file.WriteLine(Client.accountBalance);
+            file.WriteLine(Client.savingsInterestRate);
+            Client.mainMenu(Client);
         }
 
         public void depositMoney(Profile client)
@@ -67,11 +214,10 @@ namespace BankProfile
             }
 
         }
-
         public void withrawMoney(Profile client)
         {
-            Profile Client;
-            Client = client;
+            Profile profile;
+            profile = client;
             float widthdrawAmount;
             string response;
 
@@ -83,15 +229,14 @@ namespace BankProfile
             response = Console.ReadLine();
             if (response == "yes")
             {
-                displayBalance(Client);
-                Client.mainMenu(Client);
+                displayBalance(profile);
+                profile.mainMenu(profile);
             }
             else
             {
-                Client.mainMenu(Client);
+                profile.mainMenu(profile);
             }
         }
-
         public void transferMoney()
         {
 
@@ -122,14 +267,12 @@ namespace BankProfile
             
             Console.WriteLine("In {0} months you will have {1} in your account", months, currentBalance);
             Client.mainMenu(Client);
-
         }
         
         public void exitSession(Profile client)
         {
             Profile Client;
             Client = client;
-
             Console.WriteLine("Thank you {0} for using Bank of Tyler!!! Have a great day! Uwu ^_^", Client.firstName);
         }
 
@@ -138,6 +281,10 @@ namespace BankProfile
             Profile Client;
             Client = client;
             int choice;
+            Console.WriteLine("Welcome {0}", Client.firstName);
+            Console.WriteLine("Your Bank Account Number is: {0}", Client.accountNumber);
+            Console.WriteLine("Your account balance is currently {0}", Client.accountBalance);
+            Console.WriteLine("Some basic account information is: DOB: {0}, SSN: {1}, Address: {2} ", Client.birthDate, Client.socialSecurity, Client.address);
             Console.WriteLine("Please select an option: 1: Deposit | 2: Withdraw | 3: Account Balance | 4: Calculate Future Balance | 5: Exit Session/Return Card");
             choice = int.Parse(Console.ReadLine());
             switch (choice)
@@ -162,18 +309,42 @@ namespace BankProfile
                     Client.exitSession(Client);
                     break;
 
-
             }
         }
         public static void Main()
         {
-            Profile Client = new Profile("Tyler", "J", "Rubin", 25, "625-13-3271", "04/15/1995", "9518 Lavender Star Drive",17.5f);
+            Profile Client = new Profile();
+            string response;
+            int enteredAccountNumber;
+            Console.WriteLine("Are you a new client or an existing client?");
+            response = Console.ReadLine();
+
+            if (response == "new")
+            {
+                Client = new Profile();//(firstName, middleName, lastName, age, socialSecurity, birthDate, address, accountBalance);
+                Client.newClient(Client);
+                Client.mainMenu(Client);
+            }
+            else
+            {
+                Client = new Profile();
+                Console.WriteLine("Please enter your account number: ");
+                enteredAccountNumber = int.Parse(Console.ReadLine());
+                Client.loginExistingClient(enteredAccountNumber, Client);
+
+            }
+
+            //Example Create
+            /*Profile Client = new Profile("Tyler", "J", "Rubin", 25, "625-13-3271", "04/15/1995", "9518 Lavender Star Drive",17.5f);
             Console.WriteLine("Welcome {0}", Client.firstName);
             Console.WriteLine("Your Bank Account Number is: {0}", Client.accountNumber);
             Console.WriteLine("Your account balance is currently {0}", Client.accountBalance);
             Console.WriteLine("Some basic account information is: DOB: {0}, SSN: {1}, Address: {2} ", Client.birthDate, Client.socialSecurity, Client.address);
-            Client.mainMenu(Client);
-            
+            Client.mainMenu(Client); */
+
+
+
+
         }
     }
 
