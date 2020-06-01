@@ -14,9 +14,9 @@ namespace BankProfile
         private string address;
         private string phoneNumber;
         private string email; //Client Email Address
-        private double accountNumber; //Doubles as routing number
+        private double accountNumber; //Doubles for the routing number
         private float accountBalance;
-        //joasdifjapiosdf
+        private string useless; //Delete this later
 
         public Profile ()
         {
