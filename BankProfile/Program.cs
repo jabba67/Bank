@@ -5,6 +5,7 @@ namespace BankProfile
 {
     public class Profile
     {
+        private string status;
         private string firstName;
         private string middleName = "";
         private string lastName;
