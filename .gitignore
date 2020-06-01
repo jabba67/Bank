@@ -1,2 +1,4 @@
 
 *.lock
+*.ide
+*.ide-shm
