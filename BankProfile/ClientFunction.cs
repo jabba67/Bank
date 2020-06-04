@@ -44,7 +44,7 @@ namespace BankProfile
                             counter++;
                             break;
                         case 5:
-                            Client.socialSecurity = Convert.ToString(file.ReadLine());
+                            Client.socialSecurityNumber = Convert.ToString(file.ReadLine());
                             counter++;
                             break;
                         case 6:
@@ -64,7 +64,7 @@ namespace BankProfile
                             counter++;
                             break;
                         case 10:
-                            Client.savingsInterestRate = Convert.ToSingle(file.ReadLine());
+                            //Client.savingsInterestRate = Convert.ToSingle(file.ReadLine());
                             counter++;
                             break;
                     }
@@ -76,12 +76,12 @@ namespace BankProfile
             Console.WriteLine(Client.middleName);
             Console.WriteLine(Client.lastName);
             Console.WriteLine(Client.age);
-            Console.WriteLine(Client.socialSecurity);
+            Console.WriteLine(Client.socialSecurityNumber);
             Console.WriteLine(Client.birthDate);
             Console.WriteLine(Client.address);
             Console.WriteLine(Client.accountNumber);
             Console.WriteLine(Client.accountBalance);
-            Client.mainMenu(Client);
+            //Client.mainMenu(Client);
 
         }
         
@@ -103,7 +103,7 @@ namespace BankProfile
                 depositAmount = float.Parse(Console.ReadLine());
                 accountBalance += depositAmount;
                 Console.WriteLine("Your account balance is now: {0}", accountBalance);
-                Client.mainMenu(Client);
+                //Client.mainMenu(Client);
             }
             else
             {
@@ -112,12 +112,12 @@ namespace BankProfile
                 retry = Console.ReadLine();
                 if (retry == "yes")
                 {
-                    Client.depositMoney(client);
+                    //Client.depositMoney(client);
                 }
                 else
                 {
                     Console.WriteLine("L8tr bruh");
-                    Client.mainMenu(Client);
+                    //Client.mainMenu(Client);
                 }
             }
 
@@ -138,11 +138,11 @@ namespace BankProfile
             if (response == "yes")
             {
                 displayBalance(profile);
-                profile.mainMenu(profile);
+                //profile.mainMenu(profile);
             }
             else
             {
-                profile.mainMenu(profile);
+                //profile.mainMenu(profile);
             }
         }
         public void transferMoney()
@@ -155,7 +155,7 @@ namespace BankProfile
             Profile Client;
             Client = client;
             Console.WriteLine("Your current account balance is {0}", accountBalance);
-            Client.mainMenu(Client);
+            //Client.mainMenu(Client);
         }
 
         public void calculateInterest(Profile client)
@@ -169,12 +169,12 @@ namespace BankProfile
             months = int.Parse(Console.ReadLine());
             for (int i = 0; i < months; i++)
             {
-                currentBalance = (currentBalance * savingsInterestRate) + currentBalance;
+                //currentBalance = (currentBalance * savingsInterestRate) + currentBalance;
                 nextMonth = currentBalance;
             }
 
             Console.WriteLine("In {0} months you will have {1} in your account", months, currentBalance);
-            Client.mainMenu(Client);
+            //Client.mainMenu(Client);
         }
 
         public void exitSession(Profile client)
@@ -192,33 +192,35 @@ namespace BankProfile
             Console.WriteLine("Welcome {0}", Client.firstName);
             Console.WriteLine("Your Bank Account Number is: {0}", Client.accountNumber);
             Console.WriteLine("Your account balance is currently {0}", Client.accountBalance);
-            Console.WriteLine("Some basic account information is: DOB: {0}, SSN: {1}, Address: {2} ", Client.birthDate, Client.socialSecurity, Client.address);
+            Console.WriteLine("Some basic account information is: DOB: {0}, SSN: {1}, Address: {2} ", Client.birthDate, Client.socialSecurityNumber, Client.address);
             Console.WriteLine("Please select an option: 1: Deposit | 2: Withdraw | 3: Account Balance | 4: Calculate Future Balance | 5: Exit Session/Return Card");
             choice = int.Parse(Console.ReadLine());
             switch (choice)
             {
                 case 1:
-                    Client.depositMoney(Client);
+                    //Client.depositMoney(Client);
                     break;
 
                 case 2:
-                    Client.withrawMoney(Client);
+                    //Client.withrawMoney(Client);
                     break;
 
                 case 3:
-                    Client.displayBalance(Client);
+                    //Client.displayBalance(Client);
                     break;
 
                 case 4:
-                    Client.calculateInterest(Client);
+                    //Client.calculateInterest(Client);
                     break;
 
                 case 5:
-                    Client.exitSession(Client);
+                    //Client.exitSession(Client);
                     break;
 
             }
         }
+
+        /*
         public static void Main()
         {
             Profile Client = new Profile();
@@ -231,29 +233,29 @@ namespace BankProfile
             {
                 Client = new Profile();//(firstName, middleName, lastName, age, socialSecurity, birthDate, address, accountBalance);
                 Client.newClient(Client);
-                Client.mainMenu(Client);
+                //Client.mainMenu(Client);
             }
             else
             {
                 Client = new Profile();
                 Console.WriteLine("Please enter your account number: ");
                 enteredAccountNumber = int.Parse(Console.ReadLine());
-                Client.loginExistingClient(enteredAccountNumber, Client);
+                //Client.loginExistingClient(enteredAccountNumber, Client);
 
             }
 
             //Example Create
-            /*Profile Client = new Profile("Tyler", "J", "Rubin", 25, "625-13-3271", "04/15/1995", "9518 Lavender Star Drive",17.5f);
+            Profile Client = new Profile("Tyler", "J", "Rubin", 25, "625-13-3271", "04/15/1995", "9518 Lavender Star Drive",17.5f);
             Console.WriteLine("Welcome {0}", Client.firstName);
             Console.WriteLine("Your Bank Account Number is: {0}", Client.accountNumber);
             Console.WriteLine("Your account balance is currently {0}", Client.accountBalance);
             Console.WriteLine("Some basic account information is: DOB: {0}, SSN: {1}, Address: {2} ", Client.birthDate, Client.socialSecurity, Client.address);
-            Client.mainMenu(Client); */
+            Client.mainMenu(Client); 
 
 
 
 
-        }
+        }*/
     }
 }
-}
+
