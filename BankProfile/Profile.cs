@@ -5,20 +5,20 @@ namespace BankProfile
 {
     public class Profile
     {
-        private string firstName; //First + Middle + Last make up Full Name
-        private string middleName = ""; //First + Middle + Last make up Full Name
-        private string lastName; //First + Middle + Last make up Full Name
-        private int age;
-        private string birthDate;
-        private string socialSecurityNumber;
-        private string address;
-        private string phoneNumber;
-        private string email; //Client Email Address
-        private double accountNumber; //Doubles for the routing number
-        private float accountBalance;
-        private string useless; //Delete this later
+        public string firstName; //First + Middle + Last make up Full Name
+        public string middleName = ""; //First + Middle + Last make up Full Name
+        public string lastName; //First + Middle + Last make up Full Name
+        public int age;
+        public string birthDate;
+        public string socialSecurityNumber;
+        public string address;
+        public string phoneNumber;
+        public string email; //Client Email Address
+        public double accountNumber; //Doubles for the routing number
+        public float accountBalance;
+        public string useless; //Delete this later
 
-        public Profile ()
+        public Profile()
         {
             firstName = "";
             middleName = "";
@@ -31,7 +31,7 @@ namespace BankProfile
             email = "";
             accountNumber = 0;
             accountBalance = 0;
-    }
+        }
         public Profile(string _firstName, string _middleName, string _lastName, int _age, string _socialSecurityNumber, string _birthDate, string _address, string _phoneNumber, string _email, float _accountBalance)
         {
             Random rnd = new Random();
@@ -77,7 +77,7 @@ namespace BankProfile
             Client.age = int.Parse(Console.ReadLine());
 
             Console.WriteLine("{0}, what's your Social Security Number?", firstName);
-            Client.socialSecurity = Console.ReadLine();
+            Client.socialSecurityNumber = Console.ReadLine();
 
             Console.WriteLine("{0}, what's your birth date?", firstName);
             Client.birthDate = Console.ReadLine();
@@ -97,13 +97,14 @@ namespace BankProfile
             file.WriteLine(Client.middleName);
             file.WriteLine(Client.lastName);
             file.WriteLine(Client.age);
-            file.WriteLine(Client.socialSecurity);
+            file.WriteLine(Client.socialSecurityNumber);
             file.WriteLine(Client.birthDate);
             file.WriteLine(Client.address);
             file.WriteLine(Client.accountNumber);
             file.WriteLine(Client.accountBalance);
-            Client.mainMenu(Client);
+            //Client.mainMenu(Client);
         }
 
 
     }
+}
