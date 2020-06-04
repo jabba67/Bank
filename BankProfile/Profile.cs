@@ -1,5 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
+using System.Data;
+using MySql.Data;
+using MySql.Data.MySqlClient;
 
 namespace BankProfile
 {
@@ -48,50 +52,103 @@ namespace BankProfile
 
         }
 
-        public void newClient(Profile client) //This function gathers new client information and stores it into the database
+        //public void newClient(Profile client) //This function gathers new client information and stores it into the database
+        public static void Main() //This function gathers new client information and stores it into the database
         {
-            Profile Client;
-            Client = client;
+            //Profile Client;
+            //Client = client;
             Random rnd = new Random();
-            /*string firstName;
-            string middleName;
+            string firstName;
+            //string middleName;
             string lastName;
             int age;
-            string socialSecurity;
+            string socialSecurityNumber;
+            string phoneNumber;
             string birthDate;
             string address;
-            float accountBalance;*/
-            Client.accountNumber = rnd.Next(10000, 50000); ;
+            string email;
+            float accountBalance;
+            double accountNumber;
 
-
+            accountNumber = rnd.Next(10000, 50000); ;
             Console.WriteLine("New Client, what's your first name?");
-            Client.firstName = Console.ReadLine();
+            firstName = Console.ReadLine();
 
-            Console.WriteLine("{0}, what's your middle name?", firstName);
-            Client.middleName = Console.ReadLine();
+            //Console.WriteLine("{0}, what's your middle name?", firstName);
+            //Client.middleName = Console.ReadLine();
 
             Console.WriteLine("{0}, what's your last name?", firstName);
-            Client.lastName = Console.ReadLine();
+            lastName = Console.ReadLine();
 
             Console.WriteLine("{0}, what's your age?", firstName);
-            Client.age = int.Parse(Console.ReadLine());
+            age = int.Parse(Console.ReadLine());
 
             Console.WriteLine("{0}, what's your Social Security Number?", firstName);
-            Client.socialSecurityNumber = Console.ReadLine();
+            socialSecurityNumber = Console.ReadLine();
 
             Console.WriteLine("{0}, what's your birth date?", firstName);
-            Client.birthDate = Console.ReadLine();
+            birthDate = Console.ReadLine();
 
             Console.WriteLine("{0}, what's your address?", firstName);
-            Client.address = Console.ReadLine();
+            address = Console.ReadLine();
+
+            Console.WriteLine("{0}, what's your phone number?", firstName);
+            phoneNumber = Console.ReadLine();
+
+            Console.WriteLine("{0}, what's your email?", firstName);
+            email = Console.ReadLine();
 
             Console.WriteLine("{0}, what's your starting balance?", firstName);
-            Client.accountBalance = float.Parse(Console.ReadLine());
+            accountBalance = float.Parse(Console.ReadLine());
 
-            string ComposedFileName = "C:\\Git\\Bank\\BankProfile\\" + accountNumber + ".txt";
+            string connStr = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //HostIp, UserName, DatabaseName, Port, Password
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                Console.WriteLine("Connecting to MySQL...");
+                conn.Open();
+
+                //string sql = "use Bank;" + "\n" + "select * from UserInformation" + "\n" + "go"
+                //MySqlCommand cmd = new MySqlCommand(sql, conn)
+                MySqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "Insert into UserInformation(FirstName, AccountBalance, LastName, Age, BirthDate, SocialSecurityNumber, Address, PhoneNumber, EmailAddress, AccountNumber) Values(?FirstName, ?AccountBalance, ?LastName, ?Age, ?BirthDate, ?SocialSecurityNumber, ?Address, ?PhoneNumber, ?EmailAddress, ?AccountNumber)";
+                cmd.Parameters.Add("?FirstName", MySqlDbType.VarChar).Value = firstName;
+                cmd.Parameters.Add("?AccountBalance", MySqlDbType.Float).Value = accountBalance;
+                cmd.Parameters.Add("?LastName", MySqlDbType.VarChar).Value = lastName;
+                cmd.Parameters.Add("?Age", MySqlDbType.Int16).Value = age;
+                cmd.Parameters.Add("?BirthDate", MySqlDbType.VarChar).Value = birthDate;
+                cmd.Parameters.Add("?SocialSecurityNumber", MySqlDbType.VarChar).Value = socialSecurityNumber;
+                cmd.Parameters.Add("?Address", MySqlDbType.VarChar).Value = address;
+                cmd.Parameters.Add("?PhoneNumber", MySqlDbType.VarChar).Value = phoneNumber;
+                cmd.Parameters.Add("?EmailAddress", MySqlDbType.VarChar).Value = email;
+                cmd.Parameters.Add("?AccountNumber", MySqlDbType.Int16).Value = accountNumber;
+                cmd.ExecuteNonQuery();
+                /*MySqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    //Somestring = rdr.GetString(0);
+                    //Console.WriteLine("The Client Username is " + Somestring); //read general output
+                    //Console.WriteLine(rdr["Name"]); //Read by column
+
+                }
+                rdr.Close();*/
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            conn.Close();
+            Console.WriteLine("Done.");
+
+
+            //InsertCommand = "insert into UserInformation Values({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}), firstName, accountBalance, lastName, age, birthDate, socialSecurityNumber, phoneNumber, email,accountNumber")
+            //    insert into UserInformation Values("Johnny", 1000, "Fields", 25, "01/02/2001", "1234567891", "123 Avenue", "1-800-101-1092", "Iamabrokeboi@yahoo.com", "123456")
+
+            /*string ComposedFileName = "C:\\Git\\Bank\\BankProfile\\" + accountNumber + ".txt";
             Console.WriteLine("The composed string reads as {0}", ComposedFileName);
             Console.WriteLine(File.Exists(ComposedFileName) ? "Client exists." : "Client does not exist."); //Check to see if the client already exists
-            using System.IO.StreamWriter file = new System.IO.StreamWriter(ComposedFileName);
+            using System.IO.StreamWriter file = new System.IO.StreamWriter(ComposedFileName); 
 
             file.WriteLine(Client.firstName);
             file.WriteLine(Client.middleName);
@@ -101,7 +158,7 @@ namespace BankProfile
             file.WriteLine(Client.birthDate);
             file.WriteLine(Client.address);
             file.WriteLine(Client.accountNumber);
-            file.WriteLine(Client.accountBalance);
+            file.WriteLine(Client.accountBalance);*/
             //Client.mainMenu(Client);
         }
 
