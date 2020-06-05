@@ -51,6 +51,47 @@ namespace BankProfile
 
         }
 
+        public double AccountNumber
+        {
+            get
+            {
+                return this.accountNumber;
+            }
+        }
+
+        public float AccountBalance
+        {
+            get
+            {
+                return this.accountBalance;
+            }
+        }
+
+        public string Email
+        {
+            get
+            {
+                return this.email;
+            }
+        }
+
+        public string PhoneNumber
+        {
+            get
+            {
+                return this.phoneNumber;
+            }
+        }
+
+        public string Address
+        {
+            get
+            {
+                return this.address;
+            }
+
+        }
+
         //public void newClient(Profile client) //This function gathers new client information and stores it into the database
         public static void Main() //This function gathers new client information and stores it into the database
         {

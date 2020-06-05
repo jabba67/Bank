@@ -98,12 +98,12 @@ namespace BankProfile
             Console.WriteLine("What is your account number?");
             inputAccount = double.Parse(Console.ReadLine());
 
-            /*if (accountNumber == inputAccount)
+            if (AccountNumber == inputAccount)
             {
                 Console.WriteLine("How much would you like to deposit?");
                 depositAmount = float.Parse(Console.ReadLine());
                 //accountBalance += depositAmount;
-                Console.WriteLine("Your account balance is now: {0}", accountBalance);
+                Console.WriteLine("Your account balance is now: {0}", AccountBalance);
                 //Client.mainMenu(Client);
             }
             else
@@ -120,7 +120,7 @@ namespace BankProfile
                     Console.WriteLine("L8tr bruh");
                     //Client.mainMenu(Client);
                 }
-            }*/
+            }
 
         }
         public void withrawMoney(Profile client)
