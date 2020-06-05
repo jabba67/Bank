@@ -92,6 +92,46 @@ namespace BankProfile
 
         }
 
+        public string FirstName
+        {
+            get
+            {
+                return this.firstName;
+            }
+        }
+
+        public string LastName
+        {
+            get
+            {
+                return this.lastName;
+            }
+        }
+
+        public int Age
+        {
+            get
+            {
+                return this.age;
+            }
+        }
+
+        public string Birthdate
+        {
+            get
+            {
+                return this.birthDate;
+            }
+        }
+
+        public string SocialSecurityNumber
+        {
+            get
+            {
+                return this.socialSecurityNumber;
+            }
+        }
+
         //public void newClient(Profile client) //This function gathers new client information and stores it into the database
         public static void Main() //This function gathers new client information and stores it into the database
         {
