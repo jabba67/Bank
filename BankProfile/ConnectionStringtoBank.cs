@@ -6,7 +6,7 @@ using MySql.Data.MySqlClient;
 
 public class Tutorial2
 {
-    public static void Main()
+    /*public static void Main()
     {
         string connStr = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //HostIp, UserName, DatabaseName, Port, Password
         MySqlConnection conn = new MySqlConnection(connStr);
@@ -36,5 +36,5 @@ public class Tutorial2
         }
         conn.Close();
         Console.WriteLine("Done.");
-    }
+    }*/
 }

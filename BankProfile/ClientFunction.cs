@@ -28,39 +28,39 @@ namespace BankProfile
                     switch (counter)
                     {
                         case 1:
-                            Client.firstName = file.ReadLine();
+                            //Client.firstName = file.ReadLine();
                             counter++;
                             break;
                         case 2:
-                            Client.middleName = file.ReadLine();
+                            //Client.middleName = file.ReadLine();
                             counter++;
                             break;
                         case 3:
-                            Client.lastName = file.ReadLine();
+                            //Client.lastName = file.ReadLine();
                             counter++;
                             break;
                         case 4:
-                            Client.age = Convert.ToInt32(file.ReadLine());
+                            //Client.age = Convert.ToInt32(file.ReadLine());
                             counter++;
                             break;
                         case 5:
-                            Client.socialSecurityNumber = Convert.ToString(file.ReadLine());
+                            //Client.socialSecurityNumber = Convert.ToString(file.ReadLine());
                             counter++;
                             break;
                         case 6:
-                            Client.birthDate = file.ReadLine();
+                            //Client.birthDate = file.ReadLine();
                             counter++;
                             break;
                         case 7:
-                            Client.address = file.ReadLine();
+                            //Client.address = file.ReadLine();
                             counter++;
                             break;
                         case 8:
-                            Client.accountNumber = Convert.ToDouble(file.ReadLine());
+                            //Client.accountNumber = Convert.ToDouble(file.ReadLine());
                             counter++;
                             break;
                         case 9:
-                            Client.accountBalance = float.Parse(file.ReadLine());
+                            //Client.accountBalance = float.Parse(file.ReadLine());
                             counter++;
                             break;
                         case 10:
@@ -71,6 +71,7 @@ namespace BankProfile
                 }
             }
 
+            /*
             Console.WriteLine("Testing that we got all the info:");
             Console.WriteLine(Client.firstName);
             Console.WriteLine(Client.middleName);
@@ -81,7 +82,7 @@ namespace BankProfile
             Console.WriteLine(Client.address);
             Console.WriteLine(Client.accountNumber);
             Console.WriteLine(Client.accountBalance);
-            //Client.mainMenu(Client);
+            //Client.mainMenu(Client);*/
 
         }
         
@@ -97,11 +98,11 @@ namespace BankProfile
             Console.WriteLine("What is your account number?");
             inputAccount = double.Parse(Console.ReadLine());
 
-            if (accountNumber == inputAccount)
+            /*if (accountNumber == inputAccount)
             {
                 Console.WriteLine("How much would you like to deposit?");
                 depositAmount = float.Parse(Console.ReadLine());
-                accountBalance += depositAmount;
+                //accountBalance += depositAmount;
                 Console.WriteLine("Your account balance is now: {0}", accountBalance);
                 //Client.mainMenu(Client);
             }
@@ -119,7 +120,7 @@ namespace BankProfile
                     Console.WriteLine("L8tr bruh");
                     //Client.mainMenu(Client);
                 }
-            }
+            }*/
 
         }
         public void withrawMoney(Profile client)
@@ -132,7 +133,7 @@ namespace BankProfile
             Console.WriteLine("How much would you like to widthdraw?");
             widthdrawAmount = float.Parse(Console.ReadLine());
             Console.WriteLine("{0} has been dispensed from the machine", widthdrawAmount);
-            accountBalance = accountBalance - widthdrawAmount;
+            //accountBalance = accountBalance - widthdrawAmount;
             Console.WriteLine("Would you like to know your current balanced?");
             response = Console.ReadLine();
             if (response == "yes")
@@ -154,7 +155,7 @@ namespace BankProfile
         {
             Profile Client;
             Client = client;
-            Console.WriteLine("Your current account balance is {0}", accountBalance);
+            //Console.WriteLine("Your current account balance is {0}", accountBalance);
             //Client.mainMenu(Client);
         }
 
@@ -163,17 +164,17 @@ namespace BankProfile
             Profile Client;
             Client = client;
             int months;
-            float currentBalance = accountBalance;
+            //float currentBalance = accountBalance;
             float nextMonth;
-            Console.WriteLine("Hi, {0} how many months ahead do you want to calculate?", firstName);
+            //Console.WriteLine("Hi, {0} how many months ahead do you want to calculate?", firstName);
             months = int.Parse(Console.ReadLine());
             for (int i = 0; i < months; i++)
             {
                 //currentBalance = (currentBalance * savingsInterestRate) + currentBalance;
-                nextMonth = currentBalance;
+                //nextMonth = currentBalance;
             }
 
-            Console.WriteLine("In {0} months you will have {1} in your account", months, currentBalance);
+            //Console.WriteLine("In {0} months you will have {1} in your account", months, currentBalance);
             //Client.mainMenu(Client);
         }
 
@@ -181,7 +182,7 @@ namespace BankProfile
         {
             Profile Client;
             Client = client;
-            Console.WriteLine("Thank you {0} for using Bank of Tyler!!! Have a great day! Uwu ^_^", Client.firstName);
+            //Console.WriteLine("Thank you {0} for using Bank of Tyler!!! Have a great day! Uwu ^_^", firstName);
         }
 
         public void mainMenu(Profile client)
@@ -189,10 +190,10 @@ namespace BankProfile
             Profile Client;
             Client = client;
             int choice;
-            Console.WriteLine("Welcome {0}", Client.firstName);
-            Console.WriteLine("Your Bank Account Number is: {0}", Client.accountNumber);
-            Console.WriteLine("Your account balance is currently {0}", Client.accountBalance);
-            Console.WriteLine("Some basic account information is: DOB: {0}, SSN: {1}, Address: {2} ", Client.birthDate, Client.socialSecurityNumber, Client.address);
+            //Console.WriteLine("Welcome {0}", Client.firstName);
+            //Console.WriteLine("Your Bank Account Number is: {0}", Client.accountNumber);
+            //Console.WriteLine("Your account balance is currently {0}", Client.accountBalance);
+            //Console.WriteLine("Some basic account information is: DOB: {0}, SSN: {1}, Address: {2} ", Client.birthDate, Client.socialSecurityNumber, Client.address);
             Console.WriteLine("Please select an option: 1: Deposit | 2: Withdraw | 3: Account Balance | 4: Calculate Future Balance | 5: Exit Session/Return Card");
             choice = int.Parse(Console.ReadLine());
             switch (choice)

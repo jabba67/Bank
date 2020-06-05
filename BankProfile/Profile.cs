@@ -9,23 +9,22 @@ namespace BankProfile
 {
     public class Profile
     {
-        public string firstName; //First + Middle + Last make up Full Name
-        public string middleName = ""; //First + Middle + Last make up Full Name
-        public string lastName; //First + Middle + Last make up Full Name
-        public int age;
-        public string birthDate;
-        public string socialSecurityNumber;
-        public string address;
-        public string phoneNumber;
-        public string email; //Client Email Address
-        public double accountNumber; //Doubles for the routing number
-        public float accountBalance;
-        public string useless; //Delete this later
+        private string firstName; //First + Middle + Last make up Full Name
+        //public string middleName = ""; //First + Middle + Last make up Full Name
+        private string lastName; //First + Middle + Last make up Full Name
+        private int age;
+        private string birthDate;
+        private string socialSecurityNumber;
+        private string address;
+        private string phoneNumber;
+        private string email; //Client Email Address
+        private double accountNumber; //Doubles for the routing number
+        private float accountBalance;
 
         public Profile()
         {
             firstName = "";
-            middleName = "";
+            //middleName = "";
             lastName = "";
             age = 0;
             socialSecurityNumber = "";
@@ -40,7 +39,7 @@ namespace BankProfile
         {
             Random rnd = new Random();
             firstName = _firstName;
-            middleName = _middleName;
+            //middleName = _middleName;
             lastName = _lastName;
             age = _age;
             socialSecurityNumber = _socialSecurityNumber;
@@ -105,11 +104,8 @@ namespace BankProfile
             MySqlConnection conn = new MySqlConnection(connStr);
             try
             {
-                Console.WriteLine("Connecting to MySQL...");
+                //Console.WriteLine("Connecting to MySQL...");
                 conn.Open();
-
-                //string sql = "use Bank;" + "\n" + "select * from UserInformation" + "\n" + "go"
-                //MySqlCommand cmd = new MySqlCommand(sql, conn)
                 MySqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "Insert into UserInformation(FirstName, AccountBalance, LastName, Age, BirthDate, SocialSecurityNumber, Address, PhoneNumber, EmailAddress, AccountNumber) Values(?FirstName, ?AccountBalance, ?LastName, ?Age, ?BirthDate, ?SocialSecurityNumber, ?Address, ?PhoneNumber, ?EmailAddress, ?AccountNumber)";
                 cmd.Parameters.Add("?FirstName", MySqlDbType.VarChar).Value = firstName;
@@ -123,23 +119,13 @@ namespace BankProfile
                 cmd.Parameters.Add("?EmailAddress", MySqlDbType.VarChar).Value = email;
                 cmd.Parameters.Add("?AccountNumber", MySqlDbType.Int16).Value = accountNumber;
                 cmd.ExecuteNonQuery();
-                /*MySqlDataReader rdr = cmd.ExecuteReader();
-
-                while (rdr.Read())
-                {
-                    //Somestring = rdr.GetString(0);
-                    //Console.WriteLine("The Client Username is " + Somestring); //read general output
-                    //Console.WriteLine(rdr["Name"]); //Read by column
-
-                }
-                rdr.Close();*/
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
             conn.Close();
-            Console.WriteLine("Done.");
+            Console.WriteLine("New client profile has sucessfully been created! :D");
 
 
             //InsertCommand = "insert into UserInformation Values({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}), firstName, accountBalance, lastName, age, birthDate, socialSecurityNumber, phoneNumber, email,accountNumber")
