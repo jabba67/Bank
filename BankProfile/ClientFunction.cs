@@ -13,15 +13,13 @@ namespace BankProfile
         {
             float depositAmount;
             Console.WriteLine("Your account balance is " + client.AccountBalance);
-
-
-                Console.WriteLine("How much would you like to deposit?");
-                depositAmount = float.Parse(Console.ReadLine());
-                client.AccountBalance += depositAmount;
-                Console.WriteLine("Your account balance is now: {0}", client.AccountBalance);
-                mainMenu(client);
+            Console.WriteLine("How much would you like to deposit?");
+            depositAmount = float.Parse(Console.ReadLine());
+            client.AccountBalance += depositAmount;
+            Console.WriteLine("Your account balance is now: {0}", client.AccountBalance);
+            //Build sql statement to log deposit into history table
+            mainMenu(client);
             }
-
      
         public void withrawMoney(Profile client)
         {
