@@ -9,9 +9,8 @@ namespace BankProfile
 {
     public class Profile
     {
-        private string firstName; //First + Middle + Last make up Full Name
-        //public string middleName = ""; //First + Middle + Last make up Full Name
-        private string lastName; //First + Middle + Last make up Full Name
+        private string firstName; //First + Last make up Full Name
+        private string lastName; //First + Last make up Full Name
         private int age;
         private string birthDate;
         private string socialSecurityNumber;
@@ -25,7 +24,6 @@ namespace BankProfile
         public Profile()
         {
             firstName = "";
-            //middleName = "";
             lastName = "";
             age = 0;
             socialSecurityNumber = "";
@@ -37,11 +35,10 @@ namespace BankProfile
             accountBalance = 0;
             password = "";
         }
-        public Profile(string _firstName, string _middleName, string _lastName, int _age, string _socialSecurityNumber, string _birthDate, string _address, string _phoneNumber, string _email, float _accountBalance)
+        public Profile(string _firstName, string _lastName, int _age, string _socialSecurityNumber, string _birthDate, string _address, string _phoneNumber, string _email, float _accountBalance)
         {
             Random rnd = new Random();
             firstName = _firstName;
-            //middleName = _middleName;
             lastName = _lastName;
             age = _age;
             socialSecurityNumber = _socialSecurityNumber;
@@ -58,6 +55,10 @@ namespace BankProfile
             {
                 return this.accountNumber;
             }
+            set
+            {
+                this.accountNumber = value;
+            }
         }
 
         public float AccountBalance
@@ -65,6 +66,10 @@ namespace BankProfile
             get
             {
                 return this.accountBalance;
+            }
+            set
+            {
+                this.accountBalance = value;
             }
         }
 
@@ -74,6 +79,10 @@ namespace BankProfile
             {
                 return this.email;
             }
+            set
+            {
+                this.email = value;
+            }
         }
 
         public string PhoneNumber
@@ -82,6 +91,10 @@ namespace BankProfile
             {
                 return this.phoneNumber;
             }
+            set
+            {
+                this.phoneNumber = value;
+            }
         }
 
         public string Address
@@ -89,6 +102,10 @@ namespace BankProfile
             get
             {
                 return this.address;
+            }
+            set
+            {
+                this.address = value;
             }
 
         }
@@ -99,6 +116,10 @@ namespace BankProfile
             {
                 return this.firstName;
             }
+            set
+            {
+                this.firstName = value;
+            }
         }
 
         public string LastName
@@ -106,6 +127,10 @@ namespace BankProfile
             get
             {
                 return this.lastName;
+            }
+            set
+            {
+                this.lastName = value;
             }
         }
 
@@ -115,13 +140,21 @@ namespace BankProfile
             {
                 return this.age;
             }
+            set
+            {
+                this.age = value;
+            }
         }
 
-        public string Birthdate
+        public string BirthDate
         {
             get
             {
                 return this.birthDate;
+            }
+            set
+            {
+                this.birthDate = value;
             }
         }
 
@@ -131,16 +164,19 @@ namespace BankProfile
             {
                 return this.socialSecurityNumber;
             }
+            set
+            {
+                this.socialSecurityNumber = value;
+            }
         }
 
-        //public void newClient(Profile client) //This function gathers new client information and stores it into the database
-        /*public static void Main() //This function gathers new client information and stores it into the database
+        public static void newClient() //This function gathers new client information and stores it into the database
+        //public static void Main() //This function gathers new client information and stores it into the database
         {
             //Profile Client;
             //Client = client;
             Random rnd = new Random();
             string firstName;
-            //string middleName;
             string lastName;
             int age;
             string socialSecurityNumber;
@@ -156,8 +192,6 @@ namespace BankProfile
             Console.WriteLine("New Client, what's your first name?");
             firstName = Console.ReadLine();
 
-            //Console.WriteLine("{0}, what's your middle name?", firstName);
-            //Client.middleName = Console.ReadLine();
 
             Console.WriteLine("{0}, what's your last name?", firstName);
             lastName = Console.ReadLine();
@@ -215,9 +249,9 @@ namespace BankProfile
             conn.Close();
             Console.WriteLine("New client profile has sucessfully been created! :D");
 
-
+            Session.GetUserInfo();
             
-        }*/
+        }
 
     }
 }
