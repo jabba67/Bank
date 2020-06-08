@@ -10,12 +10,26 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 
 namespace BankProfile
-{
+{   
     class Session:Profile
     {
+        //Session client = new Session();
+
+
         public static void Main()
-        //public void GetUserInfo()
         {
+            GetUserInfo();
+        }
+        public static void GetUserInfo()
+        {
+            Console.WriteLine("Are you a new client? Answer y if YES if No enter n");
+            string response = (Console.ReadLine());
+
+            if (response == "n")
+            {
+                newClient();
+            }
+
             //pull info from database and assign to profile properties
             //use this to match password with accountnumber: select Password from UserInformation where AccountNumber = "45505";
             int enteredAccountNumber;
@@ -28,30 +42,93 @@ namespace BankProfile
             string connStr = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //Connect string containing HostIp, UserName, DatabaseName, Port, Password
             MySqlConnection conn = new MySqlConnection(connStr);
             string RetrievedPassword;
+            bool verified = false;
+            //Implement try catch later to catch exceptions
             try
             {
                 Console.WriteLine("Connecting to MySQL...");
                 conn.Open();
 
-                //string sql = "use Bank;" + "\n" + "select * from UserInformation" + "\n" + "go";
                 string sql = "select Password from UserInformation where AccountNumber = " + enteredAccountNumber; //Retrieve password from row that matches Account Number match
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 MySqlDataReader rdr = cmd.ExecuteReader();
 
+                
+            while (rdr.Read())
+            {
+                RetrievedPassword = rdr.GetString(0);
+                Console.WriteLine("The output is: " + RetrievedPassword); //read general output
+
+                //***Create logic for password validation in the future
+                if (enteredPassword == RetrievedPassword)
+                {
+                    Console.WriteLine("The Passwords Match yo!");
+                    verified = true;
+                }
+                else
+                {
+                    Console.WriteLine("Lock this dude out frrrrrr!");
+                }
+            }
+            rdr.Close();
+            }
+            catch (Exception ex)
+            {
+            Console.WriteLine(ex.ToString());
+            }
+            conn.Close();
+            Console.WriteLine("Done.");
+
+            if (verified == true)
+            {
+                Session.CreateSession(enteredAccountNumber);
+                Console.WriteLine("The account is verified true");
+            }
+            else
+            {
+                //***Create logic here too
+            }
+
+        }
+        public static void CreateSession(int enteredAccountNumber)
+        {
+            var profile = new Profile();
+
+
+
+            string connStr = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //Connect string containing HostIp, UserName, DatabaseName, Port, Password
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                string sql = "select * from UserInformation where AccountNumber = " + enteredAccountNumber; //Retrieve password from row that matches Account Number match
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+
                 while (rdr.Read())
                 {
-                    RetrievedPassword = rdr.GetString(0);
-                    Console.WriteLine("The output is: " + RetrievedPassword); //read general output
+                    profile.FirstName = rdr.GetString(0);
+                    profile.AccountBalance = rdr.GetInt32(1);
+                    profile.LastName = rdr.GetString(2);
+                    profile.Age = rdr.GetInt32(3);
+                    profile.BirthDate = rdr.GetString(4);
+                    profile.SocialSecurityNumber = rdr.GetString(5);
+                    profile.Address = rdr.GetString(6);
+                    profile.PhoneNumber = rdr.GetString(7);
+                    profile.Email = rdr.GetString(8);
 
-                    if (enteredPassword == RetrievedPassword)
-                    {
-                        Console.WriteLine("The Passwords Match yo!");
+                    //***Save for debugging database pull
+                    /*Console.WriteLine(profile.FirstName);
+                    Console.WriteLine("balance is " + profile.AccountBalance);
+                    Console.WriteLine(profile.LastName);
+                    Console.WriteLine(profile.Age);
+                    Console.WriteLine(profile.BirthDate);
+                    Console.WriteLine(profile.SocialSecurityNumber);
+                    Console.WriteLine(profile.Address);
+                    Console.WriteLine(profile.PhoneNumber);
+                    Console.WriteLine(profile.Email);*/
 
-                    }
-                    else
-                    {
-                        Console.WriteLine("Lock this dude out frrrrrr!");
-                    }
                 }
                 rdr.Close();
             }
@@ -60,16 +137,9 @@ namespace BankProfile
                 Console.WriteLine(ex.ToString());
             }
             conn.Close();
-            Console.WriteLine("Done.");
-            
 
+            ClientFunction.mainMenu(profile);
+        }
 
-        }
-        public void CreateSession(Profile client)
-        {
-            Profile profile;
-            profile = client;
-            
-        }
     }
 }
