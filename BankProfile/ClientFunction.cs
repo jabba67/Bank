@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Data;
+using MySql.Data;
+using MySql.Data.MySqlClient;
 
 namespace BankProfile
 {
@@ -13,35 +16,50 @@ namespace BankProfile
         {
             float depositAmount;
             Console.WriteLine("Your account balance is " + client.AccountBalance);
+            Console.WriteLine("The current account number is " + client.AccountNumber);
             Console.WriteLine("How much would you like to deposit?");
             depositAmount = float.Parse(Console.ReadLine());
             client.AccountBalance += depositAmount;
             Console.WriteLine("Your account balance is now: {0}", client.AccountBalance);
             //Build sql statement to log deposit into history table
+            //Update statement: update UserInformation set AccountBalance = 20000 where FirstName = "Tyler"
+            string connStr = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //Connect string containing HostIp, UserName, DatabaseName, Port, Password
+            MySqlConnection conn = new MySqlConnection(connStr);
+            conn.Open();
+            string sql = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber ; //Retrieve password from row that matches Account Number match
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+
             mainMenu(client);
             }
      
-        public void withrawMoney(Profile client)
+        public static void withrawMoney(Profile client)
         {
-            Profile profile;
-            profile = client;
             float widthdrawAmount;
             string response;
 
             Console.WriteLine("How much would you like to widthdraw?");
             widthdrawAmount = float.Parse(Console.ReadLine());
             Console.WriteLine("{0} has been dispensed from the machine", widthdrawAmount);
-            //accountBalance = accountBalance - widthdrawAmount;
-            Console.WriteLine("Would you like to know your current balanced?");
+            client.AccountBalance -= widthdrawAmount;
+            //Build sql statement to log deposit into history table
+            //Update statement: update UserInformation set AccountBalance = 20000 where FirstName = "Tyler"
+            string connStr = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //Connect string containing HostIp, UserName, DatabaseName, Port, Password
+            MySqlConnection conn = new MySqlConnection(connStr);
+            conn.Open();
+            string sql = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber; //Retrieve password from row that matches Account Number match
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            Console.WriteLine("Would you like to know your current balance?");
             response = Console.ReadLine();
             if (response == "yes")
             {
-                displayBalance(profile);
-                //profile.mainMenu(profile);
+                displayBalance(client);
+                mainMenu(client);
             }
             else
             {
-                //profile.mainMenu(profile);
+                mainMenu(client);
             }
         }
         public void transferMoney()
@@ -54,7 +72,7 @@ namespace BankProfile
             Profile Client;
             Client = client;
             Console.WriteLine("Your current account balance is {0}", Client.AccountBalance);
-            mainMenu(Client);
+            //mainMenu(Client);
         }
 
         public void calculateInterest(Profile client)
@@ -76,11 +94,9 @@ namespace BankProfile
             //Client.mainMenu(Client);
         }
 
-        public void exitSession(Profile client)
+        public static void exitSession(Profile client)
         {
-            Profile Client;
-            Client = client;
-            //Console.WriteLine("Thank you {0} for using Bank of Tyler!!! Have a great day! Uwu ^_^", firstName);
+            Console.WriteLine("Thank you {0} for using Bank of Tyler!!! Have a great day! Uwu ^_^", client.FirstName);
         }
 
         public static void mainMenu(Profile client)
@@ -99,7 +115,7 @@ namespace BankProfile
                     break;
 
                 case 2:
-                    //withrawMoney(Client);
+                    withrawMoney(Client);
                     break;
 
                 case 3:
@@ -111,7 +127,7 @@ namespace BankProfile
                     break;
 
                 case 5:
-                    //exitSession(Client);
+                    exitSession(Client);
                     break;
 
             }
