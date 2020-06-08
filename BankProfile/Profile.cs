@@ -20,6 +20,7 @@ namespace BankProfile
         private string email; //Client Email Address
         private double accountNumber; //Doubles for the routing number
         private float accountBalance;
+        private string password;
 
         public Profile()
         {
@@ -34,6 +35,7 @@ namespace BankProfile
             email = "";
             accountNumber = 0;
             accountBalance = 0;
+            password = "";
         }
         public Profile(string _firstName, string _middleName, string _lastName, int _age, string _socialSecurityNumber, string _birthDate, string _address, string _phoneNumber, string _email, float _accountBalance)
         {
@@ -48,7 +50,6 @@ namespace BankProfile
             phoneNumber = _phoneNumber;
             email = _email;
             accountBalance = _accountBalance;
-
         }
 
         public double AccountNumber
@@ -133,7 +134,7 @@ namespace BankProfile
         }
 
         //public void newClient(Profile client) //This function gathers new client information and stores it into the database
-        public static void Main() //This function gathers new client information and stores it into the database
+        /*public static void Main() //This function gathers new client information and stores it into the database
         {
             //Profile Client;
             //Client = client;
@@ -149,6 +150,7 @@ namespace BankProfile
             string email;
             float accountBalance;
             double accountNumber;
+            string password;
 
             accountNumber = rnd.Next(10000, 50000); ;
             Console.WriteLine("New Client, what's your first name?");
@@ -181,6 +183,10 @@ namespace BankProfile
             Console.WriteLine("{0}, what's your starting balance?", firstName);
             accountBalance = float.Parse(Console.ReadLine());
 
+            Console.WriteLine("Your account number is {0}, please record this for your records", accountNumber);
+            Console.WriteLine("Please pick a password for your account (8 Character MAX): ");
+            password = Console.ReadLine();
+
             string connStr = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //HostIp, UserName, DatabaseName, Port, Password
             MySqlConnection conn = new MySqlConnection(connStr);
             try
@@ -188,7 +194,7 @@ namespace BankProfile
                 //Console.WriteLine("Connecting to MySQL...");
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "Insert into UserInformation(FirstName, AccountBalance, LastName, Age, BirthDate, SocialSecurityNumber, Address, PhoneNumber, EmailAddress, AccountNumber) Values(?FirstName, ?AccountBalance, ?LastName, ?Age, ?BirthDate, ?SocialSecurityNumber, ?Address, ?PhoneNumber, ?EmailAddress, ?AccountNumber)";
+                cmd.CommandText = "Insert into UserInformation(FirstName, AccountBalance, LastName, Age, BirthDate, SocialSecurityNumber, Address, PhoneNumber, EmailAddress, AccountNumber, Password) Values(?FirstName, ?AccountBalance, ?LastName, ?Age, ?BirthDate, ?SocialSecurityNumber, ?Address, ?PhoneNumber, ?EmailAddress, ?AccountNumber, ?Password)";
                 cmd.Parameters.Add("?FirstName", MySqlDbType.VarChar).Value = firstName;
                 cmd.Parameters.Add("?AccountBalance", MySqlDbType.Float).Value = accountBalance;
                 cmd.Parameters.Add("?LastName", MySqlDbType.VarChar).Value = lastName;
@@ -199,6 +205,7 @@ namespace BankProfile
                 cmd.Parameters.Add("?PhoneNumber", MySqlDbType.VarChar).Value = phoneNumber;
                 cmd.Parameters.Add("?EmailAddress", MySqlDbType.VarChar).Value = email;
                 cmd.Parameters.Add("?AccountNumber", MySqlDbType.Int16).Value = accountNumber;
+                cmd.Parameters.Add("?Password", MySqlDbType.VarChar).Value = password;
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -209,26 +216,8 @@ namespace BankProfile
             Console.WriteLine("New client profile has sucessfully been created! :D");
 
 
-            //InsertCommand = "insert into UserInformation Values({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}), firstName, accountBalance, lastName, age, birthDate, socialSecurityNumber, phoneNumber, email,accountNumber")
-            //    insert into UserInformation Values("Johnny", 1000, "Fields", 25, "01/02/2001", "1234567891", "123 Avenue", "1-800-101-1092", "Iamabrokeboi@yahoo.com", "123456")
-
-            /*string ComposedFileName = "C:\\Git\\Bank\\BankProfile\\" + accountNumber + ".txt";
-            Console.WriteLine("The composed string reads as {0}", ComposedFileName);
-            Console.WriteLine(File.Exists(ComposedFileName) ? "Client exists." : "Client does not exist."); //Check to see if the client already exists
-            using System.IO.StreamWriter file = new System.IO.StreamWriter(ComposedFileName); 
-
-            file.WriteLine(Client.firstName);
-            file.WriteLine(Client.middleName);
-            file.WriteLine(Client.lastName);
-            file.WriteLine(Client.age);
-            file.WriteLine(Client.socialSecurityNumber);
-            file.WriteLine(Client.birthDate);
-            file.WriteLine(Client.address);
-            file.WriteLine(Client.accountNumber);
-            file.WriteLine(Client.accountBalance);*/
-            //Client.mainMenu(Client);
-        }
-
+            
+        }*/
 
     }
 }
