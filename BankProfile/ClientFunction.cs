@@ -69,10 +69,8 @@ namespace BankProfile
 
         public static void displayBalance(Profile client)
         {
-            Profile Client;
-            Client = client;
-            Console.WriteLine("Your current account balance is {0}", Client.AccountBalance);
-            //mainMenu(Client);
+            Console.WriteLine("Your current account balance is {0}", client.AccountBalance);
+            mainMenu(client);
         }
 
         public void calculateInterest(Profile client)
@@ -104,8 +102,6 @@ namespace BankProfile
             Profile Client;
             Client = client;
             int choice;
-            //Console.WriteLine("Welcome {0}", Client.firstName);
-            //Console.WriteLine("Your account balance is currently {0}", Client.accountBalance);
             Console.WriteLine("Please select an option: 1: Deposit | 2: Withdraw | 3: Account Balance | 4: Calculate Future Balance | 5: Exit Session/Return Card");
             choice = int.Parse(Console.ReadLine());
             switch (choice)
