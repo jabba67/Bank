@@ -25,7 +25,7 @@ namespace BankProfile
             Console.WriteLine("Are you a new client? Answer y if YES if No enter n");
             string response = (Console.ReadLine());
 
-            if (response == "n")
+            if (response == "y")
             {
                 newClient();
             }
@@ -117,6 +117,7 @@ namespace BankProfile
                     profile.Address = rdr.GetString(6);
                     profile.PhoneNumber = rdr.GetString(7);
                     profile.Email = rdr.GetString(8);
+                    profile.AccountNumber = rdr.GetInt32(9);
 
                     //***Save for debugging database pull
                     /*Console.WriteLine(profile.FirstName);
