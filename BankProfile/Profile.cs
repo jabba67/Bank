@@ -247,6 +247,38 @@ namespace BankProfile
                 Console.WriteLine(ex.ToString());
             }
             conn.Close();
+
+            //Create trigger for new customer table
+            string connStr3 = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //Connect string containing HostIp, UserName, DatabaseName, Port, Password
+            MySqlConnection conn3 = new MySqlConnection(connStr3);
+            conn3.Open();
+
+            string sql2 = "Delimiter " + "\n" + 
+                           "Create trigger TransactionsTracking" + accountNumber + " After update on UserInformation" + "\n" + 
+                           "for each row" + "\n" +
+                           "BEGIN" + "\n" +
+	                       "declare amount int;" + "\n" + 
+                           "declare insertString varchar(1000);" + "\n" +
+	                            "IF New.AccountBalance > OLD.AccountBalance then" + "\n" +
+		                            "set amount = NEW.AccountBalance - OLD.AccountBalance;" + "\n" + 
+                                    "set insertString = concat('A deposit has been made into the account with the amount: ', amount);" + "\n" + 
+		                            "Insert Into Customer" + accountNumber + " (Transaction, Time)" + "\n" +
+                                        "Values (insertString, current_timestamp);" + "\n" +
+	                            "END IF;" + "\n" + "\n" + 
+
+	                            "IF NEW.AccountBalance < OLD.AccountBalance then" + "\n" + 
+		                            "set amount = OLD.AccountBalance - NEW.AccountBalance;" + "\n" + 
+		                            "set insertString = concat('A withdrawal has been made from the account: ', amount);" + "\n" + 
+		                            "Insert Into Customer" + accountNumber + @" (Transaction, Time)" + "\n" +
+                                        "Values (insertString, current_timestamp);" + "\n" +
+	                            "END IF;" + "\n" + "\n" +
+
+                                "END **";
+
+            MySqlCommand cmd3 = new MySqlCommand(sql2, conn3);
+            MySqlDataReader rdr2 = cmd3.ExecuteReader();
+            conn3.Close();
+
             Console.WriteLine("New client profile has sucessfully been created! :D");
 
             Session.GetUserInfo();

@@ -29,6 +29,18 @@ namespace BankProfile
             string sql = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber ; //Retrieve password from row that matches Account Number match
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             MySqlDataReader rdr = cmd.ExecuteReader();
+            conn.Close();
+
+            //SQL Statement to update transaction table with amount, time, and account number
+            string connStr2 = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //Connect string containing HostIp, UserName, DatabaseName, Port, Password
+            MySqlConnection conn2 = new MySqlConnection(connStr2);
+            conn2.Open();
+            //string sql2 = "insert into TransactionTrackings set Transaction = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber; //Retrieve password from row that matches Account Number match
+            string sql2 = "insert into TransactionTracking(Transaction, TransType, Time, AccountNumber) Values(" + depositAmount + ", 'Deposit'" +  ", current_timestamp," + client.AccountNumber + ")";
+            MySqlCommand cmd2 = new MySqlCommand(sql2, conn2);
+            MySqlDataReader rdr2 = cmd2.ExecuteReader();
+            conn2.Close();
+
 
             mainMenu(client);
             }
@@ -50,6 +62,18 @@ namespace BankProfile
             string sql = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber; //Retrieve password from row that matches Account Number match
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             MySqlDataReader rdr = cmd.ExecuteReader();
+            conn.Close();
+
+            //SQL Statement to update transaction table with amount, time, and account number
+            string connStr2 = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //Connect string containing HostIp, UserName, DatabaseName, Port, Password
+            MySqlConnection conn2 = new MySqlConnection(connStr2);
+            conn2.Open();
+            string sql2 = "insert into TransactionTracking(Transaction, TransType, Time, AccountNumber) Values(" + (-1* widthdrawAmount) + ", 'Withdrawal'" + ", current_timestamp," + client.AccountNumber + ")";
+            MySqlCommand cmd2 = new MySqlCommand(sql2, conn2);
+            MySqlDataReader rdr2 = cmd2.ExecuteReader();
+            conn2.Close();
+
+
             Console.WriteLine("Would you like to know your current balance?");
             response = Console.ReadLine();
             if (response == "yes")
@@ -62,9 +86,33 @@ namespace BankProfile
                 mainMenu(client);
             }
         }
-        public void transferMoney()
+        public static void ViewTransactions(Profile client)
         {
+            string connStr = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //HostIp, UserName, DatabaseName, Port, Password
+            MySqlConnection conn = new MySqlConnection(connStr);
 
+                Console.WriteLine("Connecting to MySQL...");
+            conn.Open();
+                //string sql = "use Bank;" + "\n" + "select * from UserInformation" + "\n" + "go";
+                string sql = "select * from TransactionTracking where AccountNumber = " + client.AccountNumber;
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    Console.WriteLine("Transaction Amount:");
+                    Console.WriteLine(rdr["Transaction"]); //Read by column
+                    Console.WriteLine("Transaction Type:");
+                    Console.WriteLine(rdr["TransType"]); //Read by column
+                    Console.WriteLine("Transaction Time:");
+                    Console.WriteLine(rdr["Time"]); //Read by column
+                    Console.WriteLine("Account Number:");
+                    Console.WriteLine(rdr["AccountNumber"]); //Read by column
+                    Console.WriteLine("\n" + "\n");
+
+            }
+                rdr.Close();
+            conn.Close();
         }
 
         public static void displayBalance(Profile client)
@@ -102,7 +150,7 @@ namespace BankProfile
             Profile Client;
             Client = client;
             int choice;
-            Console.WriteLine("Please select an option: 1: Deposit | 2: Withdraw | 3: Account Balance | 4: Calculate Future Balance | 5: Exit Session/Return Card");
+            Console.WriteLine("Please select an option: 1: Deposit | 2: Withdraw | 3: Account Balance | 4: View Transactions | 5: Exit Session/Return Card");
             choice = int.Parse(Console.ReadLine());
             switch (choice)
             {
@@ -119,7 +167,7 @@ namespace BankProfile
                     break;
 
                 case 4:
-                    //calculateInterest(Client);
+                    ViewTransactions(Client);
                     break;
 
                 case 5:
