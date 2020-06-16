@@ -11,24 +11,27 @@ using MySql.Data.MySqlClient;
 
 namespace BankProfile
 {   
-    class Session:Profile
+    class Session
     {
-        //Session client = new Session();
-
-
         public static void Main()
         {
-            GetUserInfo();
-        }
-        public static void GetUserInfo()
-        {
+
             Console.WriteLine("Are you a new client? Answer y if YES if No enter n");
             string response = (Console.ReadLine());
 
             if (response == "y")
             {
-                newClient();
+                Profile newProfile = new Profile();
+                newProfile.newClient();
             }
+
+            Session newSession  =  new Session();
+            newSession.GetUserInfo();
+        }
+
+        public void GetUserInfo()
+        {
+            
 
             //pull info from database and assign to profile properties
             //use this to match password with accountnumber: select Password from UserInformation where AccountNumber = "45505";
@@ -81,7 +84,7 @@ namespace BankProfile
 
             if (verified == true)
             {
-                Session.CreateSession(enteredAccountNumber);
+                this.CreateSession(enteredAccountNumber);
                 Console.WriteLine("The account is verified true");
             }
             else
@@ -90,7 +93,7 @@ namespace BankProfile
             }
 
         }
-        public static void CreateSession(int enteredAccountNumber)
+        public void CreateSession(int enteredAccountNumber)
         {
             var profile = new Profile();
 
@@ -139,7 +142,8 @@ namespace BankProfile
             }
             conn.Close();
 
-            ClientFunction.mainMenu(profile);
+            ClientFunction clientMenu = new ClientFunction();
+            clientMenu.mainMenu(profile);
         }
 
     }

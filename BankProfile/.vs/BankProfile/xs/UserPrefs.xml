@@ -1,22 +1,13 @@
-﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Profile.cs">
+﻿<Properties StartupConfiguration="{B67DA3E3-B540-449B-9FB6-1DF266F77D1D}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Session.cs">
     <Files>
-      <File FileName="Profile.cs" Line="105" Column="39" />
-      <File FileName="ClientFunction.cs" Line="195" Column="148" />
-      <File FileName="Transfers.cs" Line="1" Column="1" />
+      <File FileName="ClientFunction.cs" Line="26" Column="106" />
+      <File FileName="Session.cs" Line="21" Column="33" />
+      <File FileName="Profile.cs" Line="285" Column="38" NotebookId="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="BankProfile" expanded="True" />
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.BankProfile PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <DisabledProjects>
-    <String>BankProfile.csproj</String>
-  </DisabledProjects>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

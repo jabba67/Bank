@@ -9,10 +9,10 @@ using MySql.Data.MySqlClient;
 
 namespace BankProfile
 {
-    public class ClientFunction: Profile
+    public class ClientFunction
     {
 
-        public static void depositMoney(Profile client)
+        public void depositMoney(Profile client)
         {
             float depositAmount;
             Console.WriteLine("Your account balance is " + client.AccountBalance);
@@ -45,7 +45,7 @@ namespace BankProfile
             mainMenu(client);
             }
      
-        public static void withrawMoney(Profile client)
+        public void withrawMoney(Profile client)
         {
             float widthdrawAmount;
             string response;
@@ -86,7 +86,7 @@ namespace BankProfile
                 mainMenu(client);
             }
         }
-        public static void ViewTransactions(Profile client)
+        public void ViewTransactions(Profile client)
         {
             string connStr = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //HostIp, UserName, DatabaseName, Port, Password
             MySqlConnection conn = new MySqlConnection(connStr);
@@ -115,7 +115,7 @@ namespace BankProfile
             conn.Close();
         }
 
-        public static void displayBalance(Profile client)
+        public void displayBalance(Profile client)
         {
             Console.WriteLine("Your current account balance is {0}", client.AccountBalance);
             mainMenu(client);
@@ -140,13 +140,14 @@ namespace BankProfile
             //Client.mainMenu(Client);
         }
 
-        public static void exitSession(Profile client)
+        public void exitSession(Profile client)
         {
             Console.WriteLine("Thank you {0} for using Bank of Tyler!!! Have a great day! Uwu ^_^", client.FirstName);
         }
 
-        public static void mainMenu(Profile client)
+        public void mainMenu(Profile client)
         {
+            ClientFunction clientMenu = new ClientFunction();
             Profile Client;
             Client = client;
             int choice;
@@ -159,11 +160,11 @@ namespace BankProfile
                     break;
 
                 case 2:
-                    withrawMoney(Client);
+                    clientMenu.withrawMoney(Client);
                     break;
 
                 case 3:
-                    displayBalance(Client);
+                    clientMenu.displayBalance(Client);
                     break;
 
                 case 4:

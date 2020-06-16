@@ -170,7 +170,7 @@ namespace BankProfile
             }
         }
 
-        public static void newClient() //This function gathers new client information and stores it into the database
+        public void newClient() //This function gathers new client information and stores it into the database
         //public static void Main() //This function gathers new client information and stores it into the database
         {
             //Profile Client;
@@ -281,7 +281,8 @@ namespace BankProfile
 
             Console.WriteLine("New client profile has sucessfully been created! :D");
 
-            Session.GetUserInfo();
+            Session newSession = new Session();
+            newSession.GetUserInfo();
             
         }
 
