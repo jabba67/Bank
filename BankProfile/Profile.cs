@@ -248,6 +248,7 @@ namespace BankProfile
             }
             conn.Close();
 
+            /*
             //Create trigger for new customer table
             string connStr3 = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //Connect string containing HostIp, UserName, DatabaseName, Port, Password
             MySqlConnection conn3 = new MySqlConnection(connStr3);
@@ -277,7 +278,7 @@ namespace BankProfile
 
             MySqlCommand cmd3 = new MySqlCommand(sql2, conn3);
             MySqlDataReader rdr2 = cmd3.ExecuteReader();
-            conn3.Close();
+            conn3.Close();*/
 
             Console.WriteLine("New client profile has sucessfully been created! :D");
 
