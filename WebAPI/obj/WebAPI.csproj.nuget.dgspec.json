@@ -1,21 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Git\\Bank\\WebAPI\\WebAPI.csproj": {}
+    "C:\\Git 2\\WebAPI\\WebAPI.csproj": {}
   },
   "projects": {
-    "C:\\Git\\Bank\\WebAPI\\WebAPI.csproj": {
+    "C:\\Git 2\\WebAPI\\WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Git\\Bank\\WebAPI\\WebAPI.csproj",
+        "projectUniqueName": "C:\\Git 2\\WebAPI\\WebAPI.csproj",
         "projectName": "WebAPI",
-        "projectPath": "C:\\Git\\Bank\\WebAPI\\WebAPI.csproj",
+        "projectPath": "C:\\Git 2\\WebAPI\\WebAPI.csproj",
         "packagesPath": "C:\\Users\\Tyler\\.nuget\\packages\\",
-        "outputPath": "C:\\Git\\Bank\\WebAPI\\obj\\",
+        "outputPath": "C:\\Git 2\\WebAPI\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
           "C:\\Users\\Tyler\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -38,10 +42,6 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
-            "Microsoft.AspNetCore.Cors": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",

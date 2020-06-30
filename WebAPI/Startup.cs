@@ -16,7 +16,6 @@ using Microsoft.EntityFrameworkCore.Design;
 using MySQL.Data;
 using Pomelo.EntityFrameworkCore.MySql;
 using WebAPI.Models;
-using Microsoft.AspNetCore.Cors;
 
 namespace WebAPI
 {
@@ -34,17 +33,7 @@ namespace WebAPI
         {
            services.AddDbContext<BankContext>(options => options.UseMySQL(Configuration.GetConnectionString("SakilaDatabase")));
             services.AddMvc();
-
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin().AllowAnyHeader();
-                    });
-            });
-
-            services.AddControllers();
+            //services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,8 +43,6 @@ namespace WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseCors();
 
             app.UseHttpsRedirection();
 
