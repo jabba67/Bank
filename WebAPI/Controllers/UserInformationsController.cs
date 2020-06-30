@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/UserInformations
+        //[DisableCors]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserInformation>>> GetUserInformation()
         {
@@ -28,6 +30,7 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/UserInformations/5
+        //[DisableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<UserInformation>> GetUserInformation(double id)
         {
