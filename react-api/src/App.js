@@ -18,6 +18,9 @@ import Contacts from './components/contacts';
       }
       render() {
         return (
+          <form>
+            <label>Account</label>
+          </form>
           <Contacts contacts={this.state.contacts} />
         )
       }
