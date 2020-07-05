@@ -18,10 +18,12 @@ import Contacts from './components/contacts';
       }
       render() {
         return (
+          <React.Fragment>
           <form>
             <label>Account</label>
           </form>
           <Contacts contacts={this.state.contacts} />
+          </React.Fragment>
         )
       }
     } 
