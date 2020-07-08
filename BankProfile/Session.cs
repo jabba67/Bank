@@ -31,8 +31,6 @@ namespace BankProfile
 
         public void GetUserInfo()
         {
-            
-
             //pull info from database and assign to profile properties
             //use this to match password with accountnumber: select Password from UserInformation where AccountNumber = "45505";
             int enteredAccountNumber;

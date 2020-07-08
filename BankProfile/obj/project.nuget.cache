@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5W0nXCeBAh+BCS7XElz7iq7uoiTf2TLS2+1PPWZxRFgTDbxzKRuM+J1fes85hkix+73XCSOe2rKYc+EoZBJVoQ==",
+  "dgSpecHash": "YFfNo7nr01kyUIE45faf1yO0NXZ+71QD3ghKYmHRost64N8+S2g6UZG+sbBk6RVjmACnYTa90r+pHcefCLVkbg==",
   "success": true,
-  "projectFilePath": "C:\\git\\Bank\\BankProfile\\BankProfile.csproj",
+  "projectFilePath": "C:\\Git\\Bank\\BankProfile\\BankProfile.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Tyler\\.nuget\\packages\\bouncycastle.netcore\\1.8.3\\bouncycastle.netcore.1.8.3.nupkg.sha512",
     "C:\\Users\\Tyler\\.nuget\\packages\\google.protobuf\\3.6.1\\google.protobuf.3.6.1.nupkg.sha512",

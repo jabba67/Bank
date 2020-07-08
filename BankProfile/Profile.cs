@@ -160,14 +160,7 @@ namespace BankProfile
 
         public string SocialSecurityNumber
         {
-            get
-            {
-                return this.socialSecurityNumber;
-            }
-            set
-            {
-                this.socialSecurityNumber = value;
-            }
+            get; set;
         }
 
         public void newClient() //This function gathers new client information and stores it into the database

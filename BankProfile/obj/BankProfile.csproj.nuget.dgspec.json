@@ -1,25 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\git\\Bank\\BankProfile\\BankProfile.csproj": {}
+    "C:\\Git\\Bank\\BankProfile\\BankProfile.csproj": {}
   },
   "projects": {
-    "C:\\git\\Bank\\BankProfile\\BankProfile.csproj": {
+    "C:\\Git\\Bank\\BankProfile\\BankProfile.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\git\\Bank\\BankProfile\\BankProfile.csproj",
+        "projectUniqueName": "C:\\Git\\Bank\\BankProfile\\BankProfile.csproj",
         "projectName": "BankProfile",
-        "projectPath": "C:\\git\\Bank\\BankProfile\\BankProfile.csproj",
+        "projectPath": "C:\\Git\\Bank\\BankProfile\\BankProfile.csproj",
         "packagesPath": "C:\\Users\\Tyler\\.nuget\\packages\\",
-        "outputPath": "C:\\git\\Bank\\BankProfile\\obj\\",
+        "outputPath": "C:\\Git\\Bank\\BankProfile\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
           "C:\\Users\\Tyler\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"

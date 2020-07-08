@@ -12,6 +12,8 @@ namespace BankProfile
     public class ClientFunction
     {
 
+        string ConnectionString = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789";
+
         public void depositMoney(Profile client)
         {
             float depositAmount;
@@ -23,8 +25,8 @@ namespace BankProfile
             Console.WriteLine("Your account balance is now: {0}", client.AccountBalance);
             //Build sql statement to log deposit into history table
             //Update statement: update UserInformation set AccountBalance = 20000 where FirstName = "Tyler"
-            string connStr = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //Connect string containing HostIp, UserName, DatabaseName, Port, Password
-            MySqlConnection conn = new MySqlConnection(connStr);
+             //Connect string containing HostIp, UserName, DatabaseName, Port, Password
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
             conn.Open();
             string sql = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber ; //Retrieve password from row that matches Account Number match
             MySqlCommand cmd = new MySqlCommand(sql, conn);
@@ -32,8 +34,7 @@ namespace BankProfile
             conn.Close();
 
             //SQL Statement to update transaction table with amount, time, and account number
-            string connStr2 = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //Connect string containing HostIp, UserName, DatabaseName, Port, Password
-            MySqlConnection conn2 = new MySqlConnection(connStr2);
+            MySqlConnection conn2 = new MySqlConnection(ConnectionString);
             conn2.Open();
             //string sql2 = "insert into TransactionTrackings set Transaction = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber; //Retrieve password from row that matches Account Number match
             string sql2 = "insert into TransactionTracking(Transaction, TransType, Time, AccountNumber) Values(" + depositAmount + ", 'Deposit'" +  ", current_timestamp," + client.AccountNumber + ")";
@@ -56,8 +57,7 @@ namespace BankProfile
             client.AccountBalance -= widthdrawAmount;
             //Build sql statement to log deposit into history table
             //Update statement: update UserInformation set AccountBalance = 20000 where FirstName = "Tyler"
-            string connStr = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //Connect string containing HostIp, UserName, DatabaseName, Port, Password
-            MySqlConnection conn = new MySqlConnection(connStr);
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
             conn.Open();
             string sql = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber; //Retrieve password from row that matches Account Number match
             MySqlCommand cmd = new MySqlCommand(sql, conn);
@@ -65,8 +65,7 @@ namespace BankProfile
             conn.Close();
 
             //SQL Statement to update transaction table with amount, time, and account number
-            string connStr2 = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //Connect string containing HostIp, UserName, DatabaseName, Port, Password
-            MySqlConnection conn2 = new MySqlConnection(connStr2);
+            MySqlConnection conn2 = new MySqlConnection(ConnectionString);
             conn2.Open();
             string sql2 = "insert into TransactionTracking(Transaction, TransType, Time, AccountNumber) Values(" + (-1* widthdrawAmount) + ", 'Withdrawal'" + ", current_timestamp," + client.AccountNumber + ")";
             MySqlCommand cmd2 = new MySqlCommand(sql2, conn2);
@@ -88,8 +87,7 @@ namespace BankProfile
         }
         public void ViewTransactions(Profile client)
         {
-            string connStr = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //HostIp, UserName, DatabaseName, Port, Password
-            MySqlConnection conn = new MySqlConnection(connStr);
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
 
                 Console.WriteLine("Connecting to MySQL...");
             conn.Open();

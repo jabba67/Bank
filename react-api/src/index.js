@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-//import App from './App';
-import Login from './containers/Login'
+import App from './App';
+//import Login from './containers/Login'
+//import contact from './components/contacts'
 import * as serviceWorker from './serviceWorker';
+//import Contacts from './components/contacts';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Login />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
