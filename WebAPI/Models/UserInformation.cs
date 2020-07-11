@@ -16,5 +16,6 @@ namespace WebAPI.Models
         public string EmailAddress { get; set; }
         public double AccountNumber { get; set; }
         public string Password { get; set; }
+
     }
 }
