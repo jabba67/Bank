@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace WebAPI.Controllers
 {
+    [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
     public class UserInformationsController : ControllerBase
@@ -45,7 +47,41 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
+        [EnableCors]
         public async Task<IActionResult> PutUserInformation(double id, UserInformation userInformation)
+        {
+            if (id != userInformation.AccountNumber)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(userInformation).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserInformationExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // POST: api/UserInformations/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost("{id}")]
+        [EnableCors]
+        public async Task<IActionResult> PostUserInformation(double id, UserInformation userInformation)
         {
             if (id != userInformation.AccountNumber)
             {
