@@ -13,6 +13,8 @@ namespace BankProfile
 {   
     class Session
     {
+        string ConnectionString = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789";
+
         public static void Main()
         {
 
@@ -40,8 +42,7 @@ namespace BankProfile
             Console.WriteLine("Please enter your password:");
             enteredPassword = Console.ReadLine();
 
-            string connStr = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //Connect string containing HostIp, UserName, DatabaseName, Port, Password
-            MySqlConnection conn = new MySqlConnection(connStr);
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
             string RetrievedPassword;
             bool verified = false;
             //Implement try catch later to catch exceptions
@@ -95,17 +96,13 @@ namespace BankProfile
         {
             var profile = new Profile();
 
-
-
-            string connStr = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //Connect string containing HostIp, UserName, DatabaseName, Port, Password
-            MySqlConnection conn = new MySqlConnection(connStr);
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
             try
             {
                 conn.Open();
                 string sql = "select * from UserInformation where AccountNumber = " + enteredAccountNumber; //Retrieve password from row that matches Account Number match
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 MySqlDataReader rdr = cmd.ExecuteReader();
-
 
                 while (rdr.Read())
                 {

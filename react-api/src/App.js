@@ -44,7 +44,7 @@ class App extends Component{
     event.preventDefault();
     const accountBalance = new FormData(event.target);
     //const[accountBalance] = event.get
-    accountBalance.get('accountBalance')
+    
     
     axios({
       method: 'POST',

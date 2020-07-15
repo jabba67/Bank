@@ -47,7 +47,6 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        [EnableCors]
         public async Task<IActionResult> PutUserInformation(double id, UserInformation userInformation)
         {
             if (id != userInformation.AccountNumber)
@@ -80,7 +79,6 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost("{id}")]
-        [EnableCors]
         public async Task<IActionResult> PostUserInformation(double id, UserInformation userInformation)
         {
             if (id != userInformation.AccountNumber)

@@ -55,7 +55,7 @@ namespace BankProfile
             widthdrawAmount = float.Parse(Console.ReadLine());
             Console.WriteLine("{0} has been dispensed from the machine", widthdrawAmount);
             client.AccountBalance -= widthdrawAmount;
-            //Build sql statement to log deposit into history table
+
             //Update statement: update UserInformation set AccountBalance = 20000 where FirstName = "Tyler"
             MySqlConnection conn = new MySqlConnection(ConnectionString);
             conn.Open();
@@ -125,7 +125,7 @@ namespace BankProfile
             Client = client;
             int months;
             //float currentBalance = accountBalance;
-            float nextMonth;
+            //float nextMonth;
             //Console.WriteLine("Hi, {0} how many months ahead do you want to calculate?", firstName);
             months = int.Parse(Console.ReadLine());
             for (int i = 0; i < months; i++)
