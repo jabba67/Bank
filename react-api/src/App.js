@@ -1,10 +1,15 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect, Image, ImageBackground } from 'react';
 import withFirebaseAuth from 'react-with-firebase-auth'
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseconfig from './firebaseconfig';
 import './App.css';
-import {Alert,Breadcrumb,BreadcrumbItem,Container,Row,Col,Button,ButtonGroup,ButtonToolbar,Form,FormGroup,FormInput,InputGroup,Card,CardHeader,CardTitle,CardImg,CardBody,CardFooter} from "shards-react";
+import {Alert,Breadcrumb,BreadcrumbItem,Container,Row,Col,Button,
+  ButtonGroup,ButtonToolbar,Form,FormGroup,FormInput,InputGroup,
+  Card,CardHeader,CardTitle,CardImg,CardBody,CardFooter,Navbar,
+  NavbarToggler,NavbarBrand,Nav,NavItem,NavLink,Dropdown,DropdownToggle,
+  DropdownMenu,DropdownItem,InputGroupAddon,Collapse,
+  InputGroupText} from "shards-react";
 import Contacts from './components/contacts';
 import AccountNumbers from './components/grabAccountNumber';
 import { makeStyles } from '@material-ui/core/styles';
@@ -87,77 +92,91 @@ class App extends Component{
       signInWithGoogle,
     } = this.props;
     return (  
-      <div className="App">
+      <div className="App" >
         <header className="App-header">
          
           {
             user
               ? <>
-                <img src = "https://festivalsurplus.com/wp-content/uploads/2019/10/festival_surplus_logo.png" width="200" height="50"/>
-                <div align = 'right'><Button onClick={signOut}>Sign Out</Button></div>
-                <img src="https://media.giphy.com/media/9P3DSO2FzzvWxDtdWP/giphy.gif"/>
-                <p align = "center">Hello, {user.displayName}</p>
+                {/*<img src = "https://festivalsurplus.com/wp-content/uploads/2019/10/festival_surplus_logo.png" width="200" height="50"/>*/}
+                <Nav justified>
+                <NavItem></NavItem>
+                <NavItem></NavItem>
+                  <NavItem>
+                    <NavLink href="https://google.com">GOOGLE?</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink onClick={signOut}>Sign Out</NavLink>
+                  </NavItem>
+                  <NavItem></NavItem>
+                  <NavItem>
+                    {/*<NavLink disabled href="#">
+                      Disabled Link
+                      </NavLink>*/
+                    }
+                  </NavItem>
+                </Nav><br></br><br></br>   
 
-              <Container className="dr-example-container"style={{ backgroundColor: 'white'}} align = "center" maxWidth = "600px">
-              <Row>
-                <Col></Col>
-                <Col>
-                    <Card style={{maxHeight:"360px", maxWidth: "300px", backgroundColor: '#bccbcc', }}>
-                      {/*<CardHeader>Card header</CardHeader>*/}
-                      {/*<CardImg src="https://place-hold.it/300x200" />*/}
-                      <CardBody>
-                        <CardTitle>ACCOUNT INFO</CardTitle>
-                        <p>Account Number: <AccountNumbers datas={this.state.datas}/></p>
-                      </CardBody>
-                      {/*<CardFooter>Card footer</CardFooter>*/}
-                    </Card>
-                </Col>{/* END COLUMN 1 */}
-                <Card style={{maxHeight:"360px", maxWidth: "300px", backgroundColor: '#bccbcc'}}>
-                      {/*<CardHeader>Card header</CardHeader>*/}
-                      {/*<CardImg src="https://place-hold.it/300x200" />*/}
-                      <CardBody>
-                        <CardTitle>ACCOUNT INFO</CardTitle>
-                        <p>Account Number: <AccountNumbers datas={this.state.datas}/></p>
-                      </CardBody>
-                      {/*<CardFooter>Card footer</CardFooter>*/}
-                    </Card>
-                <Col></Col>
-              </Row>{/* END ROW 1 */}
-              <Row>
+              <div className="Container">
+                <p align = "center">Hello, {user.displayName}</p>
+                <Container className="dr-example-container"style={{ backgroundColor: 'transparent'}} align = "center" maxHeight ="500px" maxWidth = "350px" >
+                <Row>
+                  <Col>
+                  </Col>{/* END COLUMN 1 */}
+                  <Card style={{maxHeight:"360px", maxWidth: "370px", backgroundColor: 'white'}}>
+                        <CardHeader>Account Info</CardHeader>
+                        {/*<CardImg src="https://place-hold.it/300x200" />*/}
+                        <CardBody>
+                          {/*<CardTitle>      ACCOUNT INFO      </CardTitle>*/}
+                          <p>Account Number:    <AccountNumbers datas={this.state.datas}/></p>
+                        </CardBody>
+                        {/*<CardFooter>Card footer</CardFooter>*/}
+                      </Card>
                   <Col></Col>
-                  <Col sm="25" lg="30">
-                  <Card style={{ maxWidth: "360px", backgroundColor: '#bccbcc' }}>
-                    {/*<CardHeader>Card header</CardHeader>*/}
-                    {/*<CardImg src="https://place-hold.it/300x200" />*/}
-                    <CardBody>
-                      <CardTitle>ACCOUNT BALANCES</CardTitle>
-                      <p>Your current Account Balance is: <Contacts contacts={this.state.contacts}/></p>
-                      
-                      <div align = "center"><form onSubmit ={this.handleSubmit}>
-                       <label> Deposit: 
-                        <input type="text" ref={this.input}/>
-                        </label>
-                        <input type="submit" value="Deposit" />
-                          {/*<label htmlFor="accountBalance">Desposit Amount</label>
-                          <input id="accountBalance" name="accountBalance" type="text" />*/}
-                          {/*<FormInput id="accountBalance" type = "text" name = "accountBalance" placeholder="Desposit Amount..." />*/}
-                      </form></div>
+                </Row>{/* END ROW 1 */}
+                <Row>
+                    <Col></Col>
+                    <Col sm="25" lg="30">
+                    <Card style={{ maxWidth: "370px", backgroundColor: 'white' }}>
+                      <CardHeader>ACCOUNT BALANCES</CardHeader>
+                      {/*<CardImg src="https://place-hold.it/300x200" />*/}
+                      <CardBody>
+                        {/*<CardTitle>ACCOUNT BALANCES</CardTitle>*/}
+                        <p>Your current Account Balance is: <Contacts contacts={this.state.contacts}/></p>
+                        
+                        <div align = "center"><form onSubmit ={this.handleSubmit}>
+                        <label> Deposit: 
+                          <input type="text" ref={this.input}/>
+                          </label>
+                          <input type="submit" value="Deposit" />
+                        </form>
+                      </div>{/* END CONTAINER DIV CLASS*/}
                     </CardBody>
                     {/*<CardFooter>Card footer</CardFooter>*/}
                   </Card>
                 </Col>{/* END COLUMN 2 */}
                 <Col></Col>
               </Row>{/* END ROW 2 */}
-              </Container>
+              </Container></div>
               </>
-              : <p align = "center">Please sign in.</p>   
+              : <div class = "SignIn">
+                <br></br>
+              <Card style={{maxHeight:"370", maxWidth: "380", backgroundColor: 'white'}}>
+                  <CardHeader>Sign In</CardHeader>
+                  <CardImg src="https://t3.ftcdn.net/jpg/02/20/14/38/240_F_220143804_fc4xRygvJ8bn8JPQumtHJieDN4ORNyjs.jpg" />
+                  <CardBody>
+                    {/*<CardTitle>      ACCOUNT INFO      </CardTitle>*/}
+                    <Button theme="dark" onClick={signInWithGoogle}>Sign in with Google</Button>
+                  </CardBody>
+                  {/*<CardFooter>Card footer</CardFooter>*/}
+              </Card>
+              <br></br>
+              </div>
           }
           {
             user
-              ? <>
-              
-                </>
-              : <button onClick={signInWithGoogle}>Sign in with Google</button>
+              ? <></>
+              : <></>
           }
         </header>
       </div>
