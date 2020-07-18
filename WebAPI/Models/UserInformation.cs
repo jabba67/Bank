@@ -18,4 +18,9 @@ namespace WebAPI.Models
         public string Password { get; set; }
 
     }
+
+    public partial class UserInformationDeposit
+    {
+        public int? AccountBalance { get; set; }
+    }
 }

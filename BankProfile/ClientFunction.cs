@@ -11,7 +11,6 @@ namespace BankProfile
 {
     public class ClientFunction
     {
-
         string ConnectionString = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789";
 
         public void depositMoney(Profile client)
@@ -25,29 +24,21 @@ namespace BankProfile
             Console.WriteLine("Your account balance is now: {0}", client.AccountBalance);
             //Build sql statement to log deposit into history table
             //Update statement: update UserInformation set AccountBalance = 20000 where FirstName = "Tyler"
-             //Connect string containing HostIp, UserName, DatabaseName, Port, Password
-            MySqlConnection conn = new MySqlConnection(ConnectionString);
-            conn.Open();
             string sql = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber ; //Retrieve password from row that matches Account Number match
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
-            MySqlDataReader rdr = cmd.ExecuteReader();
-            conn.Close();
+            Connections connection = new Connections();
+            connection.ConnectToDataBase(sql, client);
 
             //SQL Statement to update transaction table with amount, time, and account number
-            MySqlConnection conn2 = new MySqlConnection(ConnectionString);
-            conn2.Open();
             //string sql2 = "insert into TransactionTrackings set Transaction = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber; //Retrieve password from row that matches Account Number match
             string sql2 = "insert into TransactionTracking(Transaction, TransType, Time, AccountNumber) Values(" + depositAmount + ", 'Deposit'" +  ", current_timestamp," + client.AccountNumber + ")";
-            MySqlCommand cmd2 = new MySqlCommand(sql2, conn2);
-            MySqlDataReader rdr2 = cmd2.ExecuteReader();
-            conn2.Close();
-
+            connection.ConnectToDataBase(sql2, client);
 
             mainMenu(client);
             }
      
         public void withrawMoney(Profile client)
         {
+            Connections connection = new Connections();
             float widthdrawAmount;
             string response;
 
@@ -57,21 +48,12 @@ namespace BankProfile
             client.AccountBalance -= widthdrawAmount;
 
             //Update statement: update UserInformation set AccountBalance = 20000 where FirstName = "Tyler"
-            MySqlConnection conn = new MySqlConnection(ConnectionString);
-            conn.Open();
-            string sql = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber; //Retrieve password from row that matches Account Number match
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
-            MySqlDataReader rdr = cmd.ExecuteReader();
-            conn.Close();
+            string sql = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber; //Retrieve password from row that matches Account Number match'
+            connection.ConnectToDataBase(sql, client);
 
             //SQL Statement to update transaction table with amount, time, and account number
-            MySqlConnection conn2 = new MySqlConnection(ConnectionString);
-            conn2.Open();
             string sql2 = "insert into TransactionTracking(Transaction, TransType, Time, AccountNumber) Values(" + (-1* widthdrawAmount) + ", 'Withdrawal'" + ", current_timestamp," + client.AccountNumber + ")";
-            MySqlCommand cmd2 = new MySqlCommand(sql2, conn2);
-            MySqlDataReader rdr2 = cmd2.ExecuteReader();
-            conn2.Close();
-
+            connection.ConnectToDataBase(sql2, client);
 
             Console.WriteLine("Would you like to know your current balance?");
             response = Console.ReadLine();
@@ -121,8 +103,6 @@ namespace BankProfile
 
         public void calculateInterest(Profile client)
         {
-            Profile Client;
-            Client = client;
             int months;
             //float currentBalance = accountBalance;
             //float nextMonth;
@@ -133,7 +113,6 @@ namespace BankProfile
                 //currentBalance = (currentBalance * savingsInterestRate) + currentBalance;
                 //nextMonth = currentBalance;
             }
-
             //Console.WriteLine("In {0} months you will have {1} in your account", months, currentBalance);
             //Client.mainMenu(Client);
         }

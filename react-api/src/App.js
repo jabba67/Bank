@@ -13,6 +13,12 @@ import {Alert,Breadcrumb,BreadcrumbItem,Container,Row,Col,Button,
 import Contacts from './components/contacts';
 import AccountNumbers from './components/grabAccountNumber';
 import { makeStyles } from '@material-ui/core/styles';
+import Timeline from '@material-ui/lab/Timeline';
+import TimelineItem from '@material-ui/lab/TimelineItem';
+import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
+import TimelineConnector from '@material-ui/lab/TimelineConnector';
+import TimelineContent from '@material-ui/lab/TimelineContent';
+import TimelineDot from '@material-ui/lab/TimelineDot';
 import Paper from '@material-ui/core/Paper';
 import useStyles from './containers/displayInfo';
 
@@ -66,7 +72,7 @@ class App extends Component{
     console.log('the value of contacts rn is: ' + this.state.contacts.accountBalance);
     accountBalance = (parseInt(this.input.current.value)+ this.state.contacts.accountBalance);
     
-    axios({
+    /*axios({
       method: 'POST',
       url: 'https://localhost:44358/api/UserInformations/45505',
       data: {
@@ -82,7 +88,27 @@ class App extends Component{
         accountNumber: 45505,
         password: "jabba678"
       }
+    });*/
+
+    axios({
+      method: 'patch',
+      url: 'https://localhost:44358/api/UserInformations/45505',
+      data: {
+        firstName: "Tyler",
+        accountBalance: accountBalance,
+        lastName: "Rubin",
+        age: 25,
+        birthDate: "04/15/1995",
+        socialSecurityNumber: "533-14-1324",
+        address: "1242 Tallow Tree Lane",
+        phoneNumber: "858-342-0865",
+        emailAddress: "arcowirexzs@yahoo.com",
+        accountNumber: 45505,
+        password: "jabba678"
+      }
     });
+
+
   }
 
   render() {
@@ -158,6 +184,7 @@ class App extends Component{
                 <Col></Col>
               </Row>{/* END ROW 2 */}
               </Container></div>
+
               </>
               : <div class = "SignIn">
                 <br></br>
@@ -175,8 +202,10 @@ class App extends Component{
           }
           {
             user
-              ? <></>
-              : <></>
+              ? <>
+                </>
+              : <>
+                </>
           }
         </header>
       </div>

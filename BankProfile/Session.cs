@@ -50,7 +50,6 @@ namespace BankProfile
             {
                 Console.WriteLine("Connecting to MySQL...");
                 conn.Open();
-
                 string sql = "select Password from UserInformation where AccountNumber = " + enteredAccountNumber; //Retrieve password from row that matches Account Number match
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 MySqlDataReader rdr = cmd.ExecuteReader();

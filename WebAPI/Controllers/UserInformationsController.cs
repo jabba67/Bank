@@ -107,6 +107,38 @@ namespace WebAPI.Controllers
             return NoContent();
         }
 
+        // Patch: api/UserInformations/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchUserInformation(double id, UserInformation userInformation)
+        {
+            if (id != userInformation.AccountNumber)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(userInformation).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserInformationExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
         // POST: api/UserInformations
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
