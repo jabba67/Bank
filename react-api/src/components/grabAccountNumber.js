@@ -2,9 +2,6 @@
     import React from 'react'
 
     const AccountNumbers = ({ datas}) => {
-      const element = fetch("https://localhost:44358/api/UserInformations/45505")
-      .then((response) => response.json())
-      .then((data) => console.log('Here is my data returned:', data.accountNumber));
 
       return (
         <div>

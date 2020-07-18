@@ -94,21 +94,12 @@ class App extends Component{
       method: 'patch',
       url: 'https://localhost:44358/api/UserInformations/45505',
       data: {
-        firstName: "Tyler",
         accountBalance: accountBalance,
-        lastName: "Rubin",
-        age: 25,
-        birthDate: "04/15/1995",
-        socialSecurityNumber: "533-14-1324",
-        address: "1242 Tallow Tree Lane",
-        phoneNumber: "858-342-0865",
-        emailAddress: "arcowirexzs@yahoo.com",
-        accountNumber: 45505,
-        password: "jabba678"
+        accountNumber: 45505
       }
     });
-
-
+      //IMPLEMENT THIS: Send request to API to get account number based on validation email
+      //Then With the account number perform actions like GET and PATCH on the stored account number
   }
 
   render() {

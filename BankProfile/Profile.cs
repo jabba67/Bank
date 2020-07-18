@@ -189,7 +189,6 @@ namespace BankProfile
             Console.WriteLine("New Client, what's your first name?");
             firstName = Console.ReadLine();
 
-
             Console.WriteLine("{0}, what's your last name?", firstName);
             lastName = Console.ReadLine();
 
