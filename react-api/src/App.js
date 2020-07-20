@@ -12,6 +12,7 @@ import {Alert,Breadcrumb,BreadcrumbItem,Container,Row,Col,Button,
   InputGroupText} from "shards-react";
 import Contacts from './components/contacts';
 import AccountNumbers from './components/grabAccountNumber';
+import TransHistory from './components/grabTransactionHistory';
 import { makeStyles } from '@material-ui/core/styles';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -44,7 +45,8 @@ class App extends Component{
 
   state = {
     contacts: [],
-    datas: []
+    datas: [],
+    transHistory: []
   }
 
   componentDidMount() {
@@ -59,6 +61,13 @@ class App extends Component{
     .then(res => res.json())
     .then((data) =>  {
       this.setState({ datas: data })
+    })
+    .catch(console.log)
+
+    fetch('https://localhost:44358/api/TransactionTrackings/14311')
+    .then(res => res.json())
+    .then((data) =>  {
+      this.setState({ transHistory: data })
     })
     .catch(console.log)
     
@@ -171,6 +180,16 @@ class App extends Component{
                     </CardBody>
                     {/*<CardFooter>Card footer</CardFooter>*/}
                   </Card>
+
+                  <Card style={{maxHeight:"360px", maxWidth: "400px", backgroundColor: 'white'}}>
+                        <CardHeader>Transaction TransHistory</CardHeader>
+                        {/*<CardImg src="https://place-hold.it/300x200" />*/}
+                        <CardBody>
+                          {/*<CardTitle>      ACCOUNT INFO      </CardTitle>*/}
+                          <p>Transactions:    <TransHistory transHistory={this.state.transHistory}/></p>
+                        </CardBody>
+                        {/*<CardFooter>Card footer</CardFooter>*/}
+                      </Card>
                 </Col>{/* END COLUMN 2 */}
                 <Col></Col>
               </Row>{/* END ROW 2 */}

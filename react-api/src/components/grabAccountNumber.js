@@ -1,5 +1,4 @@
-    // src/components/contacts.js
-    import React from 'react'
+import React from 'react'
 
     const AccountNumbers = ({ datas}) => {
 

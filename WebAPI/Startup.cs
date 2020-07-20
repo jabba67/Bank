@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 using MySQL.Data.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using MySQL.Data;
-using Pomelo.EntityFrameworkCore.MySql;
+//using Pomelo.EntityFrameworkCore.MySql;
 using WebAPI.Models;
 using Microsoft.AspNetCore.Cors;
 

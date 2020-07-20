@@ -129,7 +129,8 @@ namespace WebAPI.Models
 
             modelBuilder.Entity<TransactionTracking>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.id)
+                    .HasName("PRIMARY");
 
                 entity.Property(e => e.AccountNumber)
                     .HasMaxLength(1000)
@@ -146,6 +147,9 @@ namespace WebAPI.Models
                 entity.Property(e => e.Transaction)
                     .HasMaxLength(1000)
                     .IsUnicode(false);
+
+                entity.Property(e => e.id).HasColumnType("int(11)");
+
             });
 
             modelBuilder.Entity<UserInformation>(entity =>
