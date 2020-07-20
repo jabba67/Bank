@@ -111,7 +111,7 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PatchUserInformation(double id, UserInformation userInformation)
+        public async Task<IActionResult> PatchUserInformation(double id, UserInformationDeposit userInformation)
         {
             if (id != userInformation.AccountNumber)
             {

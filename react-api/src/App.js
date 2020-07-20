@@ -91,7 +91,7 @@ class App extends Component{
     });*/
 
     axios({
-      method: 'patch',
+      method: 'PATCH',
       url: 'https://localhost:44358/api/UserInformations/45505',
       data: {
         accountBalance: accountBalance,
