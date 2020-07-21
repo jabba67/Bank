@@ -1,7 +1,38 @@
 .App {
   text-align: center;
+  
 }
 
+.Container{
+  background-attachment: scroll;  
+  padding-right: 50px;
+  padding-left: 50px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+  background-color: rgba(255, 255, 255, .15);
+  max-width: 300vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  white-space: pre-line;
+}
+
+.SignIn{
+  max-width: 300vh;
+  padding-right: 50px;
+  padding-left: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(5px);
+  background-color: rgba(255, 255, 255, .15);  
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -14,14 +45,14 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color:white;
   min-height: 100vh;
-  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color:black;
+  background-image: url(https://wallpaperaccess.com/full/2005304.jpg);
 }
 
 .App-link {

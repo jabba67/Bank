@@ -68,3 +68,4 @@ C:\git\Bank\BankProfile\obj\Debug\netcoreapp3.1\BankProfile.csproj.CopyComplete
 C:\git\Bank\BankProfile\obj\Debug\netcoreapp3.1\BankProfile.dll
 C:\git\Bank\BankProfile\obj\Debug\netcoreapp3.1\BankProfile.pdb
 C:\git\Bank\BankProfile\obj\Debug\netcoreapp3.1\BankProfile.genruntimeconfig.cache
+C:\Git\Bank\BankProfile\obj\Debug\netcoreapp3.1\BankProfile.csprojAssemblyReference.cache

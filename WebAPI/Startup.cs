@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -14,7 +15,7 @@ using Microsoft.Extensions.Logging;
 using MySQL.Data.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using MySQL.Data;
-using Pomelo.EntityFrameworkCore.MySql;
+//using Pomelo.EntityFrameworkCore.MySql;
 using WebAPI.Models;
 using Microsoft.AspNetCore.Cors;
 
@@ -33,17 +34,24 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
            services.AddDbContext<BankContext>(options => options.UseMySQL(Configuration.GetConnectionString("SakilaDatabase")));
-            services.AddMvc();
-            //services.AddControllers();
 
-            services.AddCors(options =>
+            services.AddControllers();
+
+            /*services.AddCors(options =>
             {
                 options.AddDefaultPolicy(
                     builder =>
                     {
                         builder.AllowAnyOrigin().AllowAnyHeader();
                     });
-            });
+            });*/
+
+            services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
+            {
+                builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+            }));
+
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +66,9 @@ namespace WebAPI
 
             app.UseRouting();
 
-            app.UseCors();
+            //app.UseCors();
+            app.UseCors("ApiCorsPolicy");
+
 
             app.UseAuthorization();
 

@@ -7,6 +7,7 @@ using MySql.Data.MySqlClient;
 
 namespace BankProfile
 {
+
     public class Profile
     {
         private string firstName; //First + Last make up Full Name
@@ -20,6 +21,7 @@ namespace BankProfile
         private double accountNumber; //Doubles for the routing number
         private float accountBalance;
         private string password;
+        string ConnectionString = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789";
 
         public Profile()
         {
@@ -160,21 +162,16 @@ namespace BankProfile
 
         public string SocialSecurityNumber
         {
-            get
-            {
-                return this.socialSecurityNumber;
-            }
-            set
-            {
-                this.socialSecurityNumber = value;
-            }
+            get; set;
+        }
+
+        public void connectToDatabase(string sqlStatement)
+        {
+
         }
 
         public void newClient() //This function gathers new client information and stores it into the database
-        //public static void Main() //This function gathers new client information and stores it into the database
         {
-            //Profile Client;
-            //Client = client;
             Random rnd = new Random();
             string firstName;
             string lastName;
@@ -191,7 +188,6 @@ namespace BankProfile
             accountNumber = rnd.Next(10000, 50000); ;
             Console.WriteLine("New Client, what's your first name?");
             firstName = Console.ReadLine();
-
 
             Console.WriteLine("{0}, what's your last name?", firstName);
             lastName = Console.ReadLine();
@@ -221,11 +217,9 @@ namespace BankProfile
             Console.WriteLine("Please pick a password for your account (8 Character MAX): ");
             password = Console.ReadLine();
 
-            string connStr = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //HostIp, UserName, DatabaseName, Port, Password
-            MySqlConnection conn = new MySqlConnection(connStr);
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
             try
             {
-                //Console.WriteLine("Connecting to MySQL...");
                 conn.Open();
                 MySqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "Insert into UserInformation(FirstName, AccountBalance, LastName, Age, BirthDate, SocialSecurityNumber, Address, PhoneNumber, EmailAddress, AccountNumber, Password) Values(?FirstName, ?AccountBalance, ?LastName, ?Age, ?BirthDate, ?SocialSecurityNumber, ?Address, ?PhoneNumber, ?EmailAddress, ?AccountNumber, ?Password)";
@@ -247,38 +241,6 @@ namespace BankProfile
                 Console.WriteLine(ex.ToString());
             }
             conn.Close();
-
-            /*
-            //Create trigger for new customer table
-            string connStr3 = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789"; //Connect string containing HostIp, UserName, DatabaseName, Port, Password
-            MySqlConnection conn3 = new MySqlConnection(connStr3);
-            conn3.Open();
-
-            string sql2 = "Delimiter " + "\n" + 
-                           "Create trigger TransactionsTracking" + accountNumber + " After update on UserInformation" + "\n" + 
-                           "for each row" + "\n" +
-                           "BEGIN" + "\n" +
-	                       "declare amount int;" + "\n" + 
-                           "declare insertString varchar(1000);" + "\n" +
-	                            "IF New.AccountBalance > OLD.AccountBalance then" + "\n" +
-		                            "set amount = NEW.AccountBalance - OLD.AccountBalance;" + "\n" + 
-                                    "set insertString = concat('A deposit has been made into the account with the amount: ', amount);" + "\n" + 
-		                            "Insert Into Customer" + accountNumber + " (Transaction, Time)" + "\n" +
-                                        "Values (insertString, current_timestamp);" + "\n" +
-	                            "END IF;" + "\n" + "\n" + 
-
-	                            "IF NEW.AccountBalance < OLD.AccountBalance then" + "\n" + 
-		                            "set amount = OLD.AccountBalance - NEW.AccountBalance;" + "\n" + 
-		                            "set insertString = concat('A withdrawal has been made from the account: ', amount);" + "\n" + 
-		                            "Insert Into Customer" + accountNumber + @" (Transaction, Time)" + "\n" +
-                                        "Values (insertString, current_timestamp);" + "\n" +
-	                            "END IF;" + "\n" + "\n" +
-
-                                "END **";
-
-            MySqlCommand cmd3 = new MySqlCommand(sql2, conn3);
-            MySqlDataReader rdr2 = cmd3.ExecuteReader();
-            conn3.Close();*/
 
             Console.WriteLine("New client profile has sucessfully been created! :D");
 
