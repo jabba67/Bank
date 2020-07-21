@@ -13,15 +13,6 @@ import {Alert,Breadcrumb,BreadcrumbItem,Container,Row,Col,Button,
 import Contacts from './components/contacts';
 import AccountNumbers from './components/grabAccountNumber';
 import TransHistory from './components/grabTransactionHistory';
-import { makeStyles } from '@material-ui/core/styles';
-import Timeline from '@material-ui/lab/Timeline';
-import TimelineItem from '@material-ui/lab/TimelineItem';
-import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
-import TimelineConnector from '@material-ui/lab/TimelineConnector';
-import TimelineContent from '@material-ui/lab/TimelineContent';
-import TimelineDot from '@material-ui/lab/TimelineDot';
-import Paper from '@material-ui/core/Paper';
-import useStyles from './containers/displayInfo';
 
 const firebaseApp = firebase.initializeApp(firebaseconfig);
 
@@ -29,8 +20,6 @@ const firebaseApp = firebase.initializeApp(firebaseconfig);
 const element = fetch("https://localhost:44358/api/UserInformations/45505")
       .then((response) => response.json())
       .then((data) => console.log('Here is my data returned:', data.accountNumber));
-
-//<img src="https://media.giphy.com/media/9P3DSO2FzzvWxDtdWP/giphy.gif"/>
 ///Console testing
 
 const axios = require('axios');
@@ -41,30 +30,33 @@ class App extends Component{
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.input = React.createRef();
+    this.handlelogIn = this.handlelogIn.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   state = {
     contacts: [],
     datas: [],
-    transHistory: []
+    transHistory: [],
+    account: " "
   }
 
   componentDidMount() {
-    fetch('https://localhost:44358/api/UserInformations/45505')
+    fetch(`https://localhost:44358/api/UserInformations/${this.state.account}`)
     .then(res => res.json())
     .then((data) =>  {
       this.setState({ contacts: data })
     })
     .catch(console.log)
 
-    fetch('https://localhost:44358/api/UserInformations/45505')
+    fetch(`https://localhost:44358/api/UserInformations/${this.state.account}`)
     .then(res => res.json())
     .then((data) =>  {
       this.setState({ datas: data })
     })
     .catch(console.log)
 
-    fetch('https://localhost:44358/api/TransactionTrackings/14311')
+    fetch(`https://localhost:44358/api/TransactionTrackings/${this.state.account}`)
     .then(res => res.json())
     .then((data) =>  {
       this.setState({ transHistory: data })
@@ -72,6 +64,27 @@ class App extends Component{
     .catch(console.log)
     
   }//End componentDidMount()
+
+  handlelogIn(event) {
+    event.preventDefault();
+    console.log(this.state.ccount)
+    axios.get(`https://localhost:44358/api/UserInformations/${this.state.account}`)
+    .then(response => {
+      console.log(response.data)
+      this.setState({ datas: response.data})
+      this.setState({ contacts: response.data})
+      console.log(this.state.datas)
+    })
+    .then(
+      this.props.signInWithGoogle()
+    )
+  }
+
+  handleChange(event){
+    this.setState({ account: event.target.value  })
+    console.log(this.state.account)
+  }
+
 
   handleSubmit(event) {
     event.preventDefault();
@@ -110,7 +123,7 @@ class App extends Component{
       //IMPLEMENT THIS: Send request to API to get account number based on validation email
       //Then With the account number perform actions like GET and PATCH on the stored account number
   }
-
+  
   render() {
     const {
       user,
@@ -124,7 +137,6 @@ class App extends Component{
           {
             user
               ? <>
-                {/*<img src = "https://festivalsurplus.com/wp-content/uploads/2019/10/festival_surplus_logo.png" width="200" height="50"/>*/}
                 <Nav justified>
                 <NavItem></NavItem>
                 <NavItem></NavItem>
@@ -136,10 +148,6 @@ class App extends Component{
                   </NavItem>
                   <NavItem></NavItem>
                   <NavItem>
-                    {/*<NavLink disabled href="#">
-                      Disabled Link
-                      </NavLink>*/
-                    }
                   </NavItem>
                 </Nav><br></br><br></br>   
 
@@ -180,16 +188,16 @@ class App extends Component{
                     </CardBody>
                     {/*<CardFooter>Card footer</CardFooter>*/}
                   </Card>
-
+                  {/*}
                   <Card style={{maxHeight:"360px", maxWidth: "400px", backgroundColor: 'white'}}>
                         <CardHeader>Transaction TransHistory</CardHeader>
-                        {/*<CardImg src="https://place-hold.it/300x200" />*/}
+                        <CardImg src="https://place-hold.it/300x200" />
                         <CardBody>
-                          {/*<CardTitle>      ACCOUNT INFO      </CardTitle>*/}
+                          <CardTitle>      ACCOUNT INFO      </CardTitle>
                           <p>Transactions:    <TransHistory transHistory={this.state.transHistory}/></p>
                         </CardBody>
-                        {/*<CardFooter>Card footer</CardFooter>*/}
-                      </Card>
+                        <CardFooter>Card footer</CardFooter>
+                  </Card>*/}
                 </Col>{/* END COLUMN 2 */}
                 <Col></Col>
               </Row>{/* END ROW 2 */}
@@ -202,11 +210,16 @@ class App extends Component{
                   <CardHeader>Sign In</CardHeader>
                   <CardImg src="https://t3.ftcdn.net/jpg/02/20/14/38/240_F_220143804_fc4xRygvJ8bn8JPQumtHJieDN4ORNyjs.jpg" />
                   <CardBody>
-                    {/*<CardTitle>      ACCOUNT INFO      </CardTitle>*/}
-                    <Button theme="dark" onClick={signInWithGoogle}>Sign in with Google</Button>
+                    <form onSubmit={this.handlelogIn}>
+                      <label>Enter Account Number: 
+                        <br></br>
+                        <input type="text"  value={this.state.account} onChange={this.handleChange}/>
+                        <FormInput placeholder="Account Number" input type="submit" value="log-in" />
+                      </label>
+                    </form>
                   </CardBody>
-                  {/*<CardFooter>Card footer</CardFooter>*/}
               </Card>
+              
               <br></br>
               </div>
           }

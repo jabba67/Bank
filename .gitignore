@@ -1,4 +1,7 @@
-
 *.lock
 *.ide
 *.ide-shm
+*.json.gz
+*.json
+*.csprojAssemblyReference.cache
+*.suo
