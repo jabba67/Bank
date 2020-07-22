@@ -1,4 +1,6 @@
 import React, { Component, useState, useEffect, Image, ImageBackground } from 'react';
+import {Route,HashRouter, BrowserRouter as Router} from "react-router-dom";
+import ReactDOM from 'react-dom';
 import withFirebaseAuth from 'react-with-firebase-auth'
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
@@ -13,6 +15,8 @@ import {Alert,Breadcrumb,BreadcrumbItem,Container,Row,Col,Button,
 import Contacts from './components/contacts';
 import AccountNumbers from './components/grabAccountNumber';
 import TransHistory from './components/grabTransactionHistory';
+import AccountBalance from './components/AccountBalance';
+import AccountInfo from './components/AccountInfo';
 
 const firebaseApp = firebase.initializeApp(firebaseconfig);
 
@@ -24,7 +28,7 @@ const element = fetch("https://localhost:44358/api/UserInformations/45505")
 
 const axios = require('axios');
 
-class App extends Component{
+class App extends React.Component{
 
   constructor() {
     super();
@@ -62,12 +66,11 @@ class App extends Component{
       this.setState({ transHistory: data })
     })
     .catch(console.log)
-    
   }//End componentDidMount()
 
   handlelogIn(event) {
     event.preventDefault();
-    console.log(this.state.ccount)
+    console.log(this.state.acount)
     axios.get(`https://localhost:44358/api/UserInformations/${this.state.account}`)
     .then(response => {
       console.log(response.data)
@@ -84,7 +87,6 @@ class App extends Component{
     this.setState({ account: event.target.value  })
     console.log(this.state.account)
   }
-
 
   handleSubmit(event) {
     event.preventDefault();
@@ -130,18 +132,24 @@ class App extends Component{
       signOut,
       signInWithGoogle,
     } = this.props;
-    return (  
+    return (
       <div className="App" >
         <header className="App-header">
-         
           {
             user
               ? <>
-                <Nav justified>
+              <Router>
+                <Nav className="justify-content-center">
                 <NavItem></NavItem>
                 <NavItem></NavItem>
                   <NavItem>
-                    <NavLink href="https://google.com">GOOGLE?</NavLink>
+                    <li><NavLink href="/">Home</NavLink></li>
+                    <Route path="/App" component={App}/> 
+                    <li><NavLink href="/AccountBalance">Account Balance</NavLink></li>
+                    <Route path="/AccountBalance" component={AccountBalance}/>
+                    <li><NavLink href="/AccountInfo" >Account Info</NavLink></li>
+                    <Route path="/AccountInfo" component={AccountInfo}/>  
+                    
                   </NavItem>
                   <NavItem>
                     <NavLink onClick={signOut}>Sign Out</NavLink>
@@ -149,59 +157,28 @@ class App extends Component{
                   <NavItem></NavItem>
                   <NavItem>
                   </NavItem>
-                </Nav><br></br><br></br>   
+                </Nav><br></br><br></br>
+              </Router>
 
               <div className="Container">
+                {/*
                 <p align = "center">Hello, {user.displayName}</p>
                 <Container className="dr-example-container"style={{ backgroundColor: 'transparent'}} align = "center" maxHeight ="500px" maxWidth = "350px" >
                 <Row>
                   <Col>
-                  </Col>{/* END COLUMN 1 */}
-                  <Card style={{maxHeight:"360px", maxWidth: "370px", backgroundColor: 'white'}}>
-                        <CardHeader>Account Info</CardHeader>
-                        {/*<CardImg src="https://place-hold.it/300x200" />*/}
-                        <CardBody>
-                          {/*<CardTitle>      ACCOUNT INFO      </CardTitle>*/}
-                          <p>Account Number:    <AccountNumbers datas={this.state.datas}/></p>
-                        </CardBody>
-                        {/*<CardFooter>Card footer</CardFooter>*/}
-                      </Card>
+                  </Col>
+                  
                   <Col></Col>
-                </Row>{/* END ROW 1 */}
+                </Row>
                 <Row>
                     <Col></Col>
                     <Col sm="25" lg="30">
-                    <Card style={{ maxWidth: "370px", backgroundColor: 'white' }}>
-                      <CardHeader>ACCOUNT BALANCES</CardHeader>
-                      {/*<CardImg src="https://place-hold.it/300x200" />*/}
-                      <CardBody>
-                        {/*<CardTitle>ACCOUNT BALANCES</CardTitle>*/}
-                        <p>Your current Account Balance is: <Contacts contacts={this.state.contacts}/></p>
-                        
-                        <div align = "center"><form onSubmit ={this.handleSubmit}>
-                        <label> Deposit: 
-                          <input type="text" ref={this.input}/>
-                          </label>
-                          <input type="submit" value="Deposit" />
-                        </form>
-                      </div>{/* END CONTAINER DIV CLASS*/}
-                    </CardBody>
-                    {/*<CardFooter>Card footer</CardFooter>*/}
-                  </Card>
-                  {/*}
-                  <Card style={{maxHeight:"360px", maxWidth: "400px", backgroundColor: 'white'}}>
-                        <CardHeader>Transaction TransHistory</CardHeader>
-                        <CardImg src="https://place-hold.it/300x200" />
-                        <CardBody>
-                          <CardTitle>      ACCOUNT INFO      </CardTitle>
-                          <p>Transactions:    <TransHistory transHistory={this.state.transHistory}/></p>
-                        </CardBody>
-                        <CardFooter>Card footer</CardFooter>
-                  </Card>*/}
-                </Col>{/* END COLUMN 2 */}
+                  
+                </Col>
                 <Col></Col>
-              </Row>{/* END ROW 2 */}
-              </Container></div>
+              </Row>
+                </Container>*/}
+              </div>
 
               </>
               : <div class = "SignIn">
@@ -219,7 +196,6 @@ class App extends Component{
                     </form>
                   </CardBody>
               </Card>
-              
               <br></br>
               </div>
           }

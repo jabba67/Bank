@@ -26,7 +26,8 @@ namespace BankProfile
             //Update statement: update UserInformation set AccountBalance = 20000 where FirstName = "Tyler"
             string sql = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber ; //Retrieve password from row that matches Account Number match
             Connections connection = new Connections();
-            connection.ConnectToDataBase(sql, client);
+            var c = connection.ConnectToDataBase(sql, client);
+            //connection.ConnectToDataBase(sql, client);
 
             //SQL Statement to update transaction table with amount, time, and account number
             //string sql2 = "insert into TransactionTrackings set Transaction = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber; //Retrieve password from row that matches Account Number match
@@ -52,8 +53,8 @@ namespace BankProfile
             connection.ConnectToDataBase(sql, client);
 
             //SQL Statement to update transaction table with amount, time, and account number
-            string sql2 = "insert into TransactionTracking(Transaction, TransType, Time, AccountNumber) Values(" + (-1* widthdrawAmount) + ", 'Withdrawal'" + ", current_timestamp," + client.AccountNumber + ")";
-            connection.ConnectToDataBase(sql2, client);
+            //string sql2 = "insert into TransactionTracking(Transaction, TransType, Time, AccountNumber) Values(" + (-1* widthdrawAmount) + ", 'Withdrawal'" + ", current_timestamp," + client.AccountNumber + ")";
+            //connection.ConnectToDataBase(sql2, client);
 
             Console.WriteLine("Would you like to know your current balance?");
             response = Console.ReadLine();

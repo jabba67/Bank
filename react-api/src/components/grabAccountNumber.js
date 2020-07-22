@@ -1,6 +1,6 @@
 import React from 'react'
 
-    const AccountNumbers = ({ datas}) => {
+    const AccountNumbers = ({ datas }) => {
 
       return (
         <div>
