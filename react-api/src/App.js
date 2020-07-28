@@ -148,8 +148,7 @@ class App extends React.Component{
                     <li><NavLink href="/AccountBalance">Account Balance</NavLink></li>
                     <Route path="/AccountBalance" component={AccountBalance}/>
                     <li><NavLink href="/AccountInfo" >Account Info</NavLink></li>
-                    <Route path="/AccountInfo" component={AccountInfo} email = {user.email} /> 
-                    <AccountInfo userName = {user.email}/> 
+                    <Route path="/AccountInfo" render ={(props) => <AccountInfo {...props} userName = {user.email}/>} /> 
                   </NavItem>
                   <NavItem>
                     <NavLink onClick={signOut}>Sign Out</NavLink>

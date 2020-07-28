@@ -35,7 +35,7 @@ componentWillMount() {
                         <CardHeader>Account Info</CardHeader>
                         <CardBody>
                           <CardTitle>      ACCOUNT INFO      </CardTitle>
-                          <p>Account Number:  {this.props.userName}<EmailAddress email ={this.state.email}/></p>
+                          <p>Account Number:  <EmailAddress email ={this.state.email}/></p>
                         </CardBody>
                       </Card>
         
