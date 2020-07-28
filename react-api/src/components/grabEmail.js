@@ -16,10 +16,3 @@ import React from 'react'
 
     export default EmailAddress;
 
-    /*
-  {Object.keys(datas).filter(key => key === 'age').map((item,i) => (
-            <div>
-                <h6 key={i} class="card-title">{datas[item]}</h6>
-            </div>
-          ))}
-    */

@@ -63,9 +63,9 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserInformation(double id, UserInformation userInformation)
+        public async Task<IActionResult> PutUserInformation(string id, UserInformation userInformation)
         {
-            if (id != userInformation.AccountNumber)
+            if (id != userInformation.EmailAddress)
             {
                 return BadRequest();
             }
@@ -95,9 +95,9 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost("{id}")]
-        public async Task<IActionResult> PostUserInformation(double id, UserInformation userInformation)
+        public async Task<IActionResult> PostUserInformation(string id, UserInformation userInformation)
         {
-            if (id != userInformation.AccountNumber)
+            if (id != userInformation.EmailAddress)
             {
                 return BadRequest();
             }
@@ -127,9 +127,9 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PatchUserInformation(double id, UserInformationDeposit userInformation)
+        public async Task<IActionResult> PatchUserInformation(string id, UserInformation userInformation)
         {
-            if (id != userInformation.AccountNumber)
+            if (id != userInformation.EmailAddress)
             {
                 return BadRequest();
             }
@@ -168,7 +168,7 @@ namespace WebAPI.Controllers
             }
             catch (DbUpdateException)
             {
-                if (UserInformationExists(userInformation.AccountNumber))
+                if (UserInformationExists(userInformation.EmailAddress))
                 {
                     return Conflict();
                 }
@@ -197,9 +197,9 @@ namespace WebAPI.Controllers
             return userInformation;
         }
 
-        private bool UserInformationExists(double id)
+        private bool UserInformationExists(string id)
         {
-            return _context.UserInformation.Any(e => e.AccountNumber == id);
+            return _context.UserInformation.Any(e => e.EmailAddress == id);
         }
     }
 }

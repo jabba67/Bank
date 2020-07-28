@@ -11,21 +11,16 @@ const axios = require('axios');
 
 export default class AccountInfo extends React.Component{
 
-  //Fetch account info with info (like email) passed to this component
-  //Use forms for more input
-
   state = {
     email: [],
   }
 
 componentWillMount() {
-    fetch(`https://localhost:44358/api/UserInformations/${this.props.userName}`)
-    //fetch(`https://localhost:44358/api/UserInformations/${this.route.emailer}`)
+    fetch(`https://localhost:44358/api/UserInformations/${this.props.userEmail}`)
     .then(res => res.json())
     .then((data) =>  {
       this.setState({ email: data })
     })
-    .then((console.log("happening in comp2")))
     .catch(console.log)
 }
   render() {
@@ -43,6 +38,3 @@ componentWillMount() {
     );
   }
 }
- 
-//export default AccountInfo;
-//this.props.userName
