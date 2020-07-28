@@ -63,8 +63,8 @@ export default class AccountBalanceGet extends React.Component {
   render() {
     return (
       <div class = "AccountBalance" style={{ backgroundColor: 'transparent'}}>
-        <Card style={{ maxWidth: "370px", backgroundColor: 'white' }}>
-          <CardHeader>ACCOUNT BALANCES</CardHeader>
+        <Card style={{ maxWidth: "470px", backgroundColor: 'white' }}>
+          <CardHeader >ACCOUNT BALANCES</CardHeader>
           <CardBody>
               <p>Your current Account Balance is: <AccountBalance balance ={this.state.balance}/></p>
               <div align = "center"><form onSubmit ={this.handleSubmit}>
@@ -76,9 +76,9 @@ export default class AccountBalanceGet extends React.Component {
               </div>
               <br></br>
               <label>Account Transaction History:</label>
-              <div class = "ScrollBox">
+              <center><div class = "ScrollBox">
                 <TransHistory transHistory = {this.state.transHistory}/>
-              </div>
+              </div></center>
           </CardBody>
         </Card>
       </div>

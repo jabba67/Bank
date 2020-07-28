@@ -25,7 +25,8 @@ componentWillMount() {
 }
   render() {
     return (
-      <div>
+      <div class = "AccountInfo">
+        <center>
         <Card style={{maxHeight:"360px", maxWidth: "370px", backgroundColor: 'white'}}>
                         <CardHeader>Account Info</CardHeader>
                         <CardBody>
@@ -33,7 +34,7 @@ componentWillMount() {
                           <p>Account Number:  <EmailAddress email ={this.state.email}/></p>
                         </CardBody>
                       </Card>
-        
+        </center>
       </div>
     );
   }

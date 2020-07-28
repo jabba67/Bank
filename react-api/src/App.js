@@ -89,9 +89,7 @@ class App extends React.Component{
             user
               ? <>
               <Router>
-                <Nav className="justify-content-center">
-                <NavItem></NavItem>
-                <NavItem></NavItem>
+                <Nav vertical>
                   <NavItem>
                     <li><NavLink href="/">Home</NavLink></li>
                     <Route path="/App" component={App}/> 
@@ -103,10 +101,7 @@ class App extends React.Component{
                   <NavItem>
                     <NavLink onClick={signOut}>Sign Out</NavLink>
                   </NavItem>
-                  <NavItem></NavItem>
-                  <NavItem>
-                  </NavItem>
-                </Nav><br></br><br></br>
+                </Nav><br></br><br></br><br></br>
               </Router>
             <div className="Container">
             </div>
@@ -119,7 +114,7 @@ class App extends React.Component{
                   <CardBody>
                     <label> Please Login Using Google: </label>
                     <br></br>
-                    <Button onClick = {signInWithGoogle}>Login</Button>
+                    <Button size = "lg" onClick = {signInWithGoogle}>Login</Button>
                     <br></br>
                     <label> Don't Have An Account?</label>
                     <br></br>
