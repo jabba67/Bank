@@ -30,8 +30,9 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/UserInformations/5
+        
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserInformation>> GetUserInformation(double id)
+        public async Task<ActionResult<UserInformation>> GetUserInformation(string id)
         {
             var userInformation = await _context.UserInformation.FindAsync(id);
 
@@ -42,6 +43,21 @@ namespace WebAPI.Controllers
 
             return userInformation;
         }
+        /*
+        //Make a get for account number/other info based on email, use existing class to get balance/account number
+        [HttpGet("{EmailAddress}")]
+        public async Task<ActionResult<UserInformationDeposit>> GetAccountNumberFromEmail(string EmailAddress)
+        {
+            var userInformation = await _context.UserInformation.FindAsync(EmailAddress);
+
+            if (userInformation == null)
+            {
+                return NotFound();
+            }
+
+            //return userInformation;
+            return NoContent();
+        }*/
 
         // PUT: api/UserInformations/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for

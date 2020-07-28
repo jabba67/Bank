@@ -5,44 +5,44 @@ import {Alert,Breadcrumb,BreadcrumbItem,Container,Row,Col,Button,
     NavbarToggler,NavbarBrand,Nav,NavItem,NavLink,Dropdown,DropdownToggle,
     DropdownMenu,DropdownItem,InputGroupAddon,Collapse,
     InputGroupText} from "shards-react";
-import AccountNumbers from './grabAccountNumber';
+import EmailAddress from './grabEmail';
 import App from '../App'
 const axios = require('axios'); 
 
-class AccountInfo  extends React.Component{
+export default class AccountInfo extends React.Component{
 
-state = {
-    datas: [],
-}
+  //Fetch account info with info (like email) passed to this component
+  //Use forms for more input
 
-componentDidMount() {
-    fetch(`https://localhost:44358/api/UserInformations/45505`)
+  state = {
+    email: [],
+  }
+
+componentWillMount() {
+    fetch(`https://localhost:44358/api/UserInformations/${this.props.userName}`)
+    //fetch(`https://localhost:44358/api/UserInformations/${this.route.emailer}`)
     .then(res => res.json())
     .then((data) =>  {
-      this.setState({ contacts: data })
+      this.setState({ email: data })
     })
+    .then((console.log("happening in comp2")))
     .catch(console.log)
 }
-
   render() {
     return (
-    <>
       <div>
-        
         <Card style={{maxHeight:"360px", maxWidth: "370px", backgroundColor: 'white'}}>
                         <CardHeader>Account Info</CardHeader>
-                        {/*<CardImg src="https://place-hold.it/300x200" />*/}
                         <CardBody>
-                          {/*<CardTitle>      ACCOUNT INFO      </CardTitle>*/}
-                          <p>Account Number:    {this.state.datas}</p>
+                          <CardTitle>      ACCOUNT INFO      </CardTitle>
+                          <p>Account Number:  {this.props.userName}<EmailAddress email ={this.state.email}/></p>
                         </CardBody>
-                        {/*<CardFooter>Card footer</CardFooter>*/}
                       </Card>
         
       </div>
-    </>
     );
   }
 }
  
-export default AccountInfo;
+//export default AccountInfo;
+//this.props.userName

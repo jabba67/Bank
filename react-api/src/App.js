@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect, Image, ImageBackground } from 'react';
+import React, { Component, useState, useEffect, Image, ImageBackground, useReducer } from 'react';
 import {Route,HashRouter, BrowserRouter as Router} from "react-router-dom";
 import ReactDOM from 'react-dom';
 import withFirebaseAuth from 'react-with-firebase-auth'
@@ -29,7 +29,6 @@ const element = fetch("https://localhost:44358/api/UserInformations/45505")
 const axios = require('axios');
 
 class App extends React.Component{
-
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -46,7 +45,8 @@ class App extends React.Component{
   }
 
   componentDidMount() {
-    fetch(`https://localhost:44358/api/UserInformations/${this.state.account}`)
+    console.log("happening in comp1");
+    /*fetch(`https://localhost:44358/api/UserInformations/${this.state.account}`)
     .then(res => res.json())
     .then((data) =>  {
       this.setState({ contacts: data })
@@ -65,7 +65,7 @@ class App extends React.Component{
     .then((data) =>  {
       this.setState({ transHistory: data })
     })
-    .catch(console.log)
+    .catch(console.log)*/
   }//End componentDidMount()
 
   handlelogIn(event) {
@@ -148,8 +148,8 @@ class App extends React.Component{
                     <li><NavLink href="/AccountBalance">Account Balance</NavLink></li>
                     <Route path="/AccountBalance" component={AccountBalance}/>
                     <li><NavLink href="/AccountInfo" >Account Info</NavLink></li>
-                    <Route path="/AccountInfo" component={AccountInfo}/>  
-                    
+                    <Route path="/AccountInfo" component={AccountInfo} email = {user.email} /> 
+                    <AccountInfo userName = {user.email}/> 
                   </NavItem>
                   <NavItem>
                     <NavLink onClick={signOut}>Sign Out</NavLink>
@@ -199,13 +199,7 @@ class App extends React.Component{
               <br></br>
               </div>
           }
-          {
-            user
-              ? <>
-                </>
-              : <>
-                </>
-          }
+          
         </header>
       </div>
     );//End of Return
@@ -222,3 +216,5 @@ export default withFirebaseAuth({
   providers,
   firebaseAppAuth,
 })(App);
+
+//<AccountInfo userName = {user.email}/>
