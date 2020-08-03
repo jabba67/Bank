@@ -16,86 +16,56 @@ const SignUp = () => {
     const [accountNumber, setAccountNumber] = useState(0)
     const [balance, setBalance] = useState(0)
 
-
-    // constructor() {
-    //     this.handleemailChange = this.handleemailChange.bind(this)
-    //     this.handlepasswordChange = this.handlepasswordChange.bind(this)
-    // }
-
-    // state = {
-    //  email: "",
-    //  password: ""   
-    // }
-
    const handleEmailChange = (event) => {
         console.log(event.target.value)
         setEmail(event.target.value)
-        // this.state.email = event.target.value
     }
 
     const handlePasswordChange = (event) => {
         console.log(event.target.value)
         setPassword(event.target.value)
-        // this.state.password(event.target.value)
     }
 
     const handleFnameChange = (event) => {
         console.log(event.target.value)
         setfirstName(event.target.value)
-        // this.state.password(event.target.value)
     }
     
     const handleLnameChange = (event) => {
         console.log(event.target.value)
         setlastName(event.target.value)
-        // this.state.password(event.target.value)
     }
     
     const handleAgeChange = (event) => {
         console.log(event.target.value)
         setAge(event.target.value)
-        // this.state.password(event.target.value)
     }
 
     const handleBdayChange = (event) => {
         console.log(event.target.value)
         setbirthDate(event.target.value)
         console.log(birthDate.length)
-        // if(birthDate.length == 7)
-        
-        // this.state.password(event.target.value)
     }
 
     const handleSSChange = (event) => {
         console.log(event.target.value)
         setsocialSecurity(event.target.value)
-        // this.state.password(event.target.value)
     }
 
     const handleAddressChange = (event) => {
         console.log(event.target.value)
         setAddress(event.target.value)
-        // this.state.password(event.target.value)
     }
 
     
     const handlePhoneNumChange = (event) => {
         console.log(event.target.value)
         setphoneNumber(event.target.value)
-        // this.state.password(event.target.value)
     }
-    
-    /*const handleAccountNumChange = (event) => {
-        console.log(event.target.value)
-        setAccountNumber(event.target.value)
-        // this.state.password(event.target.value)
-    }*/
 
-    
     const handleBalanceChange = (event) => {
         console.log(event.target.value)
         setBalance(event.target.value)
-        // this.state.password(event.target.value)
     }
 
     const addAccount = (event) => {
@@ -119,18 +89,17 @@ const SignUp = () => {
             return
         }
 
-        if(socialSecurity.length !== 9){
+        if(socialSecurity.length !== 11){
             alert("invalid social security")
             setsocialSecurity("")
             return
         }
 
-        if(phoneNumber.length !==10) {
+        if(phoneNumber.length !==12) {
             alert("invalid phone number")
             setphoneNumber("")
             return
         }
-        // setbirthDate(birthDate.slice(0, 2) + '/' + birthDate.slice(2, 4) + '/' + birthDate.slice(4))
 
         const accountObject = {
             FirstName : firstName,
@@ -146,8 +115,6 @@ const SignUp = () => {
             Password: password
         }
 
-        //console.log(accountObject)
-
         axios({
             method: 'POST',
             url: `https://localhost:44358/api/UserInformations`,
@@ -161,18 +128,10 @@ const SignUp = () => {
                 "Address": String(address),
                 "PhoneNumber": String(phoneNumber),
                 "EmailAddress": String(email),
-                "AccountNumber": Math.floor(Math.random() * 99999-10000),
+                "AccountNumber": Math.floor(Math.random() * (99999-10000)+10000),
                 "Password": String(password)
             }
           });
-        /*axios
-            .post('https://localhost:5001/api/UserInformations', accountObject)
-            .then(response => {
-                console.log(response)
-            })
-            .catch(error => {
-                console.log('fail')
-            })*/
     }
     
     // render(){
@@ -243,12 +202,6 @@ const SignUp = () => {
                         />
                         </label>
                         <br></br>
-                        {/*<label>Account Number:
-                        <input 
-                        value={accountNumber}
-                        onChange={handleAccountNumChange}
-                        />
-                        </label>*/}
                         <br></br>
                         <label>Account Balance:
                         <input 
