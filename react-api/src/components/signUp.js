@@ -146,23 +146,23 @@ const SignUp = () => {
             Password: password
         }
 
-        console.log(accountObject)
+        //console.log(accountObject)
 
         axios({
             method: 'POST',
             url: `https://localhost:44358/api/UserInformations`,
             data: {
-                FirstName : firstName,
-                AccountBalance : balance,
-                LastName : lastName,
-                Age: age,
-                BirthDate: birthDate,
-                SocialSecurityNumber: socialSecurity,
-                Address: address,
-                PhoneNumber: phoneNumber,
-                EmailAddress: email,
-                AccountNumber : Math.floor(Math.random() * 99999-10000),
-                Password: password
+                "FirstName": String(firstName),
+                "AccountBalance": parseInt(balance),
+                "LastName": String(lastName),
+                "Age": parseInt(age),
+                "BirthDate": String(birthDate),
+                "SocialSecurityNumber": String(socialSecurity),
+                "Address": String(address),
+                "PhoneNumber": String(phoneNumber),
+                "EmailAddress": String(email),
+                "AccountNumber": Math.floor(Math.random() * 99999-10000),
+                "Password": String(password)
             }
           });
         /*axios
