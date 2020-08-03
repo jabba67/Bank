@@ -20,6 +20,7 @@ export default class AccountBalanceGet extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.input = React.createRef();
   }
 
   state = {
@@ -33,13 +34,15 @@ export default class AccountBalanceGet extends React.Component {
     var accountBalance;
     var current = this.state.balance.accountBalance;
     console.log('the value of contacts rn is: ' + this.state.balance.accountBalance);
-    accountBalance = (parseInt(this.current)+ this.state.balance.accountBalance);
+    accountBalance = (parseInt(this.input.current.value)+ this.state.balance.accountBalance);
+    console.log('the value of AB rn is: ' + accountBalance);
+    console.log('the value of AB rn is: ' + this.props.userEmail);
 
     axios({
       method: 'PATCH',
       url: `https://localhost:44358/api/UserInformations/${this.props.userEmail}`,
       data: {
-        EmailAdress: this.props.userEmail,
+        EmailAdress: this.props.userEmail, //"arcowirexzs@gmail.com",
         AccountBalance: accountBalance
       }
     });

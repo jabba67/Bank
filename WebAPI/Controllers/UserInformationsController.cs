@@ -15,7 +15,8 @@ namespace WebAPI.Controllers
     [ApiController]
     public class UserInformationsController : ControllerBase
     {
-        private readonly BankContext _context;
+        //private readonly BankContext _context;
+        private BankContext _context;
 
         public UserInformationsController(BankContext context)
         {
@@ -127,14 +128,19 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PatchUserInformation(string id, UserInformation userInformation)
+        public async Task<IActionResult> PatchUserInformation(string id, UserInformationDeposit userInformation)
         {
-            if (id != userInformation.EmailAddress)
+            var userInformationDeposit = await _context.UserInformation.FindAsync(id);
+            if (id != userInformationDeposit.EmailAddress)
             {
                 return BadRequest();
             }
 
-            _context.Entry(userInformation).State = EntityState.Modified;
+            var entity = await _context.UserInformation.SingleOrDefaultAsync(user => user.EmailAddress == userInformationDeposit.EmailAddress);
+            if (entity.AccountBalance != userInformation.AccountBalance)
+            {
+                entity.AccountBalance = userInformation.AccountBalance;
+            }
 
             try
             {
