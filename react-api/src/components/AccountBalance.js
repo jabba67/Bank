@@ -15,6 +15,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TransHistory from './grabTransactionHistory';
 const axios = require('axios');
+var TMClient = require('textmagic-rest-client');
 
 export default class AccountBalanceGet extends React.Component {
   constructor() {
@@ -37,6 +38,11 @@ export default class AccountBalanceGet extends React.Component {
     accountBalance = (parseInt(this.input.current.value)+ this.state.balance.accountBalance);
     console.log('the value of AB rn is: ' + accountBalance);
     console.log('the value of AB rn is: ' + this.props.userEmail);
+  
+        var c = new TMClient('username', 'C7XDKZOQZo6HvhJwtUw0MBcslfqwtp4');
+        c.Messages.send({text: 'test message', phones:'8583420865'}, function(err, res){
+        console.log('Messages.send()', err, res);
+        });
 
     axios({
       method: 'PATCH',

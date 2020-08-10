@@ -136,7 +136,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            var entity = await _context.UserInformation.SingleOrDefaultAsync(user => user.EmailAddress == userInformationDeposit.EmailAddress);
+            var entity = await _context.UserInformation.SingleOrDefaultAsync(user => user.EmailAddress == userInformationDeposit.EmailAddress); //Why?
             if (entity.AccountBalance != userInformation.AccountBalance)
             {
                 entity.AccountBalance = userInformation.AccountBalance;
