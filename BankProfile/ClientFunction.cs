@@ -6,14 +6,16 @@ using System.IO;
 using System.Data;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using System.Threading.Tasks;
 
 namespace BankProfile
 {
     public class ClientFunction
     {
-        string ConnectionString = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789";
+        IMakeConnections connections = new SqlServerConnections();
+        IExecuteThings c2 = new SqlServerConnections();
 
-        public void depositMoney(Profile client)
+        public async Task depositMoney(Profile client)
         {
             float depositAmount;
             Console.WriteLine("Your account balance is " + client.AccountBalance);
@@ -25,20 +27,24 @@ namespace BankProfile
             //Build sql statement to log deposit into history table
             //Update statement: update UserInformation set AccountBalance = 20000 where FirstName = "Tyler"
             string sql = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber ; //Retrieve password from row that matches Account Number match
-            Connections connection = new Connections();
-            connection.ConnectToDataBase(sql, client);
+
+            var c = connections.ConnectToDataBase();
+
+            await c2.Execute(sql, c);
 
             //SQL Statement to update transaction table with amount, time, and account number
             //string sql2 = "insert into TransactionTrackings set Transaction = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber; //Retrieve password from row that matches Account Number match
             string sql2 = "insert into TransactionTracking(Transaction, TransType, Time, AccountNumber) Values(" + depositAmount + ", 'Deposit'" +  ", current_timestamp," + client.AccountNumber + ")";
-            connection.ConnectToDataBase(sql2, client);
+
+            await c2.Execute(sql2, c);
+
+            c.Close();
 
             mainMenu(client);
             }
      
-        public void withrawMoney(Profile client)
+        public async Task withrawMoney(Profile client)
         {
-            Connections connection = new Connections();
             float widthdrawAmount;
             string response;
 
@@ -47,13 +53,18 @@ namespace BankProfile
             Console.WriteLine("{0} has been dispensed from the machine", widthdrawAmount);
             client.AccountBalance -= widthdrawAmount;
 
+            var c = connections.ConnectToDataBase();
+
             //Update statement: update UserInformation set AccountBalance = 20000 where FirstName = "Tyler"
             string sql = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber; //Retrieve password from row that matches Account Number match'
-            connection.ConnectToDataBase(sql, client);
+
+            await c2.Execute(sql, c);
+
+            c.Close();
 
             //SQL Statement to update transaction table with amount, time, and account number
-            string sql2 = "insert into TransactionTracking(Transaction, TransType, Time, AccountNumber) Values(" + (-1* widthdrawAmount) + ", 'Withdrawal'" + ", current_timestamp," + client.AccountNumber + ")";
-            connection.ConnectToDataBase(sql2, client);
+            //string sql2 = "insert into TransactionTracking(Transaction, TransType, Time, AccountNumber) Values(" + (-1* widthdrawAmount) + ", 'Withdrawal'" + ", current_timestamp," + client.AccountNumber + ")";
+            //connection.ConnectToDataBase(sql2, client);
 
             Console.WriteLine("Would you like to know your current balance?");
             response = Console.ReadLine();
@@ -69,13 +80,13 @@ namespace BankProfile
         }
         public void ViewTransactions(Profile client)
         {
-            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            var conn = connections.ConnectToDataBase();
 
                 Console.WriteLine("Connecting to MySQL...");
             conn.Open();
                 //string sql = "use Bank;" + "\n" + "select * from UserInformation" + "\n" + "go";
                 string sql = "select * from TransactionTracking where AccountNumber = " + client.AccountNumber;
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlCommand cmd = new MySqlCommand(sql, conn as MySqlConnection);
                 MySqlDataReader rdr = cmd.ExecuteReader();
 
                 while (rdr.Read())

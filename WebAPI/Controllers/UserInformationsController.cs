@@ -15,7 +15,8 @@ namespace WebAPI.Controllers
     [ApiController]
     public class UserInformationsController : ControllerBase
     {
-        private readonly BankContext _context;
+        //private readonly BankContext _context;
+        private BankContext _context;
 
         public UserInformationsController(BankContext context)
         {
@@ -30,8 +31,9 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/UserInformations/5
+        
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserInformation>> GetUserInformation(double id)
+        public async Task<ActionResult<UserInformation>> GetUserInformation(string id)
         {
             var userInformation = await _context.UserInformation.FindAsync(id);
 
@@ -42,14 +44,29 @@ namespace WebAPI.Controllers
 
             return userInformation;
         }
+        /*
+        //Make a get for account number/other info based on email, use existing class to get balance/account number
+        [HttpGet("{EmailAddress}")]
+        public async Task<ActionResult<UserInformationDeposit>> GetAccountNumberFromEmail(string EmailAddress)
+        {
+            var userInformation = await _context.UserInformation.FindAsync(EmailAddress);
+
+            if (userInformation == null)
+            {
+                return NotFound();
+            }
+
+            //return userInformation;
+            return NoContent();
+        }*/
 
         // PUT: api/UserInformations/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserInformation(double id, UserInformation userInformation)
+        public async Task<IActionResult> PutUserInformation(string id, UserInformation userInformation)
         {
-            if (id != userInformation.AccountNumber)
+            if (id != userInformation.EmailAddress)
             {
                 return BadRequest();
             }
@@ -79,9 +96,9 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost("{id}")]
-        public async Task<IActionResult> PostUserInformation(double id, UserInformation userInformation)
+        public async Task<IActionResult> PostUserInformation(string id, UserInformation userInformation)
         {
-            if (id != userInformation.AccountNumber)
+            if (id != userInformation.EmailAddress)
             {
                 return BadRequest();
             }
@@ -111,14 +128,19 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PatchUserInformation(double id, UserInformationDeposit userInformation)
+        public async Task<IActionResult> PatchUserInformation(string id, UserInformationDeposit userInformation)
         {
-            if (id != userInformation.AccountNumber)
+            var userInformationDeposit = await _context.UserInformation.FindAsync(id);
+            if (id != userInformationDeposit.EmailAddress)
             {
                 return BadRequest();
             }
 
-            _context.Entry(userInformation).State = EntityState.Modified;
+            var entity = await _context.UserInformation.SingleOrDefaultAsync(user => user.EmailAddress == userInformationDeposit.EmailAddress); //Why?
+            if (entity.AccountBalance != userInformation.AccountBalance)
+            {
+                entity.AccountBalance = userInformation.AccountBalance;
+            }
 
             try
             {
@@ -152,7 +174,7 @@ namespace WebAPI.Controllers
             }
             catch (DbUpdateException)
             {
-                if (UserInformationExists(userInformation.AccountNumber))
+                if (UserInformationExists(userInformation.EmailAddress))
                 {
                     return Conflict();
                 }
@@ -181,9 +203,9 @@ namespace WebAPI.Controllers
             return userInformation;
         }
 
-        private bool UserInformationExists(double id)
+        private bool UserInformationExists(string id)
         {
-            return _context.UserInformation.Any(e => e.AccountNumber == id);
+            return _context.UserInformation.Any(e => e.EmailAddress == id);
         }
     }
 }

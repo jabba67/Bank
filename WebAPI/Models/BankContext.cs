@@ -154,8 +154,10 @@ namespace WebAPI.Models
 
             modelBuilder.Entity<UserInformation>(entity =>
             {
-                entity.HasKey(e => e.AccountNumber)
+                entity.HasKey(e => e.EmailAddress)
                     .HasName("PRIMARY");
+                //entity.HasKey(e => e.AccountNumber)
+                    //.HasName("PRIMARY");
 
                 entity.Property(e => e.AccountBalance).HasColumnType("int(11)");
 

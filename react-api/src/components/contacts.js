@@ -1,11 +1,6 @@
-    // src/components/contacts.js
-    import React from 'react'
+import React from 'react'
 
     const Contacts = ({ contacts}) => {
-      const element = fetch("https://localhost:44358/api/UserInformations/45505")
-      .then((response) => response.json())
-      .then((data) => console.log('Here is my data returned:', data.accountNumber));
-
       return (
         <div>
          {Object.keys(contacts).filter(key => key === 'accountBalance').map((item,i) => (

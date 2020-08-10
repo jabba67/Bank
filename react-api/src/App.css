@@ -1,17 +1,15 @@
 .App {
   text-align: center;
-  
+  overflow-x:scroll;
 }
 
 .Container{
-  background-attachment: scroll;  
+  background-attachment: fixed;  
   padding-right: 50px;
   padding-left: 50px;
   padding-top: 50px;
   padding-bottom: 50px;
   justify-content: center;
-  backdrop-filter: blur(5px);
-  background-color: rgba(255, 255, 255, .15);
   max-width: 300vh;
   position: absolute;
   top: 50%;
@@ -21,6 +19,48 @@
   white-space: pre-line;
 }
 
+
+.AccountBalance{
+  background-attachment: fixed;
+  max-width: 600vh;
+  padding-right: 50px;
+  padding-left: 50px;
+  padding-left: 50px;
+  padding-top: 20px;
+  position: absolute;
+  top: 59%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(5px);
+  background-color: rgba(255, 255, 255, .15);  
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
+}
+
+.AccountInfo
+{
+  background-attachment: fixed;
+  max-width: 600vh;
+  padding-right: 50px;
+  padding-left: 50px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(5px);
+  background-color: rgba(255, 255, 255, .15);  
+}
+
+.ScrollBox{
+  height:200px;
+  width:330px;
+  border:1px solid #ccc;
+  overflow-y:scroll;
+}
 .SignIn{
   max-width: 300vh;
   padding-right: 50px;
@@ -45,6 +85,7 @@
 }
 
 .App-header {
+  background-attachment: fixed;
   background-color:white;
   min-height: 100vh;
   flex-direction: column;

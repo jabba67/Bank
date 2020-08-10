@@ -64,13 +64,15 @@ namespace WebAPI.Controllers
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             MySqlDataReader rdr = cmd.ExecuteReader();
             List<string> TransHistory = new List<string>();
-
+            int count = 1;
             while (rdr.Read())
             {
+                TransHistory.Add("<=====" + count + "=====>");
                 TransHistory.Add("Amount: " + rdr["Transaction"].ToString() + "\n"); //Read by column
                 TransHistory.Add("Time: "+ rdr["Time"].ToString() + "\n"); //Read by column
                 TransHistory.Add("Transaction Type: " + rdr["TransType"].ToString()); //Read by column
                 TransHistory.Add("\n");
+                count++;
             }
             rdr.Close();
             conn.Close();

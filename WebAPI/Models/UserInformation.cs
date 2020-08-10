@@ -21,7 +21,7 @@ namespace WebAPI.Models
 
     public partial class UserInformationDeposit
     {
-        public double AccountNumber { get; set; }
+        public string EmailAddress {    get; set; }
         public int? AccountBalance { get; set; }
     }
 }
