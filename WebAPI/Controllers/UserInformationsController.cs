@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc.Abstractions;
 
 namespace WebAPI.Controllers
 {
@@ -17,6 +18,12 @@ namespace WebAPI.Controllers
     {
         //private readonly BankContext _context;
         private BankContext _context;
+        private IUserInfoReposity _repo;
+
+        /*public UserInformationsController(IUserInfoReposity repo)
+        {
+            _repo = repo;
+        }*/
 
         public UserInformationsController(BankContext context)
         {
@@ -25,9 +32,9 @@ namespace WebAPI.Controllers
 
         // GET: api/UserInformations
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserInformation>>> GetUserInformation()
+        public async Task<IActionResult> GetUserInformation()
         {
-            return await _context.UserInformation.ToListAsync();
+            return Ok(await _repo.GetUserInformationAsync());
         }
 
         // GET: api/UserInformations/5

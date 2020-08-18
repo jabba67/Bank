@@ -1,11 +1,12 @@
 .App {
   text-align: center;
   overflow-x:scroll;
+  background-attachment: scroll; 
 }
 
 .Container{
   background-attachment: fixed;  
-  padding-right: 50px;
+  /*padding-right: 50px;
   padding-left: 50px;
   padding-top: 50px;
   padding-bottom: 50px;
@@ -16,11 +17,11 @@
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-  white-space: pre-line;
+  white-space: pre-line;*/
 }
 
-
 .AccountBalance{
+  background-image: url(https://wallpaperaccess.com/full/2005304.jpg);
   background-attachment: fixed;
   max-width: 600vh;
   padding-right: 50px;
@@ -28,7 +29,7 @@
   padding-left: 50px;
   padding-top: 20px;
   position: absolute;
-  top: 59%;
+   top: 75%;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
@@ -40,7 +41,7 @@
 
 .AccountInfo
 {
-  background-attachment: fixed;
+  background-attachment: scroll;
   max-width: 600vh;
   padding-right: 50px;
   padding-left: 50px;

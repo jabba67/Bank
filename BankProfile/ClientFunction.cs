@@ -21,7 +21,7 @@ namespace BankProfile
             Console.WriteLine("Your account balance is " + client.AccountBalance);
             Console.WriteLine("The current account number is " + client.AccountNumber);
             Console.WriteLine("How much would you like to deposit?");
-            depositAmount = float.Parse(Console.ReadLine());
+            depositAmount = float.Parse(Console.ReadLine()); //Potential SQL Injection point
             client.AccountBalance += depositAmount;
             Console.WriteLine("Your account balance is now: {0}", client.AccountBalance);
             //Build sql statement to log deposit into history table
@@ -49,7 +49,7 @@ namespace BankProfile
             string response;
 
             Console.WriteLine("How much would you like to widthdraw?");
-            widthdrawAmount = float.Parse(Console.ReadLine());
+            widthdrawAmount = float.Parse(Console.ReadLine()); //Potential SQL Injection point
             Console.WriteLine("{0} has been dispensed from the machine", widthdrawAmount);
             client.AccountBalance -= widthdrawAmount;
 
@@ -100,10 +100,17 @@ namespace BankProfile
                     Console.WriteLine("Account Number:");
                     Console.WriteLine(rdr["AccountNumber"]); //Read by column
                     Console.WriteLine("\n" + "\n");
-
-            }
+                }
                 rdr.Close();
             conn.Close();
+        }
+
+        public void CallTransform(Profile client)
+        {
+            double AccountBalanceInitial = client.AccountBalance * 0;
+            MultipleAsync Test = new MultipleAsync();
+            Test.TestingAsyncMethods(AccountBalanceInitial);
+            mainMenu(client);
         }
 
         public void displayBalance(Profile client)
@@ -114,16 +121,20 @@ namespace BankProfile
 
         public void calculateInterest(Profile client)
         {
-            int months;
+            Give_Interest example = new Calculate_Interest();
+            double accountBal = 20000;
+            example.ThisAbstractFunction(client);
+            mainMenu(client);
+            //int months;
             //float currentBalance = accountBalance;
             //float nextMonth;
             //Console.WriteLine("Hi, {0} how many months ahead do you want to calculate?", firstName);
-            months = int.Parse(Console.ReadLine());
-            for (int i = 0; i < months; i++)
-            {
-                //currentBalance = (currentBalance * savingsInterestRate) + currentBalance;
-                //nextMonth = currentBalance;
-            }
+            //months = int.Parse(Console.ReadLine());
+            //for (int i = 0; i < months; i++)
+            //{
+            //currentBalance = (currentBalance * savingsInterestRate) + currentBalance;
+            //nextMonth = currentBalance;
+            //}
             //Console.WriteLine("In {0} months you will have {1} in your account", months, currentBalance);
             //Client.mainMenu(Client);
         }
@@ -139,7 +150,7 @@ namespace BankProfile
             Profile Client;
             Client = client;
             int choice;
-            Console.WriteLine("Please select an option: 1: Deposit | 2: Withdraw | 3: Account Balance | 4: View Transactions | 5: Exit Session/Return Card");
+            Console.WriteLine("Please select an option: 1: Deposit | 2: Withdraw | 3: Account Balance | 4: View Transactions | 5: Calulate Interest | 6: Call Transform | 7: Exit Session/Return Card");
             choice = int.Parse(Console.ReadLine());
             switch (choice)
             {
@@ -160,6 +171,14 @@ namespace BankProfile
                     break;
 
                 case 5:
+                    calculateInterest(Client);
+                    break;
+
+                case 6:
+                    CallTransform(Client);
+                    break;
+
+                case 7:
                     exitSession(Client);
                     break;
 

@@ -15,7 +15,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TransHistory from './grabTransactionHistory';
 const axios = require('axios');
-var TMClient = require('textmagic-rest-client');
+
+
 
 export default class AccountBalanceGet extends React.Component {
   constructor() {
@@ -38,11 +39,7 @@ export default class AccountBalanceGet extends React.Component {
     accountBalance = (parseInt(this.input.current.value)+ this.state.balance.accountBalance);
     console.log('the value of AB rn is: ' + accountBalance);
     console.log('the value of AB rn is: ' + this.props.userEmail);
-  
-        var c = new TMClient('username', 'C7XDKZOQZo6HvhJwtUw0MBcslfqwtp4');
-        c.Messages.send({text: 'test message', phones:'8583420865'}, function(err, res){
-        console.log('Messages.send()', err, res);
-        });
+
 
     axios({
       method: 'PATCH',
@@ -90,6 +87,36 @@ export default class AccountBalanceGet extends React.Component {
               </div></center>
           </CardBody>
         </Card>
+
+        <Table striped bordered hover variant="dark">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Username</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td colSpan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </Table>
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect, Image, ImageBackground, useReducer } from 'react';
+import React, { Component, useState, useEffect, Image, ImageBackground, useReducer, Alert, Toast } from 'react';
 import {Route,HashRouter, BrowserRouter as Router} from "react-router-dom";
 import ReactDOM from 'react-dom';
 import withFirebaseAuth from 'react-with-firebase-auth'
@@ -6,7 +6,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseconfig from './firebaseconfig';
 import './App.css';
-import {Alert,Breadcrumb,BreadcrumbItem,Container,Row,Col,Button,
+import {Breadcrumb,BreadcrumbItem,Row,Container, Col,Button,
   ButtonGroup,ButtonToolbar,Form,FormGroup,FormInput,InputGroup,
   Card,CardHeader,CardTitle,CardImg,CardBody,CardFooter,Navbar,
   NavbarToggler,NavbarBrand,Nav,NavItem,NavLink,Dropdown,DropdownToggle,
@@ -16,6 +16,9 @@ import TransHistory from './components/grabTransactionHistory';
 import AccountBalance from './components/AccountBalance';
 import AccountInfo from './components/AccountInfo';
 import signUp from './components/signUp';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+//import Container from '@material-ui/core/Container';
 
 const firebaseApp = firebase.initializeApp(firebaseconfig);
 
@@ -88,6 +91,7 @@ class App extends React.Component{
           {
             user
               ? <>
+              
               <Router>
                 <Nav vertical>
                   <NavItem>
@@ -103,7 +107,46 @@ class App extends React.Component{
                   </NavItem>
                 </Nav><br></br><br></br><br></br>
               </Router>
-            <div className="Container">
+
+
+              {/* Need to build out dashboard here */}
+              {/*<AccountInfo instance2></AccountInfo>}
+              <AccountBalance instance></AccountBalance>*/}
+              
+          <div className="Container">  
+            {/*<Container className="dr-example-container">
+                <Row>
+                  <Col lg="3">
+                    <AccountInfo instance2></AccountInfo>
+                    <br></br><br></br><br></br><br></br>
+                  </Col>
+                  <Col sm="12" md="4" lg="6">
+                    <AccountInfo instance2></AccountInfo>
+                    <br></br><br></br><br></br><br></br>
+                  </Col>
+                  <Col lg="3">
+                    <AccountInfo instance2></AccountInfo>
+                    <br></br><br></br><br></br><br></br>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg="3">
+                    <br></br><br></br>
+                    Building a dashboard out here:
+                    </Col>
+                  <Col sm="12" md="4" lg="6">
+                    <br></br><br></br>
+                    <AccountBalance instance></AccountBalance>
+                    <br></br><br></br>
+                  </Col>
+                  <Col lg="3">
+                    <br></br><br></br>
+                    Building a dashboard out here:
+                  </Col>
+                </Row>
+
+            </Container>*/}
+              
             </div>
             </>
             : <div class = "SignIn">
