@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc.Abstractions;
 
 namespace WebAPI.Controllers
 {
@@ -17,17 +18,26 @@ namespace WebAPI.Controllers
     {
         //private readonly BankContext _context;
         private BankContext _context;
+        private IUserInfoRepository _repo;
 
-        public UserInformationsController(BankContext context)
+        public UserInformationsController(IUserInfoRepository repo)
+        {
+            _repo = repo;
+        }
+
+        /*public UserInformationsController(BankContext context)
         {
             _context = context;
-        }
+        }*/
+
 
         // GET: api/UserInformations
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserInformation>>> GetUserInformation()
+        public async Task<IActionResult> GetUserInformation()
+        //public async Task<ActionResult<IEnumerable<UserInformation>>> GetUserInformation()
         {
-            return await _context.UserInformation.ToListAsync();
+            return Ok(await _repo.GetUserInformationAsync());
+            //return await _context.UserInformation.ToListAsync();
         }
 
         // GET: api/UserInformations/5
@@ -128,34 +138,20 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PatchUserInformation(string id, UserInformationDeposit userInformation)
+        //public async Task<IActionResult> PatchUserInformation(string id, UserInformationDeposit userInformation)
+        public async Task<IActionResult> PatchUserInformation(string id, UserInformationDeposit userInformationDeposit)
         {
-            var userInformationDeposit = await _context.UserInformation.FindAsync(id);
-            if (id != userInformationDeposit.EmailAddress)
+            try
+            {
+                await _repo.PatchUserInformationAsync(id, userInformationDeposit);
+            }
+            catch(ArgumentException)
             {
                 return BadRequest();
             }
-
-            var entity = await _context.UserInformation.SingleOrDefaultAsync(user => user.EmailAddress == userInformationDeposit.EmailAddress); //Why?
-            if (entity.AccountBalance != userInformation.AccountBalance)
+            catch (InvalidOperationException)
             {
-                entity.AccountBalance = userInformation.AccountBalance;
-            }
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserInformationExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
@@ -165,23 +161,24 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<UserInformation>> PostUserInformation(UserInformation userInformation)
+        public async Task<IActionResult> PostUserInformation(UserInformation userInformation)
         {
-            _context.UserInformation.Add(userInformation);
+            //_context.UserInformation.Add(userInformation);
             try
             {
-                await _context.SaveChangesAsync();
+                await _repo.PostUserInformationAsync(userInformation);
             }
             catch (DbUpdateException)
             {
-                if (UserInformationExists(userInformation.EmailAddress))
+                return Conflict();
+                /*if (UserInformationExists(userInformation.EmailAddress))
                 {
                     return Conflict();
                 }
                 else
                 {
                     throw;
-                }
+                }*/
             }
 
             return CreatedAtAction("GetUserInformation", new { id = userInformation.AccountNumber }, userInformation);
@@ -189,7 +186,7 @@ namespace WebAPI.Controllers
 
         // DELETE: api/UserInformations/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<UserInformation>> DeleteUserInformation(double id)
+        public async Task<ActionResult<UserInformation>> DeleteUserInformation(string id)
         {
             var userInformation = await _context.UserInformation.FindAsync(id);
             if (userInformation == null)

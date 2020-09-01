@@ -161,6 +161,8 @@ namespace WebAPI.Models
 
                 entity.Property(e => e.AccountBalance).HasColumnType("int(11)");
 
+                entity.Property(e => e.CheckingAccountBalance).HasColumnType("int(11)");
+
                 entity.Property(e => e.Address)
                     .HasMaxLength(40)
                     .IsUnicode(false);

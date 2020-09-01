@@ -83,7 +83,7 @@ namespace BankProfile
             if (verified == true)
             {
                 this.CreateSession(enteredAccountNumber);
-                Console.WriteLine("The account is verified true");
+                Console.WriteLine("Closing Session");
             }
             else
             {

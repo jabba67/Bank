@@ -36,6 +36,7 @@ namespace BankProfile
             accountNumber = 0;
             accountBalance = 0;
             password = "";
+            
         }
         public Profile(string _firstName, string _lastName, int _age, string _socialSecurityNumber, string _birthDate, string _address, string _phoneNumber, string _email, float _accountBalance)
         {
