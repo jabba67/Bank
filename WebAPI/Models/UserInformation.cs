@@ -7,6 +7,7 @@ namespace WebAPI.Models
     {
         public string FirstName { get; set; }
         public int? AccountBalance { get; set; }
+        public int? CheckingAccountBalance { get; set; }
         public string LastName { get; set; }
         public int? Age { get; set; }
         public string BirthDate { get; set; }
@@ -15,13 +16,15 @@ namespace WebAPI.Models
         public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
         public double AccountNumber { get; set; }
+        public double? CheckingAccountNumber { get; set; }
         public string Password { get; set; }
 
     }
 
     public partial class UserInformationDeposit
     {
-        public string EmailAddress {    get; set; }
+        public string EmailAddress {get; set; }
         public int? AccountBalance { get; set; }
+        public int? CheckingAccountBalance { get; set; }
     }
 }

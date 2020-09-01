@@ -6,7 +6,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseconfig from './firebaseconfig';
 import './App.css';
-import {Breadcrumb,BreadcrumbItem,Row,Container, Col,Button,
+import {BreadcrumbItem,Row,Container, Col,Button,
   ButtonGroup,ButtonToolbar,Form,FormGroup,FormInput,InputGroup,
   Card,CardHeader,CardTitle,CardImg,CardBody,CardFooter,Navbar,
   NavbarToggler,NavbarBrand,Nav,NavItem,NavLink,Dropdown,DropdownToggle,
@@ -16,18 +16,15 @@ import TransHistory from './components/grabTransactionHistory';
 import AccountBalance from './components/AccountBalance';
 import AccountInfo from './components/AccountInfo';
 import signUp from './components/signUp';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-//import Container from '@material-ui/core/Container';
 
 const firebaseApp = firebase.initializeApp(firebaseconfig);
-
 const axios = require('axios');
+const drawerWidth = 240;
 
 class App extends React.Component{
   constructor() {
     super();
-    this.handleSubmit = this.handleSubmit.bind(this);
+    //this.handleSubmit = this.handleSubmit.bind(this);
     this.input = React.createRef();
     this.handlelogIn = this.handlelogIn.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -38,6 +35,11 @@ class App extends React.Component{
     datas: [],
     transHistory: [],
     account: " "
+  }
+
+  handleClick(event) {
+    event.preventDefault();
+    console.info('You clicked a breadcrumb.');
   }
 
   handlelogIn(event) {
@@ -60,7 +62,7 @@ class App extends React.Component{
     console.log(this.state.account)
   }
 
-  handleSubmit(event) {
+  /*handleSubmit(event) {
     event.preventDefault();
     alert('A name was submitted: ' + this.input.current.value);
     var accountBalance;
@@ -78,10 +80,11 @@ class App extends React.Component{
     });
       //IMPLEMENT THIS: Send request to API to get account number based on validation email
       //Then With the account number perform actions like GET and PATCH on the stored account number
-  }
+  }*/
   render() {
     const {
       user,
+      classes,
       signOut,
       signInWithGoogle,
     } = this.props;
@@ -93,7 +96,8 @@ class App extends React.Component{
               ? <>
               
               <Router>
-                <Nav vertical>
+                <Nav fill vertical>
+                
                   <NavItem>
                     <li><NavLink href="/">Home</NavLink></li>
                     <Route path="/App" component={App}/> 
@@ -105,7 +109,7 @@ class App extends React.Component{
                   <NavItem>
                     <NavLink onClick={signOut}>Sign Out</NavLink>
                   </NavItem>
-                </Nav><br></br><br></br><br></br>
+                </Nav>
               </Router>
 
 

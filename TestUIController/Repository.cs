@@ -10,12 +10,5 @@ using WebAPI.Models;
 namespace TestUIController
 {
     
-    public class Repository : IUserInfoReposity
-    {
-        BankContext context = new BankContext();
-        public async Task<IEnumerable<UserInformation>> GetUserInformationAsync()
-        {
-            return await context.UserInformation.ToListAsync();
-        }
-    }
+    
 }

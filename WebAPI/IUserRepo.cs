@@ -6,9 +6,11 @@ using WebAPI.Models;
 
 namespace WebAPI
 { 
-        public interface IUserInfoReposity
+        public interface IUserInfoRepository
         {
            Task<IEnumerable<UserInformation>> GetUserInformationAsync();
+           Task PatchUserInformationAsync(string id, UserInformationDeposit userInformation);
+           Task PostUserInformationAsync(UserInformation userinformation);
         }
     
 }

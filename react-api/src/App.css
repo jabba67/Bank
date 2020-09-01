@@ -1,11 +1,9 @@
 .App {
   text-align: center;
-  overflow-x:scroll;
-  background-attachment: scroll; 
+  
 }
 
-.Container{
-  background-attachment: fixed;  
+.Container{  
   /*padding-right: 50px;
   padding-left: 50px;
   padding-top: 50px;
@@ -21,34 +19,36 @@
 }
 
 .AccountBalance{
-  background-image: url(https://wallpaperaccess.com/full/2005304.jpg);
-  background-attachment: fixed;
-  max-width: 600vh;
+  
+  overflow-y: scroll;
+  transition: opacity 0.25s linear;
+  cursor:crosshair;
+  height: 700px;
   padding-right: 50px;
   padding-left: 50px;
   padding-left: 50px;
   padding-top: 20px;
   position: absolute;
-   top: 75%;
+  top: 600px;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(10px);
   background-color: rgba(255, 255, 255, .15);  
-  background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
-}
+  /*background: rgb(2,0,36);*/
+  /*background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);*/
+  
+  }
 
 .AccountInfo
 {
-  background-attachment: scroll;
   max-width: 600vh;
   padding-right: 50px;
   padding-left: 50px;
   padding-top: 20px;
   padding-bottom: 20px;
   position: absolute;
-  top: 40%;
+  top: 450px;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
@@ -57,7 +57,7 @@
 }
 
 .ScrollBox{
-  height:200px;
+  height:400px;
   width:330px;
   border:1px solid #ccc;
   overflow-y:scroll;
@@ -86,7 +86,12 @@
 }
 
 .App-header {
+  background-image: url(https://wallpapersite.com/images/pages/pic_w/18246.png);
   background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  background-size: cover;
   background-color:white;
   min-height: 100vh;
   flex-direction: column;
@@ -94,7 +99,6 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color:black;
-  background-image: url(https://wallpaperaccess.com/full/2005304.jpg);
 }
 
 .App-link {
