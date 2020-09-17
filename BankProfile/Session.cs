@@ -11,64 +11,69 @@ using MySql.Data.MySqlClient;
 
 namespace BankProfile
 {   
-    class Session
+    public class Session
     {
         string ConnectionString = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789";
 
         public static void Main()
         {
-
             Console.WriteLine("Are you a new client? Answer y if YES if No enter n");
             string response = (Console.ReadLine());
 
-            if (response == "y")
+            if (response.Contains("y"))
             {
                 Profile newProfile = new Profile();
                 newProfile.newClient();
             }
-
-            Session newSession  =  new Session();
-            newSession.GetUserInfo();
+            else if (response.Contains("n"))
+            {
+                Session newSession = new Session();
+                newSession.GetUserInfo();
+            }
         }
 
         public void GetUserInfo()
         {
             //pull info from database and assign to profile properties
             //use this to match password with accountnumber: select Password from UserInformation where AccountNumber = "45505";
-            int enteredAccountNumber;
+            string enteredEmailAddress;
             string enteredPassword;
-            Console.WriteLine("Please enter your Account Number:");
-            enteredAccountNumber = int.Parse(Console.ReadLine());
+
+        EmailEnter:
+            Console.WriteLine("Please enter your Email Address:");
+            enteredEmailAddress = Console.ReadLine();
+            if (!enteredEmailAddress.Contains(".com"))
+            {
+                Console.WriteLine("Please enter a valid email address");
+                goto EmailEnter;
+            }
+
+        PasswordEnter:
             Console.WriteLine("Please enter your password:");
             enteredPassword = Console.ReadLine();
 
             MySqlConnection conn = new MySqlConnection(ConnectionString);
             string RetrievedPassword;
             bool verified = false;
-            //Implement try catch later to catch exceptions
             try
             {
-                Console.WriteLine("Connecting to MySQL...");
                 conn.Open();
-                string sql = "select Password from UserInformation where AccountNumber = " + enteredAccountNumber; //Retrieve password from row that matches Account Number match
+                string sql = "select Password from UserInformation where EmailAddress = " + '"' + enteredEmailAddress + '"'; //Retrieve password from row that matches Account Number match
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 MySqlDataReader rdr = cmd.ExecuteReader();
-
                 
             while (rdr.Read())
             {
                 RetrievedPassword = rdr.GetString(0);
-                Console.WriteLine("The output is: " + RetrievedPassword); //read general output
-
-                //***Create logic for password validation in the future
+                //Console.WriteLine("The output is: " + RetrievedPassword); //read general output
                 if (enteredPassword == RetrievedPassword)
                 {
-                    Console.WriteLine("The Passwords Match yo!");
+                    Console.WriteLine("Login Successful" + '\n');
                     verified = true;
                 }
                 else
                 {
-                    Console.WriteLine("Lock this dude out frrrrrr!");
+                    Console.WriteLine("Login Unsucessful ACCESS DENIED" + '\n');
                 }
             }
             rdr.Close();
@@ -78,28 +83,26 @@ namespace BankProfile
             Console.WriteLine(ex.ToString());
             }
             conn.Close();
-            Console.WriteLine("Done.");
 
             if (verified == true)
             {
-                this.CreateSession(enteredAccountNumber);
+                this.CreateSession(enteredEmailAddress);
                 Console.WriteLine("Closing Session");
             }
             else
             {
-                //***Create logic here too
+                goto PasswordEnter;
             }
-
         }
-        public void CreateSession(int enteredAccountNumber)
+        public void CreateSession(string enteredEmailAddress)
         {
-            var profile = new Profile();
+            Profile profile = new Profile();
 
             MySqlConnection conn = new MySqlConnection(ConnectionString);
             try
             {
                 conn.Open();
-                string sql = "select * from UserInformation where AccountNumber = " + enteredAccountNumber; //Retrieve password from row that matches Account Number match
+                string sql = "select * from UserInformation where EmailAddress = " + '"' + enteredEmailAddress + '"'; //Retrieve password from row that matches Account Number match
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 MySqlDataReader rdr = cmd.ExecuteReader();
 
@@ -107,25 +110,16 @@ namespace BankProfile
                 {
                     profile.FirstName = rdr.GetString(0);
                     profile.AccountBalance = rdr.GetInt32(1);
-                    profile.LastName = rdr.GetString(2);
-                    profile.Age = rdr.GetInt32(3);
-                    profile.BirthDate = rdr.GetString(4);
-                    profile.SocialSecurityNumber = rdr.GetString(5);
-                    profile.Address = rdr.GetString(6);
-                    profile.PhoneNumber = rdr.GetString(7);
-                    profile.Email = rdr.GetString(8);
-                    profile.AccountNumber = rdr.GetInt32(9);
-
-                    //***Save for debugging database pull
-                    /*Console.WriteLine(profile.FirstName);
-                    Console.WriteLine("balance is " + profile.AccountBalance);
-                    Console.WriteLine(profile.LastName);
-                    Console.WriteLine(profile.Age);
-                    Console.WriteLine(profile.BirthDate);
-                    Console.WriteLine(profile.SocialSecurityNumber);
-                    Console.WriteLine(profile.Address);
-                    Console.WriteLine(profile.PhoneNumber);
-                    Console.WriteLine(profile.Email);*/
+                    profile.CheckingAccountBalance = rdr.GetInt32(2);
+                    profile.LastName = rdr.GetString(3);
+                    profile.Age = rdr.GetInt32(4);
+                    profile.BirthDate = rdr.GetString(5);
+                    profile.SocialSecurityNumber = rdr.GetString(6);
+                    profile.Address = rdr.GetString(7);
+                    profile.PhoneNumber = rdr.GetString(8);
+                    profile.Email = rdr.GetString(9);
+                    profile.AccountNumber = rdr.GetInt32(10);
+                    profile.CheckingAccountNumber = rdr.GetInt32(11);
 
                 }
                 rdr.Close();

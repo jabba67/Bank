@@ -10,7 +10,28 @@ using System.Threading.Tasks;
 
 namespace BankProfile
 {
-    public class ClientFunction
+
+    class GenerateGeneralAccountStatement : StatementGeneration
+    {
+        public override void GenerateStatement(Profile Client, int response)
+        {
+            Console.WriteLine("I generate general account statements here: " + '\n' + '\n');
+            ViewTransactions(Client, response);
+            mainMenu(Client);
+        }
+    }
+
+    class GenerateCheckingAccountStatement : StatementGeneration
+    {
+        public override void GenerateStatement(Profile Client, int response)
+        {
+            Console.WriteLine("I generate checking account statements here:" + '\n');
+            ViewTransactions(Client, response);
+            mainMenu(Client);
+        }
+    }
+
+    public class ClientFunction : Session
     {
         IMakeConnections connections = new SqlServerConnections();
         IExecuteThings c2 = new SqlServerConnections();
@@ -24,22 +45,15 @@ namespace BankProfile
             depositAmount = float.Parse(Console.ReadLine()); //Potential SQL Injection point
             client.AccountBalance += depositAmount;
             Console.WriteLine("Your account balance is now: {0}", client.AccountBalance);
-            //Build sql statement to log deposit into history table
             //Update statement: update UserInformation set AccountBalance = 20000 where FirstName = "Tyler"
             string sql = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber ; //Retrieve password from row that matches Account Number match
-
             var c = connections.ConnectToDataBase();
-
             await c2.Execute(sql, c);
 
             //SQL Statement to update transaction table with amount, time, and account number
-            //string sql2 = "insert into TransactionTrackings set Transaction = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber; //Retrieve password from row that matches Account Number match
             string sql2 = "insert into TransactionTracking(Transaction, TransType, Time, AccountNumber) Values(" + depositAmount + ", 'Deposit'" +  ", current_timestamp," + client.AccountNumber + ")";
-
             await c2.Execute(sql2, c);
-
             c.Close();
-
             mainMenu(client);
             }
      
@@ -57,14 +71,8 @@ namespace BankProfile
 
             //Update statement: update UserInformation set AccountBalance = 20000 where FirstName = "Tyler"
             string sql = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber; //Retrieve password from row that matches Account Number match'
-
             await c2.Execute(sql, c);
-
             c.Close();
-
-            //SQL Statement to update transaction table with amount, time, and account number
-            //string sql2 = "insert into TransactionTracking(Transaction, TransType, Time, AccountNumber) Values(" + (-1* widthdrawAmount) + ", 'Withdrawal'" + ", current_timestamp," + client.AccountNumber + ")";
-            //connection.ConnectToDataBase(sql2, client);
 
             Console.WriteLine("Would you like to know your current balance?");
             response = Console.ReadLine();
@@ -78,21 +86,34 @@ namespace BankProfile
                 mainMenu(client);
             }
         }
-        public void ViewTransactions(Profile client)
+        public void ViewTransactions(Profile client, int response)
         {
             var conn = connections.ConnectToDataBase();
+            int responsefromMenu = response;
+            string sql = "";
+            
+            if (responsefromMenu == 1)
+            {
+                sql = "select * from TransactionTracking where AccountNumber = " + client.AccountNumber;
+            }
+            if (responsefromMenu == 2)
+            {
+                sql = "select * from TransactionTracking where AccountNumber = " + client.CheckingAccountNumber; 
+            }
 
-                Console.WriteLine("Connecting to MySQL...");
-            conn.Open();
-                //string sql = "use Bank;" + "\n" + "select * from UserInformation" + "\n" + "go";
-                string sql = "select * from TransactionTracking where AccountNumber = " + client.AccountNumber;
-                MySqlCommand cmd = new MySqlCommand(sql, conn as MySqlConnection);
+            MySqlCommand cmd = new MySqlCommand(sql, conn as MySqlConnection);
                 MySqlDataReader rdr = cmd.ExecuteReader();
+            int totalMoney = 0;
+            int totalMoneyTemp = 0;
+            int transactions = 0;
 
-                while (rdr.Read())
+            while (rdr.Read())
                 {
                     Console.WriteLine("Transaction Amount:");
                     Console.WriteLine(rdr["Transaction"]); //Read by column
+                    //totalMoneyTemp = int.Parse(rdr.GetString(0));
+                    //totalMoney += totalMoneyTemp;
+                    //transactions++;
                     Console.WriteLine("Transaction Type:");
                     Console.WriteLine(rdr["TransType"]); //Read by column
                     Console.WriteLine("Transaction Time:");
@@ -100,9 +121,19 @@ namespace BankProfile
                     Console.WriteLine("Account Number:");
                     Console.WriteLine(rdr["AccountNumber"]); //Read by column
                     Console.WriteLine("\n" + "\n");
+                    
                 }
-                rdr.Close();
+            /*for(int i = 1; i < 14; i++)
+            {
+                totalMoney += int.Parse(rdr.GetString(0));
+                transactions++;
+                rdr.NextResult();
+            }*/
+
+            rdr.Close();
             conn.Close();
+            Console.WriteLine("Total Amount of Money Moved Is: " + totalMoney + " For " + transactions + " Amount of Transactions");
+            mainMenu(client);
         }
 
         public void CallTransform(Profile client)
@@ -116,27 +147,35 @@ namespace BankProfile
         public void displayBalance(Profile client)
         {
             Console.WriteLine("Your current account balance is {0}", client.AccountBalance);
+            Console.WriteLine("Account Number: " + client.AccountNumber + '\n' + "Checking Account Number: " + client.CheckingAccountNumber);
             mainMenu(client);
         }
 
         public void calculateInterest(Profile client)
         {
-            Give_Interest example = new Calculate_Interest();
-            double accountBal = 20000;
-            example.ThisAbstractFunction(client);
+            //Give_Interest example = new Calculate_Interest(); This was a interface learning example
+            //example.ThisAbstractFunction(client);
+            float savingsInterestRate = 0.3f;
+            int months;
+            float currentBalance = client.AccountBalance;
+            Console.WriteLine("Hi, {0} how many months ahead do you want to calculate?", client.FirstName);
+            months = int.Parse(Console.ReadLine());
+            for (int i = 0; i < months; i++)
+            {
+                currentBalance = (currentBalance * savingsInterestRate) + currentBalance;
+            }
+            Console.WriteLine("In {0} months you will have {1} in your account", months, currentBalance);
             mainMenu(client);
-            //int months;
-            //float currentBalance = accountBalance;
-            //float nextMonth;
-            //Console.WriteLine("Hi, {0} how many months ahead do you want to calculate?", firstName);
-            //months = int.Parse(Console.ReadLine());
-            //for (int i = 0; i < months; i++)
-            //{
-            //currentBalance = (currentBalance * savingsInterestRate) + currentBalance;
-            //nextMonth = currentBalance;
-            //}
-            //Console.WriteLine("In {0} months you will have {1} in your account", months, currentBalance);
-            //Client.mainMenu(Client);
+        }
+
+        public async Task printAccountStatementAsync(Profile client)
+        {
+            var c = connections.ConnectToDataBase();
+            string sql = "select * from TransactionTracking where AccountNumber=" + client.AccountNumber;
+            await c2.Execute(sql, c);
+            Console.WriteLine(c2);
+            c.Close();
+            mainMenu(client);
         }
 
         public void exitSession(Profile client)
@@ -146,40 +185,53 @@ namespace BankProfile
 
         public void mainMenu(Profile client)
         {
-            ClientFunction clientMenu = new ClientFunction();
-            Profile Client;
-            Client = client;
+            StatementGeneration generalAccountStatement = new GenerateGeneralAccountStatement();
+            StatementGeneration checkingAccountStatement = new GenerateCheckingAccountStatement();
+            int response = 0;
             int choice;
-            Console.WriteLine("Please select an option: 1: Deposit | 2: Withdraw | 3: Account Balance | 4: View Transactions | 5: Calulate Interest | 6: Call Transform | 7: Exit Session/Return Card");
+            Console.WriteLine("Please select an option: 1: Deposit | 2: Withdraw | 3: Account Balance | 4: View Transactions | 5: Calulate Interest | '\n' 6: Call Transform | 7: Exit Session/Return Card | 8: Generate Statements");
             choice = int.Parse(Console.ReadLine());
             switch (choice)
             {
                 case 1:
-                    depositMoney(Client);
+                    depositMoney(client);
                     break;
 
                 case 2:
-                    clientMenu.withrawMoney(Client);
+                    withrawMoney(client);
                     break;
 
                 case 3:
-                    clientMenu.displayBalance(Client);
+                    displayBalance(client);
                     break;
 
                 case 4:
-                    ViewTransactions(Client);
+                    ViewTransactions(client, response);
                     break;
 
                 case 5:
-                    calculateInterest(Client);
+                    calculateInterest(client);
                     break;
 
                 case 6:
-                    CallTransform(Client);
+                    CallTransform(client);
                     break;
 
                 case 7:
-                    exitSession(Client);
+                    exitSession(client);
+                    break;
+
+                case 8:
+                    Console.WriteLine("Please choose 1 for a General Account Statement or 2 for Checking Account Statement");
+                    response = int.Parse(Console.ReadLine());
+                    if(response == 1)
+                    {
+                        generalAccountStatement.GenerateStatement(client, response);
+                    }
+                    else if(response == 2)
+                    {
+                        checkingAccountStatement.GenerateStatement(client, response);
+                    }
                     break;
 
             }

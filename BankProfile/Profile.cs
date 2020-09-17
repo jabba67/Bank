@@ -19,7 +19,9 @@ namespace BankProfile
         private string phoneNumber;
         private string email; //Client Email Address
         private double accountNumber; //Doubles for the routing number
+        private double checkingAccountNumber;
         private float accountBalance;
+        private float checkingAccountBalance;
         private string password;
         string ConnectionString = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789";
 
@@ -34,11 +36,13 @@ namespace BankProfile
             phoneNumber = "";
             email = "";
             accountNumber = 0;
+            checkingAccountNumber = 0;
             accountBalance = 0;
+            checkingAccountBalance = 0;
             password = "";
             
         }
-        public Profile(string _firstName, string _lastName, int _age, string _socialSecurityNumber, string _birthDate, string _address, string _phoneNumber, string _email, float _accountBalance)
+        public Profile(string _firstName, string _lastName, int _age, string _socialSecurityNumber, string _birthDate, string _address, string _phoneNumber, string _email, float _accountBalance, float _checkingAccountBalance, double _accountNumber, double _checkingAccountNumber)
         {
             Random rnd = new Random();
             firstName = _firstName;
@@ -50,125 +54,82 @@ namespace BankProfile
             phoneNumber = _phoneNumber;
             email = _email;
             accountBalance = _accountBalance;
+            checkingAccountBalance = _checkingAccountBalance;
+            accountNumber = _accountNumber;
+            checkingAccountNumber = _checkingAccountNumber;
         }
 
         public double AccountNumber
         {
-            get
-            {
-                return this.accountNumber;
-            }
-            set
-            {
-                this.accountNumber = value;
-            }
+            get{return this.accountNumber;}
+            set{this.accountNumber = value;}
+        }
+
+        public double CheckingAccountNumber
+        {
+            get{return this.checkingAccountNumber;}
+            set { this.checkingAccountNumber = value; }
         }
 
         public float AccountBalance
         {
-            get
-            {
-                return this.accountBalance;
-            }
-            set
-            {
-                this.accountBalance = value;
-            }
+            get{return this.accountBalance;}
+            set{this.accountBalance = value;}
+        }
+
+        public float CheckingAccountBalance
+        {
+            get { return this.checkingAccountBalance; }
+            set { this.checkingAccountBalance = value; }
         }
 
         public string Email
         {
-            get
-            {
-                return this.email;
-            }
-            set
-            {
-                this.email = value;
-            }
+            get{return this.email;}
+            set{this.email = value;}
         }
 
         public string PhoneNumber
         {
-            get
-            {
-                return this.phoneNumber;
-            }
-            set
-            {
-                this.phoneNumber = value;
-            }
+            get{return this.phoneNumber;}
+            set{this.phoneNumber = value;}
         }
 
         public string Address
         {
-            get
-            {
-                return this.address;
-            }
-            set
-            {
-                this.address = value;
-            }
+            get{return this.address;}
+            set{this.address = value;}
 
         }
 
         public string FirstName
         {
-            get
-            {
-                return this.firstName;
-            }
-            set
-            {
-                this.firstName = value;
-            }
+            get{return this.firstName;}
+            set{this.firstName = value;}
         }
 
         public string LastName
         {
-            get
-            {
-                return this.lastName;
-            }
-            set
-            {
-                this.lastName = value;
-            }
+            get{return this.lastName;}
+            set{this.lastName = value;}
         }
 
         public int Age
         {
-            get
-            {
-                return this.age;
-            }
-            set
-            {
-                this.age = value;
-            }
+            get{return this.age;}
+            set{this.age = value;}
         }
 
         public string BirthDate
         {
-            get
-            {
-                return this.birthDate;
-            }
-            set
-            {
-                this.birthDate = value;
+            get{return this.birthDate;}
+            set{this.birthDate = value;
             }
         }
 
         public string SocialSecurityNumber
         {
             get; set;
-        }
-
-        public void connectToDatabase(string sqlStatement)
-        {
-
         }
 
         public void newClient() //This function gathers new client information and stores it into the database
@@ -183,7 +144,9 @@ namespace BankProfile
             string address;
             string email;
             float accountBalance;
+            float checkingAcccountBalance;
             double accountNumber;
+            double checkingAccountNumber;
             string password;
 
             accountNumber = rnd.Next(10000, 50000); ;

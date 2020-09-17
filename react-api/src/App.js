@@ -100,7 +100,7 @@ class App extends React.Component{
                 
                   <NavItem>
                     <li><NavLink href="/">Home</NavLink></li>
-                    <Route path="/App" component={App}/> 
+                    <Route path="/App" exact render = {() => <App/>}/> 
                     <li><NavLink href="/AccountBalance">Account Balance</NavLink></li>
                     <Route path="/AccountBalance" render ={(props) => <AccountBalance {...props} userEmail = {user.email}/>}/>
                     <li><NavLink href="/AccountInfo" >Account Info</NavLink></li>
@@ -112,7 +112,7 @@ class App extends React.Component{
                 </Nav>
               </Router>
 
-
+              <AccountInfo accountnumber ={this.state.accountnumber}/>
               {/* Need to build out dashboard here */}
               {/*<AccountInfo instance2></AccountInfo>}
               <AccountBalance instance></AccountBalance>*/}
