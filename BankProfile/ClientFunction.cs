@@ -7,11 +7,13 @@ using System.Data;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Threading.Tasks;
+using TestClientFunctions;
+//using TestClientFunctions;
 
 namespace BankProfile
 {
 
-    class GenerateGeneralAccountStatement : StatementGeneration
+    public class GenerateGeneralAccountStatement : StatementGeneration
     {
         public override void GenerateStatement(Profile Client, int response)
         {
@@ -21,7 +23,7 @@ namespace BankProfile
         }
     }
 
-    class GenerateCheckingAccountStatement : StatementGeneration
+    public class GenerateCheckingAccountStatement : StatementGeneration
     {
         public override void GenerateStatement(Profile Client, int response)
         {
@@ -35,6 +37,16 @@ namespace BankProfile
     {
         IMakeConnections connections = new SqlServerConnections();
         IExecuteThings c2 = new SqlServerConnections();
+        private IClientFunctionTester @object;
+
+        public ClientFunction(IClientFunctionTester @object)
+        {
+            this.@object = @object;
+        }
+
+        public ClientFunction()
+        {
+        }
 
         public async Task depositMoney(Profile client)
         {
@@ -42,7 +54,7 @@ namespace BankProfile
             Console.WriteLine("Your account balance is " + client.AccountBalance);
             Console.WriteLine("The current account number is " + client.AccountNumber);
             Console.WriteLine("How much would you like to deposit?");
-            depositAmount = float.Parse(Console.ReadLine()); //Potential SQL Injection point
+            depositAmount = float.Parse(Console.ReadLine()); //Potential SQL Injection point make the user enter the correct data type and input or reject and ask again
             client.AccountBalance += depositAmount;
             Console.WriteLine("Your account balance is now: {0}", client.AccountBalance);
             //Update statement: update UserInformation set AccountBalance = 20000 where FirstName = "Tyler"
@@ -57,10 +69,12 @@ namespace BankProfile
             mainMenu(client);
             }
      
-        public async Task withrawMoney(Profile client)
+        public async Task<bool> withrawMoney(Profile client)
         {
             float widthdrawAmount;
             string response;
+            bool status = false;
+            bool status2 = true;
 
             Console.WriteLine("How much would you like to widthdraw?");
             widthdrawAmount = float.Parse(Console.ReadLine()); //Potential SQL Injection point
@@ -80,10 +94,13 @@ namespace BankProfile
             {
                 displayBalance(client);
                 mainMenu(client);
+                status = true;
+                return Equals(status, status2);
             }
             else
             {
                 mainMenu(client);
+                return status == true;
             }
         }
         public void ViewTransactions(Profile client, int response)

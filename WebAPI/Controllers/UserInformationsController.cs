@@ -20,15 +20,15 @@ namespace WebAPI.Controllers
         private BankContext _context;
         private IUserInfoRepository _repo;
 
-        public UserInformationsController(IUserInfoRepository repo)
+        /*public UserInformationsController(IUserInfoRepository repo)
         {
             _repo = repo;
-        }
+        }*/
 
-        /*public UserInformationsController(BankContext context)
+        public UserInformationsController(BankContext context)
         {
             _context = context;
-        }*/
+        }
 
 
         // GET: api/UserInformations

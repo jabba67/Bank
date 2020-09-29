@@ -132,6 +132,11 @@ namespace BankProfile
             get; set;
         }
 
+        public string Password
+        {
+            get;set;
+        }
+
         public void newClient() //This function gathers new client information and stores it into the database
         {
             Random rnd = new Random();

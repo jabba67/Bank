@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-import {Alert,Container,Row,Col,Button,
-    ButtonGroup,ButtonToolbar,Form,FormGroup,FormInput,InputGroup,
-    Card,CardHeader,CardTitle,CardImg,CardBody,CardFooter,Navbar,
-    NavbarToggler,NavbarBrand,Nav,NavItem,NavLink,InputGroupAddon,Collapse,
-    InputGroupText} from "shards-react";
+import {Alert,Container,Row,Col,Card,CardHeader,CardTitle,CardImg,CardBody,CardFooter,} from "shards-react";
 import AccountBalance from './grabAccountBalance';
 import CheckingAccountBalance from './grabCheckingAccountBalance';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,11 +9,10 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import TransHistory from './grabTransactionHistory';
 import { Tab } from "@material-ui/core";
+import Content from '../components/Content';
 const axios = require('axios');
-
 
 
 export default class AccountBalanceGet extends React.Component {
@@ -86,6 +81,7 @@ export default class AccountBalanceGet extends React.Component {
   render() {
     return (
       <div class = "AccountBalance" style={{ backgroundColor: 'transparent'}}>
+      <Content>
       <Container className="dr-example-container">
         <Row>
           <Col>
@@ -161,6 +157,7 @@ export default class AccountBalanceGet extends React.Component {
           <Col></Col>
         </Row>
         </Container>
+        </Content>
       </div>
     );
   }
