@@ -10,6 +10,13 @@ namespace BankProfile
     {
         IMakeConnections connections = new SqlServerConnections();
         IExecuteThings c2 = new SqlServerConnections();
+        private IClientFunctionTester @object;
+
+        public Client(IClientFunctionTester @object)
+        {
+            this.@object = @object;
+        }
+
         public async Task<bool> WithrawMoneyTest(Profile client)
         {
             float widthdrawAmount;

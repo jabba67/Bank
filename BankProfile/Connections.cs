@@ -50,7 +50,7 @@ namespace BankProfile
         public async Task Execute(string cmdText, IDbConnection connection)
         {
             var command = new MySqlCommand(cmdText, connection as MySqlConnection);
-            Console.WriteLine("in execute");
+            //Console.WriteLine("in execute");
             await command.ExecuteNonQueryAsync();
         }
     }

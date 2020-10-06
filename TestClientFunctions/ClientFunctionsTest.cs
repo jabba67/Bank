@@ -19,8 +19,9 @@ namespace TestClientFunctions
         }
 
         [TestMethod]
-        public void WithrawMoneyTester()
+        public async Task WithrawMoneyTesterAsync()
         {
+            float amount = 5000;
             Profile client = new Profile()
             {
                 FirstName = "Tester",
@@ -42,10 +43,14 @@ namespace TestClientFunctions
             ClientFunction useThis = new ClientFunction(mock.Object);
 
             //Act
-            var result = useThis.withrawMoney(client);
+            var result =  await useThis.withrawMoney(client, amount);
 
-            //Assert
-            Assert.Equals(result, true);
+            //Assert.IsNotNull(result);
+            Assert.AreEqual(10, result);
+
+
+            //Mock database object
+            //Fix method to be testable (dont use readline)
         }
     }
 

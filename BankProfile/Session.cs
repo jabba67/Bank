@@ -131,7 +131,7 @@ namespace BankProfile
             conn.Close();
 
             ClientFunction clientMenu = new ClientFunction();
-            clientMenu.mainMenu(profile);
+            clientMenu.mainMenuAsync(profile);
         }
 
     }

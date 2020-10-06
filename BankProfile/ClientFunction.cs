@@ -19,7 +19,7 @@ namespace BankProfile
         {
             Console.WriteLine("I generate general account statements here: " + '\n' + '\n');
             ViewTransactions(Client, response);
-            mainMenu(Client);
+            mainMenuAsync(Client);
         }
     }
 
@@ -29,7 +29,7 @@ namespace BankProfile
         {
             Console.WriteLine("I generate checking account statements here:" + '\n');
             ViewTransactions(Client, response);
-            mainMenu(Client);
+            mainMenuAsync(Client);
         }
     }
 
@@ -66,18 +66,12 @@ namespace BankProfile
             string sql2 = "insert into TransactionTracking(Transaction, TransType, Time, AccountNumber) Values(" + depositAmount + ", 'Deposit'" +  ", current_timestamp," + client.AccountNumber + ")";
             await c2.Execute(sql2, c);
             c.Close();
-            mainMenu(client);
+            mainMenuAsync(client);
             }
      
-        public async Task<bool> withrawMoney(Profile client)
+        public async Task<int> withrawMoney(Profile client, float money)
         {
-            float widthdrawAmount;
-            string response;
-            bool status = false;
-            bool status2 = true;
-
-            Console.WriteLine("How much would you like to widthdraw?");
-            widthdrawAmount = float.Parse(Console.ReadLine()); //Potential SQL Injection point
+            float widthdrawAmount = money;
             Console.WriteLine("{0} has been dispensed from the machine", widthdrawAmount);
             client.AccountBalance -= widthdrawAmount;
 
@@ -87,21 +81,7 @@ namespace BankProfile
             string sql = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber; //Retrieve password from row that matches Account Number match'
             await c2.Execute(sql, c);
             c.Close();
-
-            Console.WriteLine("Would you like to know your current balance?");
-            response = Console.ReadLine();
-            if (response == "yes")
-            {
-                displayBalance(client);
-                mainMenu(client);
-                status = true;
-                return Equals(status, status2);
-            }
-            else
-            {
-                mainMenu(client);
-                return status == true;
-            }
+            return 5;
         }
         public void ViewTransactions(Profile client, int response)
         {
@@ -150,25 +130,25 @@ namespace BankProfile
             rdr.Close();
             conn.Close();
             Console.WriteLine("Total Amount of Money Moved Is: " + totalMoney + " For " + transactions + " Amount of Transactions");
-            mainMenu(client);
+            mainMenuAsync(client);
         }
 
-        public void CallTransform(Profile client)
+        public async Task CallTransformAsync(Profile client)
         {
             double AccountBalanceInitial = client.AccountBalance * 0;
             MultipleAsync Test = new MultipleAsync();
             Test.TestingAsyncMethods(AccountBalanceInitial);
-            mainMenu(client);
+            await mainMenuAsync(client);
         }
 
-        public void displayBalance(Profile client)
+        public async Task displayBalanceAsync(Profile client)
         {
             Console.WriteLine("Your current account balance is {0}", client.AccountBalance);
             Console.WriteLine("Account Number: " + client.AccountNumber + '\n' + "Checking Account Number: " + client.CheckingAccountNumber);
-            mainMenu(client);
+            await mainMenuAsync(client);
         }
 
-        public void calculateInterest(Profile client)
+        public async Task calculateInterestAsync(Profile client)
         {
             //Give_Interest example = new Calculate_Interest(); This was a interface learning example
             //example.ThisAbstractFunction(client);
@@ -182,7 +162,7 @@ namespace BankProfile
                 currentBalance = (currentBalance * savingsInterestRate) + currentBalance;
             }
             Console.WriteLine("In {0} months you will have {1} in your account", months, currentBalance);
-            mainMenu(client);
+            await mainMenuAsync(client);
         }
 
         public async Task printAccountStatementAsync(Profile client)
@@ -192,7 +172,7 @@ namespace BankProfile
             await c2.Execute(sql, c);
             Console.WriteLine(c2);
             c.Close();
-            mainMenu(client);
+            await mainMenuAsync(client);
         }
 
         public void exitSession(Profile client)
@@ -200,26 +180,40 @@ namespace BankProfile
             Console.WriteLine("Thank you {0} for using Bank of Tyler!!! Have a great day! Uwu ^_^", client.FirstName);
         }
 
-        public void mainMenu(Profile client)
+        public async Task mainMenuAsync(Profile client)
         {
             StatementGeneration generalAccountStatement = new GenerateGeneralAccountStatement();
             StatementGeneration checkingAccountStatement = new GenerateCheckingAccountStatement();
             int response = 0;
             int choice;
+            string balanceCheck;
             Console.WriteLine("Please select an option: 1: Deposit | 2: Withdraw | 3: Account Balance | 4: View Transactions | 5: Calulate Interest | '\n' 6: Call Transform | 7: Exit Session/Return Card | 8: Generate Statements");
             choice = int.Parse(Console.ReadLine());
             switch (choice)
             {
                 case 1:
-                    depositMoney(client);
+                    await depositMoney(client);
                     break;
 
                 case 2:
-                    withrawMoney(client);
+                    Console.WriteLine("How much would you like to widthdraw?");
+                    float widthdrawAmount = float.Parse(Console.ReadLine()); //Potential SQL Injection point
+                    await withrawMoney(client, widthdrawAmount);
+                    Console.WriteLine("Would you like to know your current balance?");
+                    balanceCheck = Console.ReadLine();
+                    if (balanceCheck == "yes")
+                    {
+                        displayBalanceAsync(client);
+                        await mainMenuAsync(client);
+                    }
+                    else
+                    {
+                        await mainMenuAsync(client);
+                    }
                     break;
 
                 case 3:
-                    displayBalance(client);
+                    displayBalanceAsync(client);
                     break;
 
                 case 4:
@@ -227,11 +221,11 @@ namespace BankProfile
                     break;
 
                 case 5:
-                    calculateInterest(client);
+                    await calculateInterestAsync(client);
                     break;
 
                 case 6:
-                    CallTransform(client);
+                    CallTransformAsync(client);
                     break;
 
                 case 7:
