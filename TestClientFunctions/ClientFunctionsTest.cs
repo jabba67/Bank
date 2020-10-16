@@ -47,6 +47,7 @@ namespace TestClientFunctions
 
             //Assert.IsNotNull(result);
             Assert.AreEqual(10, result);
+            //change to check if an exception is returned if not we're good
 
 
             //Mock database object

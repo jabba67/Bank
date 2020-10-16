@@ -11,7 +11,7 @@ namespace BankProfile
 {
     public class MySqlConnections : IConnection
     {
-        private  string ConnectionString = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789";
+        private string ConnectionString = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789";
 
         //string sqlUpdate = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber;
         public IDbConnection ConnectToDataBase()

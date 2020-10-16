@@ -1,24 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {Route, BrowserRouter as Router, Link} from "react-router-dom";
 import withFirebaseAuth from 'react-with-firebase-auth'
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseconfig from './firebaseconfig';
 import './App.css';
-import {Button,Card,CardHeader,CardTitle,CardImg,CardBody,CardFooter} from "shards-react";
+import { Button, Card } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import { AnimateOnChange } from 'react-animation'
+import Particles from 'react-particles-js';
 
-import TransHistory from './components/grabTransactionHistory';
+//Component and Asset Imports
 import AccountBalance from './components/AccountBalance';
 import AccountInfo from './components/AccountInfo';
-import signUp from './components/signUp';
-import TestLoadThis from './components/TestLoadFunction';
+import Dashboard from './components/Dashboard';
+import GoogleSignIn from './googleLogin.png'
+import TitanBankDraft1 from './TitanBankDraft3.png'
+import SignUp from './components/signUp';
+
+//Not Being Used
+//import TransHistory from './components/grabTransactionHistory';
+//import signUp from './components/signUp';
+//import TestLoadThis from './components/TestLoadFunction';
+//import {CardHeader,CardTitle,CardImg,CardBody,CardFooter} from "shards-react";
 
 const firebaseApp = firebase.initializeApp(firebaseconfig);
 const axios = require('axios');
-const drawerWidth = 240;
 
 class App extends React.Component{
   constructor() {
@@ -66,62 +75,139 @@ class App extends React.Component{
   render() {
     const {
       user,
-      classes,
       signOut,
       signInWithGoogle,
+      classes,
     } = this.props;
     return (
       <div className="App" >
         <header className="App-header">
           {
             user
-              ? <>
+              ? 
+              <>
                 <Container className = "p-0" fluid = {true}>
                   <Router>
-                  <Navbar className = "border-bottom" bg = "transparent" expand="lg">
-                    <Navbar.Brand>Navigation</Navbar.Brand>
-
-                    <Navbar.Toggle className = "border-0" aria-controls="navbar-toggle" />
+                  <Navbar bg = "transparent" variant="dark" expand="lg">
+                    <Navbar.Brand>Titan Bank</Navbar.Brand>
+                    <Navbar.Toggle className = "border-0" aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="navbar-toggle">
-                      <Nav className = "ml-auto">
+                      <Nav className = "mr-auto">
                         <Link className = "nav-link" to ="/">Home</Link>
                         <Link className = "nav-link" to ="/AccountInfo">Account Info</Link>
-                        <Link className = "nav-link" to ="/AccountBalance">Account Balance</Link>
-                        <Link onClick={signOut}>Sign Out</Link>
+                        <Link className = "nav-link" to ="/AccountBalance">Account Balance </Link>
+                        <Button variant="outline-primary" size = "sm" onClick={signOut}>Sign Out</Button>
                       </Nav>
-                  </Navbar.Collapse>
+                      {/*<Form inline>
+                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                        <Button variant="outline-primary">Search</Button>
+                        <img height={30} width={150} src ={TitanBankDraft1}/>
+                      </Form>*/}
+                    </Navbar.Collapse>
                   </Navbar>
                   <br></br>
-                
-                      <Route path = "/" exact render={(props) => <AccountInfo {...props} userEmail = {user.email}/>} />
+                      <Route path = "/" exact render={(props) => <Dashboard {...props} userEmail = {user.email}/>} />
                       <Route path="/AccountBalance" exact render ={(props) => <AccountBalance {...props} userEmail = {user.email}/>}/>
                       <Route path="/AccountInfo" exact render ={(props) => <AccountInfo {...props} userEmail = {user.email}/>} />
                     </Router>
                   </Container>
-              {/* Need to build out dashboard here */}
-
-          <div className="Container">  
-            </div>
-            </>
+              </>
             : <div class = "SignIn">
-                <br></br>
-              <Card style={{maxHeight:"370", maxWidth: "380", backgroundColor: 'white'}}>
-                  <CardHeader>Sign In</CardHeader>
-                  <CardImg src="https://t3.ftcdn.net/jpg/02/20/14/38/240_F_220143804_fc4xRygvJ8bn8JPQumtHJieDN4ORNyjs.jpg" />
-                  <CardBody>
-                    <label> Please Login Using Google: </label>
-                    <br></br>
-                    <Button size = "lg" onClick = {signInWithGoogle}>Login</Button>
-                    <br></br>
-                    <label> Don't Have An Account?</label>
-                    <br></br>
+                <Particles
+                  canvasClassName="example"
+                  height="900px"
+                  width="1800px"
+                  params={{
+                    "particles": {
+                        "number": {
+                            "value": 50
+                        },
+                        "size": {
+                            "value": 3
+                        }
+                    },
+                    "interactivity": {
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "repulse"
+                            }
+                        }
+                    },
+                    "color": {
+                      "value": "black"
+                  },
+                }} />
+                {/*
+                <Particles
+                  canvasClassName="example"
+                  height="900px"
+                  width="900px"
+                  params={{
+                    "particles": {
+                        "number": {
+                            "value": 160,
+                            "density": {
+                                "enable": false
+                            }
+                        },
+                        "size": {
+                            "value": 3,
+                            "random": true,
+                            "anim": {
+                                "speed": 4,
+                                "size_min": 0.3
+                            }
+                        },
+                        "line_linked": {
+                            "enable": false
+                        },
+                        "move": {
+                            "random": true,
+                            "speed": 1,
+                            "direction": "top",
+                            "out_mode": "out"
+                        }
+                    },
+                    "interactivity": {
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "bubble"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "repulse"
+                            }
+                        },
+                        "modes": {
+                            "bubble": {
+                                "distance": 250,
+                                "duration": 2,
+                                "size": 0,
+                                "opacity": 0
+                            },
+                            "repulse": {
+                                "distance": 400,
+                                "duration": 4
+                            }
+                        }
+                    }
+                }} />*/}
+              <Card style={{ backgroundColor: 'white'}}>
+                  <img src ={TitanBankDraft1}/>
+                  <Card.Body>
+                  <AnimateOnChange animationIn="popIn" animationOut="popOut">
+                      <img height={62} width={257} src ={GoogleSignIn} onClick = {signInWithGoogle}/>
+                  </AnimateOnChange>
+                    <br></br><br></br>
+                    <label> Don't Have An Account? </label>
                       <Router>
-                      <a href="/signUp">Sign Up</a>
-                    <Route path="/signUp" component={signUp}/>
+                        <a href="/signUp"> Sign Up Here</a>
+                        <Route path = "/signUp" exact render={(props) =><SignUp/>} />
                       </Router>
-                  </CardBody>
+                  </Card.Body>
               </Card>
-              <br></br>
               </div>
           }
         </header>
@@ -129,7 +215,6 @@ class App extends React.Component{
     );//End of Return
   }//End of Render()
 }//End Class App
-
 const firebaseAppAuth = firebaseApp.auth();
 
 const providers = {

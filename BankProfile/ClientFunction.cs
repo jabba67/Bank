@@ -78,20 +78,79 @@ namespace BankProfile
             var c = connections.ConnectToDataBase();
 
             //Update statement: update UserInformation set AccountBalance = 20000 where FirstName = "Tyler"
-            string sql = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber; //Retrieve password from row that matches Account Number match'
+            string sql = "update UserInformation set AccountBalance = " + client.AccountBalance + " where AccountNumber = " + client.AccountNumber;
             await c2.Execute(sql, c);
             c.Close();
             return 5;
         }
+
+        public async Task TransferMoney(Profile client, string recipientEmailAddress, float amountToTransfer, int chosenAccountNumber)
+        { 
+            string ConnectionString = "server=165.227.58.156;user=Tyler;database=Bank;port=3306;password=jabba6789";
+            int recipientAccountNumber = 0;
+            float recipientAccountBalance = 0;
+            double transferFromAccount = chosenAccountNumber;
+            string accountType = "";
+            float senderBalance = 0;
+            if (transferFromAccount == 1)
+            {
+                transferFromAccount = client.AccountNumber;
+                senderBalance = client.AccountBalance - amountToTransfer;
+                accountType = "AccountBalance";
+            }
+            if (transferFromAccount == 2)
+            {
+                transferFromAccount = client.CheckingAccountNumber;
+                senderBalance = client.CheckingAccountBalance - amountToTransfer;
+                accountType = "CheckingAccountBalance";
+            }
+
+            MySqlConnection conn = new MySqlConnection(ConnectionString);
+            try
+            {
+                conn.Open();
+                string sqlFind = "select AccountNumber, AccountBalance from UserInformation where EmailAddress = '" + recipientEmailAddress + "'";
+                MySqlCommand cmd = new MySqlCommand(sqlFind, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    recipientAccountNumber = rdr.GetInt32(0);
+                    recipientAccountBalance = rdr.GetInt32(1);
+                }
+                rdr.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            conn.Close();
+
+            //client.AccountBalance -= amountToTransfer;//Update Senders Account Balance
+            recipientAccountBalance += amountToTransfer; //Update Recipients Account Balance
+
+            var c = connections.ConnectToDataBase();
+            string sql = "insert CustomerToCustomer set FromAccountNumber = " + transferFromAccount + ", ToAccountNumber = " + recipientAccountNumber; //Update C2C Table with FromAccountNumber and ToAccountNumber
+            c2.Execute(sql, c);
+            string sql2 = "update UserInformation set " + accountType + " = " + senderBalance + " where AccountNumber = " + client.AccountNumber; //Update Balance in Sender Account
+            c2.Execute(sql2, c);
+            string sql3 = "update UserInformation set AccountBalance = " + recipientAccountBalance + " where AccountNumber = " + recipientAccountNumber; //Update Balance in Recipient Account
+            c2.Execute(sql3, c);
+            c.Close();
+
+            await mainMenuAsync(client);
+        }
         public void ViewTransactions(Profile client, int response)
         {
+            //string sql = "select Transaction as 'Amount', TransType as 'Tranaction', Time as 'Time of Transaction' from TransactionTracking where AccountNumber = " + client.AccountNumber;
             var conn = connections.ConnectToDataBase();
             int responsefromMenu = response;
             string sql = "";
             
             if (responsefromMenu == 1)
             {
-                sql = "select * from TransactionTracking where AccountNumber = " + client.AccountNumber;
+                //sql = "select * from TransactionTracking where AccountNumber = " + client.AccountNumber;
+                sql = "select Transaction as 'Amount', TransType as 'Transaction', Time as 'Time of Transaction', AccountNumber from TransactionTracking where AccountNumber = " + client.AccountNumber;
             }
             if (responsefromMenu == 2)
             {
@@ -107,14 +166,14 @@ namespace BankProfile
             while (rdr.Read())
                 {
                     Console.WriteLine("Transaction Amount:");
-                    Console.WriteLine(rdr["Transaction"]); //Read by column
+                    Console.WriteLine(rdr["Amount"]); //Read by column
                     //totalMoneyTemp = int.Parse(rdr.GetString(0));
                     //totalMoney += totalMoneyTemp;
                     //transactions++;
                     Console.WriteLine("Transaction Type:");
-                    Console.WriteLine(rdr["TransType"]); //Read by column
+                    Console.WriteLine(rdr["Transaction"]); //Read by column
                     Console.WriteLine("Transaction Time:");
-                    Console.WriteLine(rdr["Time"]); //Read by column
+                    Console.WriteLine(rdr["Time of Transaction"]); //Read by column
                     Console.WriteLine("Account Number:");
                     Console.WriteLine(rdr["AccountNumber"]); //Read by column
                     Console.WriteLine("\n" + "\n");
@@ -187,7 +246,7 @@ namespace BankProfile
             int response = 0;
             int choice;
             string balanceCheck;
-            Console.WriteLine("Please select an option: 1: Deposit | 2: Withdraw | 3: Account Balance | 4: View Transactions | 5: Calulate Interest | '\n' 6: Call Transform | 7: Exit Session/Return Card | 8: Generate Statements");
+            Console.WriteLine("Please select an option: 1: Deposit | 2: Withdraw | 3: Account Balance | 4: View Transactions | 5: Calulate Interest | '\n' 6: Call Transform | 7: Exit Session/Return Card | 8: Generate Statements | 9: Transfer Money");
             choice = int.Parse(Console.ReadLine());
             switch (choice)
             {
@@ -244,7 +303,19 @@ namespace BankProfile
                         checkingAccountStatement.GenerateStatement(client, response);
                     }
                     break;
+                case 9:
+                    string recipientEmailAddress = "";
+                    int fromAccountNumber = 0;
+                    float recipentAmount = 0;
 
+                    Console.WriteLine("Please Enter the Email Address of the Desired Recipient: ");
+                    recipientEmailAddress = Console.ReadLine();
+                    Console.WriteLine("Please Select The Account You Would Like to Transfer Money From: " + '\n' + "1: Checking Account 1" + '\n' + "2: Checking Account 2");
+                    fromAccountNumber = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Please Enter the Amount You Would Like to Transfer to the Recipient: $");
+                    recipentAmount = float.Parse(Console.ReadLine());
+                    TransferMoney(client, recipientEmailAddress, recipentAmount, fromAccountNumber);
+                    break;
             }
         }
 
