@@ -1,11 +1,5 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import {Card} from 'react-bootstrap';
-import { Avatar } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
 import { Dialog, DialogActionsBar } from '@progress/kendo-react-dialogs';
 import { Input } from '@progress/kendo-react-inputs'; 
 import { Button } from '@progress/kendo-react-buttons';
@@ -23,19 +17,22 @@ import AccountNumbers from "./grabAccountNumber";
 import { DonutChartContainer } from './DonutChartContainer';
 import { BarChartContainer } from './BarChartContainer';
 import { GridContainer } from './GridContainer';
-import { PanelBarContainer } from './PanelBarContainer';
-import moneySign from '../moneySign.png'
-import bankCover from '../bankCover.jpg'
+import TransactionGrid  from './TransactionsGridContainer';
 const axios = require('axios'); 
+
+//Unused Components/Imports
+//import Container from 'react-bootstrap/Container';
+//import Row from 'react-bootstrap/Row';
+//import Col from 'react-bootstrap/Col';
+//import {Card} from 'react-bootstrap';
+//import { Avatar } from 'antd';
+//import { UserOutlined } from '@ant-design/icons';
 
 export default class Dashboard extends React.Component{
 
   constructor(props) {
     super(props);
     this.appContainer = React.createRef();
-    /*this.state = {
-      showDialog: false
-    }*/
   }
 
   //State Declaration
@@ -78,19 +75,14 @@ export default class Dashboard extends React.Component{
         <div className="bootstrap-wrapper">
           <div className="app-container container">
             <div className="row">
-              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                <h1>Welcome $Name Here$</h1>
+              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-8">
+                <h1>Welcome {this.props.userEmail}</h1>
               </div>
               <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-3">
                 <Button primary={true} onClick={this.handleShare}>Share</Button>
                 <Button onClick={this.handlePDFExport}>Export to PDF</Button>
               </div>
             </div>
-            <div className="row">
-              {/*<div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                <PanelBarContainer/>
-    </div>*/}
-              
                 <div className="row">
                   <div className="col-xs-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
                     <h4>Spending Summary</h4>
@@ -116,12 +108,11 @@ export default class Dashboard extends React.Component{
                 </div>
                 <div className="row">
                   <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <h4>Transactions</h4>
-                    <GridContainer />
+                    <center><h4>Transactions</h4>
+                    <TransactionGrid/></center>{/*<GridContainer /></center>*/}
                   </div>
-                 
-                  </div>
-            </div>
+                </div>
+            
             {this.state.showDialog &&
               <Dialog title={"Share this report"} onClose={this.handleShare}>
                 <p>Please enter the email address/es of the recipient/s.</p>

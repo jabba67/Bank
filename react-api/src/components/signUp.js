@@ -5,8 +5,11 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
-import SignUp2 from './signUp2';
 import { useHistory } from 'react-router-dom';
+
+//Import Components and Assets
+import SignUp2 from './signUp2';
+import ThankYou from './ThankYou'
 
 //Not being used
 // import React, { Component, useState, useEffect, Image, ImageBackground, useReducer } from 'react';
@@ -96,7 +99,7 @@ function SignUp(){
         console.log(balance);
 
         // validate inputs
-        {/*if(birthDate.length < 8){
+        {if(birthDate.length < 8){
             alert("Please Enter a Correct Birthday Format")
             setbirthDate("")
             return
@@ -136,7 +139,7 @@ function SignUp(){
             alert("Please Enter a Valid Password")
             setbirthDate("")
             return
-        }*/}
+        }}
 
         const accountObject = {
             FirstName : firstName,
@@ -171,6 +174,7 @@ function SignUp(){
                 "Password": String(password)
             }
           });
+          window.location.reload(false)
     }
     
         return (
@@ -179,55 +183,55 @@ function SignUp(){
                 <Form onSubmit={addAccount}>
                     <Form.Group as={Row} controlId="formPlaintextEmail">
                         <Form.Label>First Name</Form.Label>
-                        <Form.Control  id="full-name" name="name" type="text" value={firstName} onChange={handleFnameChange}  placeholder="First Name"/>
+                        <Form.Control name="name" type="text" value={firstName} onChange={handleFnameChange}  placeholder="First Name"/>
                     </Form.Group>
                     <Form.Group as={Row} controlId="formPlaintextEmail">
                         <Form.Label>Last Name</Form.Label>
-                        <Form.Control  id="full-name" name="name" type="text" value={lastName} onChange={handleLnameChange}  placeholder="Last Name"/>
+                        <Form.Control name="name" type="text" value={lastName} onChange={handleLnameChange}  placeholder="Last Name"/>
                     </Form.Group>
                     <Form.Group as={Row} controlId="formPlaintextEmail">
                         <Form.Label>Email </Form.Label>
-                        <Form.Control  id="full-name" name="name" type="text" value={email} onChange={handleEmailChange}  placeholder="Email"/>
+                        <Form.Control name="name" type="text" value={email} onChange={handleEmailChange}  placeholder="Email"/>
                         </Form.Group>
                     <Form.Group as={Row} controlId="formPlaintextEmail">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control  id="full-name" name="name" type="text" value={password} onChange={handlePasswordChange}  placeholder="Password"/>
+                        <Form.Control name="name" type="text" value={password} onChange={handlePasswordChange}  placeholder="Password"/>
                     </Form.Group>
-                    {/* 
+                    
                     <Form.Group as={Row} controlId="formPlaintextEmail">
                         <Form.Label>Age</Form.Label>
-                        <Form.Control  id="full-name" name="name" type="text" value={age} onChange={handleAgeChange}  placeholder="Age"/>
+                        <Form.Control name="name" type="text" value={age} onChange={handleAgeChange}  placeholder="Age"/>
                     </Form.Group>
                     <Form.Group as={Row} controlId="formPlaintextEmail">
                         <Form.Label>Birth Date</Form.Label>
-                        <Form.Control  id="full-name" name="name" type="text" value={birthDate} onChange={handleBdayChange}  placeholder="DD/MM/YYYY"/>
+                        <Form.Control name="name" type="text" value={birthDate} onChange={handleBdayChange}  placeholder="DD/MM/YYYY"/>
                     </Form.Group>
                     <Form.Group as={Row} controlId="formPlaintextEmail">
                         <Form.Label>Social Security: </Form.Label>
-                        <Form.Control  id="full-name" name="name" type="text" value={socialSecurity} onChange={handleSSChange}  placeholder="Social Security"/>
+                        <Form.Control name="name" type="text" value={socialSecurity} onChange={handleSSChange}  placeholder="Social Security"/>
                     </Form.Group>
                     <Form.Group as={Row} controlId="formPlaintextEmail">
                         <Form.Label>Address</Form.Label>
-                        <Form.Control  id="full-name" name="name" type="text" value={address} onChange={handleAddressChange}  placeholder="Address"/>
+                        <Form.Control  name="name" type="text" value={address} onChange={handleAddressChange}  placeholder="Address"/>
                     </Form.Group>
                     <Form.Group as={Row} controlId="formPlaintextEmail">
                         <Form.Label>Phone Number</Form.Label>
-                        <Form.Control  id="full-name" name="name" type="text" value={phoneNumber} onChange={handlePhoneNumChange}  placeholder="Phone Number"/>
+                        <Form.Control  name="name" type="text" value={phoneNumber} onChange={handlePhoneNumChange}  placeholder="Phone Number"/>
                     </Form.Group>
                     <Form.Group as={Row} controlId="formPlaintextEmail">
                         <Form.Label>Beginning Account Balance</Form.Label>
-                        <Form.Control  id="full-name" name="name" type="text" value={balance} onChange={handleBalanceChange}  placeholder="Beginning Account Balance"/>
+                        <Form.Control name="name" type="text" value={balance} onChange={handleBalanceChange}  placeholder="Beginning Account Balance"/>
                     </Form.Group>
-                    */}
                     <Router>
-                    <Link to='/signUp2'>
-                        <Button className="d-inline-block" variant="primary" type="submit" disabled={disabled}>
-                            Next
+                    
+                        <Button className="d-inline-block" variant="primary" type="submit" disabled={disabled} to="http://localhost:3000/">
+                            Submit Application
                         </Button>
+                    <Link to='/ThankYou'>
                     </Link>
-                    <Route path = "/signUp2" exact render={(props) =><SignUp2/>} />
+                    <Route path = "/ThankYou" render={(props) =><ThankYou/>} />
                     </Router>
-                        {formSent === true && <p className="d-inline success-msg">Just a Little More</p>}
+                        {formSent === true && <p className="d-inline success-msg"><br></br>Submit Success!</p>}
                         {formSent === false && <p className="d-inline err-msg">Form Not Sent</p>}
                         
                      

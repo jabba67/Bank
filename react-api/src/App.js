@@ -35,6 +35,7 @@ class App extends React.Component{
     this.input = React.createRef();
     this.handlelogIn = this.handlelogIn.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
 
   state = {
@@ -44,12 +45,9 @@ class App extends React.Component{
     account: " ",
     testFunction: {
       title: 'Testing This',
-    }
-  }
-
-  handleClick(event) {
-    event.preventDefault();
-    console.info('You clicked a breadcrumb.');
+    },
+    width: 0,
+    height: 0,
   }
 
   handlelogIn(event) {
@@ -70,6 +68,19 @@ class App extends React.Component{
   handleChange(event){
     this.setState({ account: event.target.value  })
     console.log(this.state.account)
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
 
   render() {
@@ -98,11 +109,6 @@ class App extends React.Component{
                         <Link className = "nav-link" to ="/AccountBalance">Account Balance </Link>
                         <Button variant="outline-primary" size = "sm" onClick={signOut}>Sign Out</Button>
                       </Nav>
-                      {/*<Form inline>
-                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                        <Button variant="outline-primary">Search</Button>
-                        <img height={30} width={150} src ={TitanBankDraft1}/>
-                      </Form>*/}
                     </Navbar.Collapse>
                   </Navbar>
                   <br></br>
@@ -115,8 +121,8 @@ class App extends React.Component{
             : <div class = "SignIn">
                 <Particles
                   canvasClassName="example"
-                  height="900px"
-                  width="1800px"
+                  height={this.state.height}
+                  width={this.state.width}
                   params={{
                     "particles": {
                         "number": {
@@ -128,72 +134,16 @@ class App extends React.Component{
                     },
                     "interactivity": {
                         "events": {
-                            "onhover": {
+                            /*"onhover": {
                                 "enable": true,
                                 "mode": "repulse"
-                            }
+                            }*/
                         }
                     },
                     "color": {
                       "value": "black"
                   },
                 }} />
-                {/*
-                <Particles
-                  canvasClassName="example"
-                  height="900px"
-                  width="900px"
-                  params={{
-                    "particles": {
-                        "number": {
-                            "value": 160,
-                            "density": {
-                                "enable": false
-                            }
-                        },
-                        "size": {
-                            "value": 3,
-                            "random": true,
-                            "anim": {
-                                "speed": 4,
-                                "size_min": 0.3
-                            }
-                        },
-                        "line_linked": {
-                            "enable": false
-                        },
-                        "move": {
-                            "random": true,
-                            "speed": 1,
-                            "direction": "top",
-                            "out_mode": "out"
-                        }
-                    },
-                    "interactivity": {
-                        "events": {
-                            "onhover": {
-                                "enable": true,
-                                "mode": "bubble"
-                            },
-                            "onclick": {
-                                "enable": true,
-                                "mode": "repulse"
-                            }
-                        },
-                        "modes": {
-                            "bubble": {
-                                "distance": 250,
-                                "duration": 2,
-                                "size": 0,
-                                "opacity": 0
-                            },
-                            "repulse": {
-                                "distance": 400,
-                                "duration": 4
-                            }
-                        }
-                    }
-                }} />*/}
               <Card style={{ backgroundColor: 'white'}}>
                   <img src ={TitanBankDraft1}/>
                   <Card.Body>

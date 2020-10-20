@@ -1,133 +1,164 @@
 import React, { Component } from "react";
 import {Container, Button, Form, FormControl,Card, CardGroup, Row,Col,Jumbotron} from 'react-bootstrap';
+import { Alert } from "shards-react";
+import { Table, Tag, Space } from 'antd';
+import { Grid, GridColumn as Column } from '@progress/kendo-react-grid';
+import { Sparkline } from '@progress/kendo-react-charts';
+
+//Import Components and Assets
 import AccountBalance from './grabAccountBalance';
 import CheckingAccountBalance from './grabCheckingAccountBalance';
 import TransHistory from './grabTransactionHistory';
+import TransactionGrid  from './TransactionsGridContainer';
+import { gridData } from './data/appData';
 import homeIcon from '../home-outline.svg';
 import cashIcon from '../cash-outline.svg';
-import fundsAvailable from '../fundsAvailable.jpg';
-import { Table, Tag, Space } from 'antd';
+import successIcon from '../checked.svg';
 
 const axios = require('axios');
 
-//import {Alert} from "shards-react";
+const SparkLineChartCell = (props) => <td><Sparkline data={props.dataItem.PriceHistory}/></td>
+
+const processData = (data) => {
+    data.forEach((item) => {
+      item.PriceHistory = Array.from({ length: 20 }, () => Math.floor(Math.random() * 100));
+      return item;
+    })
+    return data;
+  }
+
+//Unused imports
 
 
 export default class AccountBalanceGet extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmitWidthdraw = this.handleSubmitWidthdraw.bind(this);
     this.input = React.createRef();
     this.input2 = React.createRef();
+    this.input3 = React.createRef();
+    this.input4 = React.createRef();
+    this.interval = null;
+    this.interval2 = null;
+    this.showAlert = this.showAlert.bind(this);
+    this.showAlert2 = this.showAlert2.bind(this);
+    this.handleTimeChange = this.handleTimeChange.bind(this);
+    this.clearInterval = this.clearInterval.bind(this);
+    this.handleTimeChange2 = this.handleTimeChange2.bind(this);
+    this.clearInterval2 = this.clearInterval2.bind(this);
   }
 
   state = {
     balance: [],
     checkingaccountbalance: [],
     transHistory: [],
-    columns:[
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: text => <a>{text}</a>,
-      },
-      {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
-      },
-      {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
-      },
-      {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: tags => (
-          <>
-            {tags.map(tag => {
-              let color = tag.length > 5 ? 'geekblue' : 'green';
-              if (tag === 'loser') {
-                color = 'volcano';
-              }
-              return (
-                <Tag color={color} key={tag}>
-                  {tag.toUpperCase()}
-                </Tag>
-              );
-            })}
-          </>
-        ),
-      },
-      {
-        title: 'Action',
-        key: 'action',
-        render: (text, record) => (
-          <Space size="middle">
-            <a>Invite {record.name}</a>
-            <a>Delete</a>
-          </Space>
-        ),
-      },
-    ],
-    data:[
-      {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-      },
-      {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-      },
-      {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
-      },
-    ]
+    visible: false,
+    countdown: 0,
+    timeUntilDismissed: 3,
+    visible2: false,
+    countdown2: 0,
+    timeUntilDismissed2: 3
+  }
+
+  showAlert() {
+    this.clearInterval();
+    this.setState({ visible: true, countdown: 0, timeUntilDismissed: 3 });
+    this.interval = setInterval(this.handleTimeChange, 1000);
+  }
+
+  showAlert2() {
+    this.clearInterval2();
+    this.setState({ visible2: true, countdown2: 0, timeUntilDismissed2: 3 });
+    this.interval2 = setInterval(this.handleTimeChange2, 1000);
+  }
+
+  handleTimeChange() {
+    if (this.state.countdown < this.state.timeUntilDismissed - 1) {
+      this.setState({
+        ...this.state,
+        ...{ countdown: this.state.countdown + 1 }
+      });
+      return;
+    }
+
+    this.setState({ ...this.state, ...{ visible: false } });
+    this.clearInterval();
+    setInterval(window.location.reload(false), 5000);
+  }
+
+  clearInterval() {
+    clearInterval(this.interval);
+    this.interval = null;
+  }
+
+  handleTimeChange2() {
+    if (this.state.countdown < this.state.timeUntilDismissed - 1) {
+      this.setState({
+        ...this.state,
+        ...{ countdown: this.state.countdown + 1 }
+      });
+      return;
+    }
+
+    this.setState({ ...this.state, ...{ visible: false } });
+    this.clearInterval2();
+    setInterval(window.location.reload(false), 5000);
+  }
+
+  clearInterval2() {
+    clearInterval(this.interval2);
+    this.interval2 = null;
   }
 
   handleSubmit(event) {
     event.preventDefault();
     var accountBalance = this.state.balance.accountBalance;
-    var CheckingAccountBalance = this.state.checkingaccountbalance.checkingAccountBalance;//this.state.checkingaccountbalance.checkingAccountBalance;
+    var CheckingAccountBalance = this.state.checkingaccountbalance.checkingAccountBalance;
     var current = this.state.balance.accountBalance;
     var CurrentChecking = this.state.checkingaccountbalance.checkingAccountBalance;
-    console.log('the value of account balance rn is: ' + this.state.balance.accountBalance);
-    console.log('the value of checking account balance rn is: ' + this.state.checkingaccountbalance.checkingAccountBalance);
 
     if((parseInt(this.input.current.value) > 0))
     {
-      accountBalance = (parseInt(this.input.current.value)+ current);//this.state.balance.accountBalance);
+      accountBalance = (parseInt(this.input.current.value)+ current);
     }
     if((parseInt(this.input2.current.value) > 0))
     {
-      CheckingAccountBalance = (parseInt(this.input2.current.value)+ CurrentChecking); //this.state.checkingaccountbalance.checkingAccountBalance);
+      CheckingAccountBalance = ((parseInt(this.input2.current.value)+ CurrentChecking));
     }
-    
-    console.log('the value of AccountBalance rn is: ' + accountBalance);
-    console.log('the value of Checking Account Balance rn is: ' + CheckingAccountBalance);
-    console.log('the value of email rn is: ' + this.props.userEmail);
-
-    alert("New Account Balances: Main Account Balance: " + accountBalance + " Checking Account Balance: " + CheckingAccountBalance);
-    window.location.reload(false);
 
     axios({
       method: 'PATCH',
       url: `https://localhost:44358/api/UserInformations/${this.props.userEmail}`,
       data: {
-        EmailAdress: this.props.userEmail, //"arcowirexzs@gmail.com",
+        EmailAdress: this.props.userEmail,
+        AccountBalance: accountBalance,
+        CheckingAccountBalance: CheckingAccountBalance
+      }
+    });
+  }
+
+  handleSubmitWidthdraw(event) {
+    event.preventDefault();
+    var accountBalance = this.state.balance.accountBalance;
+    var CheckingAccountBalance = this.state.checkingaccountbalance.checkingAccountBalance;
+    var current = this.state.balance.accountBalance;
+    var CurrentChecking = this.state.checkingaccountbalance.checkingAccountBalance;
+
+    if((parseInt(this.input3.current.value) > 0))
+    {
+      accountBalance = ((parseInt(this.input3.current.value)*-1)+ current);
+    }
+    if((parseInt(this.input4.current.value) > 0))
+    {
+      CheckingAccountBalance = ((parseInt(this.input4.current.value)*-1)+ CurrentChecking);
+    }
+
+    axios({
+      method: 'PATCH',
+      url: `https://localhost:44358/api/UserInformations/${this.props.userEmail}`,
+      data: {
+        EmailAdress: this.props.userEmail,
         AccountBalance: accountBalance,
         CheckingAccountBalance: CheckingAccountBalance
       }
@@ -160,71 +191,59 @@ export default class AccountBalanceGet extends React.Component {
     return (
       <div class = "AccountBalance" style={{ backgroundColor: 'transparent'}}>
       <div className="bootstrap-wrapper">
-          <div className="app-container container">
+          <div className="app-container2 container">
           <div className="row">
-              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-      {/*<Container fluid={true}>
-          <Row>
-    <Col md={4} sm={8}>*/}
-              <Card 
-                bg={"transparent"}
-                text={'light'}
-                border={"transparent"}
-              >
-                {/*<Card.Img variant="top" src={fundsAvailable} />*/}
-                <Card.Title>ACCOUNT BALANCES</Card.Title>
-                  <Card.Body>
-                    <img height={25} width={50}  src={homeIcon}/>Main Account Balance: <AccountBalance balance ={this.state.balance}/><br></br>
-                    <img height={25} width={50}  src={cashIcon}/>Checking Account Balance: <CheckingAccountBalance checkingaccountbalance ={this.state.checkingaccountbalance}/><br></br>
-                  </Card.Body>
-                </Card></div>
-                {/*</Col> 
-                </Row>
-                <Row>
-                <Col md={4} sm={8}>*/}
-                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-              <Card 
-                bg={"transparent"}
-                text={'light'}
-                border={"transparent"}
-              >
-                <Card.Title>DEPOSIT TO ACCOUNTS</Card.Title>
-                  <Card.Body>
-                    <Card.Text>
-                      <div align = "center"><form onSubmit ={this.handleSubmit}>
-                        <Form.Label>   Deposit to Main Account: 
-                          <br></br><input type="text" ref={this.input}  placeholder="Main Account" />
-                        </Form.Label><br></br>
-                          <label> Deposit to Checking Account: 
-                            <br></br><input type="text" ref={this.input2}  placeholder="Checking Account" />
-                          </label><br></br>
-                          <input type="submit" value="Deposit" />
-                        </form>
-                      </div><br></br>
-                    </Card.Text>
-                  </Card.Body>
-                </Card></div>
-                {/*</Col> 
-                </Row>
-                <Row>
-                <Col md={4} sm={8}>*/}
+              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-4">
+                <h5>ACCOUNT BALANCES</h5>
+                  <img height={25} width={50}  src={homeIcon}/>Main Account Balance: <AccountBalance balance ={this.state.balance}/><br></br>
+                  <img height={25} width={50}  src={cashIcon}/>Checking Account Balance: <CheckingAccountBalance checkingaccountbalance ={this.state.checkingaccountbalance}/><br></br>
+              </div>
+              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-4">
+                <h5> DEPOSIT TO ACCOUNTS</h5>
+                  <div align = "center"><form onSubmit ={this.handleSubmit}>
+                    <Form.Label>   Deposit to Main Account: 
+                      <br></br><input type="text" ref={this.input}  placeholder="        Main Account" />
+                    </Form.Label><br></br><br></br>
+                      <label> Deposit to Checking Account: 
+                        <br></br><input type="text" ref={this.input2}  placeholder="     Checking Account" />
+                      </label><br></br>
+                      <Alert className="mb-2" open={this.state.visible} theme="success" fade={true}>
+                      <img height={25} width={50}  src={successIcon}/>Deposit Success! This message will dissapear in {" "}
+                        {this.state.timeUntilDismissed - this.state.countdown} seconds!
+                      </Alert>
+                      <input type="submit" value="Deposit" onClick={this.showAlert} />
+                    </form>
+                  </div><br></br>
+                </div>
+                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-4">
+                <h5> WIDTHDRAW FROM ACCOUNTS</h5>
+                  <div align = "center"><form onSubmit ={this.handleSubmitWidthdraw}>
+                    <Form.Label>   Withdraw from Main Account: 
+                      <br></br><input type="text" ref={this.input3}  placeholder="        Main Account" />
+                    </Form.Label><br></br><br></br>
+                      <label> Withdraw from Checking Account: 
+                        <br></br><input type="text" ref={this.input4}  placeholder="     Checking Account" />
+                      </label><br></br>
+                      <Alert className="mb-2" open={this.state.visible2} theme="success" fade={true}>
+                      <img height={25} width={50}  src={successIcon}/>Withdraw Success! This message will dissapear in {" "}
+                        {this.state.timeUntilDismissed2 - this.state.countdown2} seconds!
+                      </Alert>
+                      <input type="submit" value="Withdraw" onClick={this.showAlert2} />
+                    </form>
+                  </div><br></br>
+                </div>
                 </div>
                 <div className="row">
-                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-12">
-              <h5>ACCOUNT TRANSACTIONS:</h5>
+                  <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-12">
+                    <h5>RECENT TRANSACTIONS:</h5>
                     <center>
-                      <div class = "ScrollBox">
-                        <TransHistory transHistory = {this.state.transHistory}/>
-                      </div>
+                      <TransactionGrid/>
                     </center>
-                </div></div>
-               {/*} <Table columns={this.state.columns} dataSource={this.state.data} />*/}
-            {/*</Col> 
-          </Row>
-        </Container>*/}
+                  </div>
+                </div>
+            </div>
         </div>
         </div>
-      </div>
     );//End Return
   }
 }
