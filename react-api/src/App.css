@@ -2,10 +2,14 @@
   text-align: center;
 }
 .AccountBalance{
-  cursor:crosshair;
-  
+  padding:20px;
+  cursor:auto;
   border-color: rgba(255, 255, 255, .15); 
-  color: "black"
+  color: "black";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
   /*
   background-color: rgba(255, 255, 255, .15);
@@ -28,19 +32,31 @@
   overflow-y:scroll;
 }
 .SignIn{
+  padding-top:75px;
+  padding-bottom:15px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  border-radius: 0 !important;
 }
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.Footer{
+  color:white
+}
+
+.Card{
+  border-radius: 0 !important;
+}
+
 .App-header {
   background-color: #2b2b2b;
-  min-height: 100vh;
+  min-height: 105vh;
+  border-radius: 0 !important;
 }
 .example{
   position:absolute !important;
@@ -64,12 +80,14 @@ h1{
 }
 .app-container {
   border-radius: 5px 5px 5px 5px;
-  padding: 15px;
+  padding: 20px;
   background-color: white;
+  ;
 }
 .app-container2{
   padding: 15px;
-  color:white
+  color:black;
+  max-width:100vh;
 }
 .percentage-number{
   color: rgb(63, 81, 181);

@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import {Container, Button, Form, FormControl,Card, CardGroup, Row,Col,Jumbotron} from 'react-bootstrap';
+import {Container, Button, Form, FormControl,Card, CardColumns, Row,Col,Jumbotron} from 'react-bootstrap';
 import { Alert } from "shards-react";
 import { Table, Tag, Space } from 'antd';
 import { Grid, GridColumn as Column } from '@progress/kendo-react-grid';
 import { Sparkline } from '@progress/kendo-react-charts';
+import SkeletonCard from "./SkeletonCard";
 
 //Import Components and Assets
 import AccountBalance from './grabAccountBalance';
@@ -14,6 +15,10 @@ import { gridData } from './data/appData';
 import homeIcon from '../home-outline.svg';
 import cashIcon from '../cash-outline.svg';
 import successIcon from '../checked.svg';
+import depositIcon from '../deposit.svg';
+import withdrawIcon from '../withdraw2.svg';
+import accountIcon from '../account3.svg';
+
 
 const axios = require('axios');
 
@@ -28,7 +33,6 @@ const processData = (data) => {
   }
 
 //Unused imports
-
 
 export default class AccountBalanceGet extends React.Component {
   constructor() {
@@ -58,7 +62,8 @@ export default class AccountBalanceGet extends React.Component {
     timeUntilDismissed: 3,
     visible2: false,
     countdown2: 0,
-    timeUntilDismissed2: 3
+    timeUntilDismissed2: 3,
+    isLoading: false,
   }
 
   showAlert() {
@@ -109,6 +114,16 @@ export default class AccountBalanceGet extends React.Component {
   clearInterval2() {
     clearInterval(this.interval2);
     this.interval2 = null;
+  }
+
+  async componentDidMount() {
+    this.setState({ isLoading: true })
+    const response = await fetch(`https://localhost:44358/api/UserInformations/${this.props.userEmail}`)
+    if (response.ok) {
+      this.setState({isLoading: false })
+    } else {
+      this.setState({isLoading: false })
+    }
   }
 
   handleSubmit(event) {
@@ -188,23 +203,27 @@ export default class AccountBalanceGet extends React.Component {
     .catch(console.log)
   }
   render() {
+    const {isLoading} = this.state
+    if (isLoading) {
+      return <div> <SkeletonCard /></div>
+    }
     return (
-      <div class = "AccountBalance" style={{ backgroundColor: 'transparent'}}>
+      <div class = "AccountBalance" style={{ backgroundColor: "white"}}>
       <div className="bootstrap-wrapper">
           <div className="app-container2 container">
           <div className="row">
               <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-4">
-                <h5>ACCOUNT BALANCES</h5>
-                  <img height={25} width={50}  src={homeIcon}/>Main Account Balance: <AccountBalance balance ={this.state.balance}/><br></br>
-                  <img height={25} width={50}  src={cashIcon}/>Checking Account Balance: <CheckingAccountBalance checkingaccountbalance ={this.state.checkingaccountbalance}/><br></br>
+                <h4>ACCOUNT BALANCES<br></br><img height={50} width={50}  src={accountIcon}/></h4>
+                  <img height={25} width={50}  src={homeIcon}/>Main Account Balance:<AccountBalance balance ={this.state.balance}/>
+                  <img height={25} width={50}  src={cashIcon}/>Checking Account Balance:<CheckingAccountBalance checkingaccountbalance ={this.state.checkingaccountbalance}/><br></br>
               </div>
               <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-4">
-                <h5> DEPOSIT TO ACCOUNTS</h5>
+                <h4>DEPOSIT<br></br><img height={50} width={50}  src={depositIcon}/></h4>
                   <div align = "center"><form onSubmit ={this.handleSubmit}>
-                    <Form.Label>   Deposit to Main Account: 
+                    <Form.Label>Deposit to Main Account: 
                       <br></br><input type="text" ref={this.input}  placeholder="        Main Account" />
                     </Form.Label><br></br><br></br>
-                      <label> Deposit to Checking Account: 
+                      <label>Deposit to Checking Account: 
                         <br></br><input type="text" ref={this.input2}  placeholder="     Checking Account" />
                       </label><br></br>
                       <Alert className="mb-2" open={this.state.visible} theme="success" fade={true}>
@@ -216,7 +235,7 @@ export default class AccountBalanceGet extends React.Component {
                   </div><br></br>
                 </div>
                 <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-4">
-                <h5> WIDTHDRAW FROM ACCOUNTS</h5>
+                <h4>WIDTHDRAW<br></br><img height={50} width={50}  src={withdrawIcon}/></h4>
                   <div align = "center"><form onSubmit ={this.handleSubmitWidthdraw}>
                     <Form.Label>   Withdraw from Main Account: 
                       <br></br><input type="text" ref={this.input3}  placeholder="        Main Account" />
@@ -235,9 +254,8 @@ export default class AccountBalanceGet extends React.Component {
                 </div>
                 <div className="row">
                   <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-12">
-                    <h5>RECENT TRANSACTIONS:</h5>
-                    <center>
-                      <TransactionGrid/>
+                  <center><h5>RECENT TRANSACTIONS:</h5>
+                  <TransactionGrid/>
                     </center>
                   </div>
                 </div>

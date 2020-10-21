@@ -41,6 +41,7 @@
     "react-dom": "^16.13.1",
     "react-icons": "^3.11.0",
     "react-infinite-scroll-component": "^5.0.5",
+    "react-loading-skeleton": "^2.1.1",
     "react-native-sms-x": "^1.0.7",
     "react-particles-js": "^3.3.0",
     "react-router": "^5.2.0",
