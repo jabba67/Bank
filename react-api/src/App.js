@@ -1,45 +1,61 @@
-import React, { Component, useState, useEffect, Image, ImageBackground, useReducer, Alert, Toast } from 'react';
-import {Route,HashRouter, BrowserRouter as Router} from "react-router-dom";
-import ReactDOM from 'react-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import {Route, BrowserRouter as Router, Link} from "react-router-dom";
 import withFirebaseAuth from 'react-with-firebase-auth'
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseconfig from './firebaseconfig';
 import './App.css';
-import {BreadcrumbItem,Row,Container, Col,Button,
-  ButtonGroup,ButtonToolbar,Form,FormGroup,FormInput,InputGroup,
-  Card,CardHeader,CardTitle,CardImg,CardBody,CardFooter,Navbar,
-  NavbarToggler,NavbarBrand,Nav,NavItem,NavLink,Dropdown,DropdownToggle,
-  DropdownMenu,DropdownItem,InputGroupAddon,Collapse,
-  InputGroupText, Label} from "shards-react";
-import TransHistory from './components/grabTransactionHistory';
+import { Button, Card, CardColumns } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import { AnimateOnChange } from 'react-animation'
+import Particles from 'react-particles-js';
+
+//Component and Asset Imports
 import AccountBalance from './components/AccountBalance';
 import AccountInfo from './components/AccountInfo';
-import signUp from './components/signUp';
+import Dashboard from './components/Dashboard';
+import Footer from './Footer';
+import GoogleSignIn from './googleLogin.png'
+import TitanBankDraft1 from './TitanBankDraft3.png'
+import SignUp from './components/signUp';
+import depositIcon from './deposit.svg';
+import creditIcon from './card3.svg'
+import account from './account4.svg';
+import contract from './contract.svg';
+import savings from './savings.svg';
+import loans from './loans.svg';
+import investment from './investment.svg';
+
+//Not Being Used
+//import TransHistory from './components/grabTransactionHistory';
+//import signUp from './components/signUp';
+//import TestLoadThis from './components/TestLoadFunction';
+//import {CardHeader,CardTitle,CardImg,CardBody,CardFooter} from "shards-react";
 
 const firebaseApp = firebase.initializeApp(firebaseconfig);
 const axios = require('axios');
-const drawerWidth = 240;
 
 class App extends React.Component{
   constructor() {
     super();
-    //this.handleSubmit = this.handleSubmit.bind(this);
     this.input = React.createRef();
     this.handlelogIn = this.handlelogIn.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
 
   state = {
     contacts: [],
     datas: [],
     transHistory: [],
-    account: " "
-  }
-
-  handleClick(event) {
-    event.preventDefault();
-    console.info('You clicked a breadcrumb.');
+    account: " ",
+    testFunction: {
+      title: 'Testing This',
+    },
+    width: 0,
+    height: 0,
   }
 
   handlelogIn(event) {
@@ -62,116 +78,159 @@ class App extends React.Component{
     console.log(this.state.account)
   }
 
-  /*handleSubmit(event) {
-    event.preventDefault();
-    alert('A name was submitted: ' + this.input.current.value);
-    var accountBalance;
-    var current = this.state.contacts.accountBalance;
-    console.log('the value of contacts rn is: ' + this.state.contacts.accountBalance);
-    accountBalance = (parseInt(this.input.current.value)+ this.state.contacts.accountBalance);
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+  }
 
-    axios({
-      method: 'PATCH',
-      url: 'https://localhost:44358/api/UserInformations/45505',
-      data: {
-        accountBalance: accountBalance,
-        accountNumber: 45505
-      }
-    });
-      //IMPLEMENT THIS: Send request to API to get account number based on validation email
-      //Then With the account number perform actions like GET and PATCH on the stored account number
-  }*/
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+  }
+
   render() {
     const {
       user,
-      classes,
       signOut,
       signInWithGoogle,
+      signInAnonymously,
+      signInWithEmailAndPassword,
+      signInWithFacebook,
+      classes,
     } = this.props;
     return (
       <div className="App" >
         <header className="App-header">
           {
             user
-              ? <>
-              
-              <Router>
-                <Nav fill vertical>
-                
-                  <NavItem>
-                    <li><NavLink href="/">Home</NavLink></li>
-                    <Route path="/App" component={App}/> 
-                    <li><NavLink href="/AccountBalance">Account Balance</NavLink></li>
-                    <Route path="/AccountBalance" render ={(props) => <AccountBalance {...props} userEmail = {user.email}/>}/>
-                    <li><NavLink href="/AccountInfo" >Account Info</NavLink></li>
-                    <Route path="/AccountInfo" render ={(props) => <AccountInfo {...props} userEmail = {user.email}/>} />
-                  </NavItem>
-                  <NavItem>
-                    <NavLink onClick={signOut}>Sign Out</NavLink>
-                  </NavItem>
-                </Nav>
-              </Router>
-
-
-              {/* Need to build out dashboard here */}
-              {/*<AccountInfo instance2></AccountInfo>}
-              <AccountBalance instance></AccountBalance>*/}
-              
-          <div className="Container">  
-            {/*<Container className="dr-example-container">
-                <Row>
-                  <Col lg="3">
-                    <AccountInfo instance2></AccountInfo>
-                    <br></br><br></br><br></br><br></br>
-                  </Col>
-                  <Col sm="12" md="4" lg="6">
-                    <AccountInfo instance2></AccountInfo>
-                    <br></br><br></br><br></br><br></br>
-                  </Col>
-                  <Col lg="3">
-                    <AccountInfo instance2></AccountInfo>
-                    <br></br><br></br><br></br><br></br>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col lg="3">
-                    <br></br><br></br>
-                    Building a dashboard out here:
-                    </Col>
-                  <Col sm="12" md="4" lg="6">
-                    <br></br><br></br>
-                    <AccountBalance instance></AccountBalance>
-                    <br></br><br></br>
-                  </Col>
-                  <Col lg="3">
-                    <br></br><br></br>
-                    Building a dashboard out here:
-                  </Col>
-                </Row>
-
-            </Container>*/}
-              
-            </div>
-            </>
+              ? 
+              <>
+                <Container className = "p-0" fluid = {true}>
+                  <Router>
+                  <Navbar bg = "transparent" variant="dark" expand="lg">
+                    <Navbar.Brand>Titan Bank</Navbar.Brand>
+                    <Navbar.Toggle className = "border-0" aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="navbar-toggle">
+                      <Nav className = "mr-auto">
+                        <Link className = "nav-link" to ="/">Home</Link>
+                        <Link className = "nav-link" to ="/AccountInfo">Account Info</Link>
+                        <Link className = "nav-link" to ="/AccountBalance">Account Balance </Link>
+                        <Button variant="outline-primary" size = "sm" onClick={signOut}>Sign Out</Button>
+                      </Nav>
+                    </Navbar.Collapse>
+                  </Navbar>
+                  <br></br>
+                      <Route path = "/" exact render={(props) => <Dashboard {...props} userEmail = {user.email}/>} />
+                      <Route path="/AccountBalance" exact render ={(props) => <AccountBalance {...props} userEmail = {user.email}/>}/>
+                      <Route path="/AccountInfo" exact render ={(props) => <AccountInfo {...props} userEmail = {user.email}/>} />
+                    </Router>
+                    {/*<Footer />*/}
+                  </Container>
+              </>
             : <div class = "SignIn">
-                <br></br>
-              <Card style={{maxHeight:"370", maxWidth: "380", backgroundColor: 'white'}}>
-                  <CardHeader>Sign In</CardHeader>
-                  <CardImg src="https://t3.ftcdn.net/jpg/02/20/14/38/240_F_220143804_fc4xRygvJ8bn8JPQumtHJieDN4ORNyjs.jpg" />
-                  <CardBody>
-                    <label> Please Login Using Google: </label>
-                    <br></br>
-                    <Button size = "lg" onClick = {signInWithGoogle}>Login</Button>
-                    <br></br>
-                    <label> Don't Have An Account?</label>
-                    <br></br>
+                <Particles
+                  canvasClassName="example"
+                  height={this.state.height}
+                  width={this.state.width}
+                  params={{
+                    "particles": {
+                        "number": {
+                            "value": 50
+                        },
+                        "size": {
+                            "value": 3
+                        }
+                    },
+                    "interactivity": {
+                        "events": {
+                            /*"onhover": {
+                                "enable": true,
+                                "mode": "repulse"
+                            }*/
+                        }
+                    },
+                    "color": {
+                      "value": "black"
+                  },
+                }} />
+                {/* use this for transparent background: 'rgba(255, 255, 255, 0.40)'*/}
+              <Card border="white" style={{ backgroundColor: 'white', borderBottomLeftRadius:0, borderBottomRightRadius: 0}}>
+                  <center><img height={310} width={745} src ={TitanBankDraft1}/></center>
+                  <Card.Body>
+                  <AnimateOnChange animationIn="popIn" animationOut="popOut">
+                      <img height={62} width={257} src ={GoogleSignIn} onClick = {signInWithGoogle}/>
+                  </AnimateOnChange>
+                    <br></br><br></br>
+                    <label> Don't Have An Account? </label>
                       <Router>
-                      <a href="/signUp">Sign Up</a>
-                    <Route path="/signUp" component={signUp}/>
+                        <a href="/signUp"> Sign Up Here</a>
+                        <Route path = "/signUp" exact render={(props) =><SignUp/>} />
                       </Router>
-                  </CardBody>
+                  </Card.Body>
               </Card>
-              <br></br>
+              <CardColumns style={{ backgroundColor: 'white', border:"white", borderBottomLeftRadius:5, borderBottomRightRadius: 5}}>
+              <Card border="white" style={{ width: '18rem' }}>
+              <img height={50} width={50}  src={account}/>
+                  <Card.Body>
+                    <Card.Title>Account Management</Card.Title>
+                    <Card.Text>
+                      All accounts are displayed clearly in one place.
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+                <Card border="white" style={{ width: '18rem' }}>
+                <img height={50} width={50}  src={savings}/>
+                  <Card.Body>
+                    <Card.Title>Savings Management</Card.Title>
+                    <Card.Text>
+                      Saving money has never been easier with our modern 
+                      implementation of saving methods!
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+                <Card border="white" style={{ width: '18rem' }}>
+                <img height={50} width={50}  src={creditIcon}/>
+                  <Card.Body>
+                    <Card.Title>Card Management</Card.Title>
+                    <Card.Text>
+                      Users will never lose track of their cards' balance.
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+                <Card border="white" style={{ width: '18rem' }}>
+                <img height={50} width={50}  src={loans}/>
+                  <Card.Body>
+                    <Card.Title>Loans</Card.Title>
+                    <Card.Text>
+                      We enable our users to track loans and apply for new ones instantly.
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+                <Card border="white" style={{ width: '18rem' }}>
+                <img height={50} width={50}  src={contract}/>
+                  <Card.Body>
+                    <Card.Title>Contracts</Card.Title>
+                    <Card.Text>
+                      All contracts signed between the user and the bank feature online 
+                      signatures to let the user avoid unnecessary visits to the bank.
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+                <Card border="white" style={{ width: '18rem' }}>
+                <img height={50} width={50}  src={investment}/>
+                  <Card.Body>
+                    <Card.Title>Investment Mangement</Card.Title>
+                    <Card.Text>
+                      Our bank provides investment insights for clients to see the performance 
+                      and make decisions based on frequently updated information.
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              </CardColumns>
+
               </div>
           }
         </header>
@@ -179,7 +238,6 @@ class App extends React.Component{
     );//End of Return
   }//End of Render()
 }//End Class App
-
 const firebaseAppAuth = firebaseApp.auth();
 
 const providers = {

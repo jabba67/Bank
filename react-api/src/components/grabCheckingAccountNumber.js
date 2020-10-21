@@ -1,7 +1,6 @@
 import React from 'react'
 
     const CheckingAccountNumbers = ({ checkingaccountnumber }) => {
-
       return (
         <div>
          {Object.keys(checkingaccountnumber).filter(key => key === 'checkingAccountNumber').map((item,i) => (
@@ -9,7 +8,6 @@ import React from 'react'
                 <h6 key={i} class="card-title">{checkingaccountnumber[item]}</h6>
             </div>
           ))}
-          
         </div>
       )
     };

@@ -20,24 +20,24 @@ namespace WebAPI.Controllers
         private BankContext _context;
         private IUserInfoRepository _repo;
 
-        public UserInformationsController(IUserInfoRepository repo)
+        /*public UserInformationsController(IUserInfoRepository repo)
         {
             _repo = repo;
-        }
+        }*/
 
-        /*public UserInformationsController(BankContext context)
+        public UserInformationsController(BankContext context)
         {
             _context = context;
-        }*/
+        }
 
 
         // GET: api/UserInformations
         [HttpGet]
-        public async Task<IActionResult> GetUserInformation()
-        //public async Task<ActionResult<IEnumerable<UserInformation>>> GetUserInformation()
+        //public async Task<IActionResult> GetUserInformation()
+        public async Task<ActionResult<IEnumerable<UserInformation>>> GetUserInformation()
         {
-            return Ok(await _repo.GetUserInformationAsync());
-            //return await _context.UserInformation.ToListAsync();
+            //return Ok(await _repo.GetUserInformationAsync());
+            return await _context.UserInformation.ToListAsync();
         }
 
         // GET: api/UserInformations/5
@@ -134,13 +134,16 @@ namespace WebAPI.Controllers
             return NoContent();
         }
 
-        // Patch: api/UserInformations/5
+        /*// Patch: api/UserInformations/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPatch("{id}")]
         //public async Task<IActionResult> PatchUserInformation(string id, UserInformationDeposit userInformation)
         public async Task<IActionResult> PatchUserInformation(string id, UserInformationDeposit userInformationDeposit)
         {
+            //_context.UserInformation.Add(UserInformation);
+            //await _context.SaveChangesAsync();
+
             try
             {
                 await _repo.PatchUserInformationAsync(id, userInformationDeposit);
@@ -155,12 +158,56 @@ namespace WebAPI.Controllers
             }
 
             return NoContent();
+        }*/
+
+
+        // Patch: api/UserInformations/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchUserInformation(string id, UserInformationDeposit userInformation)
+        {
+            var userInformationDeposit = await _context.UserInformation.FindAsync(id);
+            if (id != userInformationDeposit.EmailAddress)
+            {
+                return BadRequest();
+            }
+
+            var entity = await _context.UserInformation.SingleOrDefaultAsync(user => user.EmailAddress == userInformationDeposit.EmailAddress);
+            if (entity.AccountBalance != userInformation.AccountBalance)
+            {
+                entity.AccountBalance = userInformation.AccountBalance;
+                entity.CheckingAccountBalance = entity.CheckingAccountBalance;
+            }
+            if (entity.CheckingAccountBalance != userInformation.CheckingAccountBalance)
+            {
+                entity.AccountBalance = entity.AccountBalance;
+                entity.CheckingAccountBalance = userInformation.CheckingAccountBalance;
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserInformationExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
         // POST: api/UserInformations
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
+        /*[HttpPost]
         public async Task<IActionResult> PostUserInformation(UserInformation userInformation)
         {
             //_context.UserInformation.Add(userInformation);
@@ -170,19 +217,48 @@ namespace WebAPI.Controllers
             }
             catch (DbUpdateException)
             {
-                return Conflict();
-                /*if (UserInformationExists(userInformation.EmailAddress))
+                return Conflict();*/
+        /*if (UserInformationExists(userInformation.EmailAddress))
+        {
+            return Conflict();
+        }
+        else
+        {
+            throw;
+        }*/
+        /*}
+
+        return CreatedAtAction("GetUserInformation", new { id = userInformation.AccountNumber }, userInformation);
+    }*/
+
+        // POST: api/UserInformations
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost]
+        public async Task<ActionResult<UserInformation>> PostUserInformation(UserInformation userInformation)
+        {
+            _context.UserInformation.Add(userInformation);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (UserInformationExists(userInformation.EmailAddress))
                 {
                     return Conflict();
                 }
                 else
                 {
                     throw;
-                }*/
+                }
             }
 
             return CreatedAtAction("GetUserInformation", new { id = userInformation.AccountNumber }, userInformation);
         }
+
+
+
 
         // DELETE: api/UserInformations/5
         [HttpDelete("{id}")]

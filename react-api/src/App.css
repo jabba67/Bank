@@ -1,105 +1,151 @@
 .App {
   text-align: center;
-  
 }
-
-.Container{  
-  /*padding-right: 50px;
-  padding-left: 50px;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  justify-content: center;
-  max-width: 300vh;
+.AccountBalance{
+  padding:20px;
+  cursor:auto;
+  border-color: rgba(255, 255, 255, .15); 
+  color: "black";
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-right: -50%;
   transform: translate(-50%, -50%);
-  white-space: pre-line;*/
 }
-
-.AccountBalance{
-  
-  overflow-y: scroll;
-  transition: opacity 0.25s linear;
-  cursor:crosshair;
-  height: 700px;
-  padding-right: 50px;
-  padding-left: 50px;
-  padding-left: 50px;
-  padding-top: 20px;
+  /*
+  background-color: rgba(255, 255, 255, .15);
   position: absolute;
-  top: 600px;
+  top: 55%;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-  backdrop-filter: blur(10px);
-  background-color: rgba(255, 255, 255, .15);  
-  /*background: rgb(2,0,36);*/
-  /*background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);*/
-  
-  }
-
-.AccountInfo
-{
-  max-width: 600vh;
-  padding-right: 50px;
-  padding-left: 50px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  position: absolute;
-  top: 450px;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  backdrop-filter: blur(5px);
-  background-color: rgba(255, 255, 255, .15);  
+  */
+.AccountInfo{
+  background-color: #2b2b2b;
 }
-
+.signUp{
+  background-color: #2b2b2b;
+}
 .ScrollBox{
-  height:400px;
-  width:330px;
+  height:294px;
+  width:flex;
   border:1px solid #ccc;
   overflow-y:scroll;
 }
 .SignIn{
-  max-width: 300vh;
-  padding-right: 50px;
-  padding-left: 50px;
+  padding-top:75px;
+  padding-bottom:15px;
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-right: -50%;
   transform: translate(-50%, -50%);
-  backdrop-filter: blur(5px);
-  background-color: rgba(255, 255, 255, .15);  
+  border-radius: 0 !important;
 }
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.Footer{
+  color:white
+}
+
+.Card{
+  border-radius: 0 !important;
+}
 
 .App-header {
-  background-image: url(https://wallpapersite.com/images/pages/pic_w/18246.png);
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100%;
-  background-size: cover;
-  background-color:white;
-  min-height: 100vh;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color:black;
+  background-color: #2b2b2b;
+  min-height: 105vh;
+  border-radius: 0 !important;
 }
+.example{
+  position:absolute !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+td{ 
+  width:38px; 
+  overflow: hidden; 
+  width: 300px; 
+}
+  /*  border: 1px solid black; */
+h1{
+  color:rgb(63, 81, 181);
+  font-weight: bold;
+}
+.buttons-right>button {
+  float: right;
+  margin: 5px;
+}
+.app-container {
+  border-radius: 5px 5px 5px 5px;
+  padding: 20px;
+  background-color: white;
+  ;
+}
+.app-container2{
+  padding: 15px;
+  color:black;
+  max-width:100vh;
+}
+.percentage-number{
+  color: rgb(63, 81, 181);
+  font-size: 50px;
+  font-weight: bold;
+}
+.percentage-sign{
+  color: rgb(63, 81, 181);
+  font-size: 40px;
+}
+.percentage-container{
+  text-align: center;
+}
+.percentage-container:first-child{
+  padding-bottom: 3em;
+}
+.teammate:after{
+  content: ".";
+  display: block;
+  height: 0;
+  line-height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.teammate h2{
+  font-size: 1.3em;
+  font-weight: normal;
+  padding-top: 17px;
+  margin: 0;
+}
+.teammate p{
+  margin: 0;
+  font-size: .7em;
+}
+.teammate img{
+  display: inline-block;
+  vertical-align: top;
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+}
+.mate-info{
+  display: inline-block;
+  vertical-align: top;
+}
+.panelbar-wrapper{
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* Use this to show lines of each widegt on dashboard
+.container .row div {
+  outline: solid 1px black;
+}*/
+
+/*background-image: url(https://wallpapersite.com/images/pages/pic_w/18246.png);*/
 
 .App-link {
   color: #61dafb;
