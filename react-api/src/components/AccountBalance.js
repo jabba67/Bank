@@ -18,6 +18,7 @@ import successIcon from '../assets/checked.svg';
 import depositIcon from '../assets/deposit.svg';
 import withdrawIcon from '../assets/withdraw2.svg';
 import accountIcon from '../assets/account3.svg';
+import transfer from '../assets/transfer.svg';
 
 
 const axios = require('axios');
@@ -209,10 +210,10 @@ export default class AccountBalanceGet extends React.Component {
     }
     return (
       <div className="app-container container" ref={(el) => this.appContainer = el}>
-      <div class = "AccountBalance" style={{ backgroundColor: "white"}}>
+      <div class = "AccountBalance" style={{ backgroundColor: "#e8e8e8"}}>
       <div className="bootstrap-wrapper">
           <div className="app-container2 container">
-          <h4>ACCOUNT BALANCES<br></br><img height={50} width={50}  src={accountIcon}/></h4>
+          <Card><h4>ACCOUNT BALANCES<br></br><img height={50} width={50}  src={accountIcon}/></h4>
           <div className="row">
               <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                 <img height={25} width={50}  src={homeIcon}/>Main Account Balance:<AccountBalance balance ={this.state.balance}/>
@@ -221,7 +222,8 @@ export default class AccountBalanceGet extends React.Component {
                 <img height={25} width={50}  src={cashIcon}/>Checking Account Balance:<CheckingAccountBalance checkingaccountbalance ={this.state.checkingaccountbalance}/><br></br>
               </div>
               </div>
-              <h4>ACCOUNT Transfer<br></br><img height={50} width={50}  src={accountIcon}/></h4>
+              </Card>
+              <Card bg={"transparent"} border-color={"transparent"}><h4>ACCOUNT ACTIONS<br></br><img height={50} width={50}  src={transfer}/></h4>
               <div className="row">
               <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                 <h4>DEPOSIT<br></br><img height={50} width={50}  src={depositIcon}/></h4>
@@ -258,11 +260,13 @@ export default class AccountBalanceGet extends React.Component {
                   </div><br></br>
                 </div>
                 </div>
+                </Card>
                 <div className="row">
                   <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-12">
-                  <center><h5>RECENT TRANSACTIONS:</h5>
+                  <Card><center>
+                    <Card.Title><h4>RECENT TRANSACTIONS:</h4></Card.Title>
                   <TransactionGrid/>
-                    </center>
+                    </center></Card>
                   </div>
                 </div>
             </div>

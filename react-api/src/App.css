@@ -2,11 +2,13 @@
   text-align: center;
 }
 .AccountBalance{
+  border-radius: 5px 5px 5px 5px;
   padding:20px;
   cursor:auto;
   border-color: rgba(255, 255, 255, .15); 
-  color: "black";
-  min-height: 120vh;
+  color: 'white';
+  min-height: 105vh;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   /*position: absolute;
   top: 50%;
   left: 50%;
@@ -36,18 +38,18 @@
 .Footer{
   color:white;
   padding: 3px;
-  position: fixed;
   bottom:0;
   left: 0;
   right:0;
 }
 .Card{
   border-radius: 0 !important;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 .App-header {
   background: rgb(2,0,36);
-  background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 65%, rgba(0,212,255,1) 100%);
-  min-height: 110vh;
+  background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 78%, rgba(0,212,255,1) 100%);
+  min-height: 108vh;
   border-radius: 0 !important;
 }
 .example{
@@ -70,10 +72,10 @@ h1{
   margin: 5px;
 }
 .app-container {
-  border-radius: 5px 5px 5px 5px;
-  padding: 5px;
   min-height: 110vh;
-  background-color: white;
+  border-radius: 5px 5px 5px 5px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  /*background-color: white;*/
 }
 .app-container3 {
   border-radius: 5px 5px 5px 5px;

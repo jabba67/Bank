@@ -15,7 +15,7 @@ import { donutChartData } from './data/appData';
 const labelTemplate = (e) => (e.category + '\n'  + (e.percentage*100) +'%');
 
 export const DonutChartContainer = () => (
-  <Chart style={{height:300, background:"none"}}>
+  <Chart style={{height:288 }}>
     <ChartSeries>
       <ChartSeriesItem type="donut" data={donutChartData} categoryField="foodType" field="percentSold" padding={0}>
         <ChartSeriesLabels color="#fff" background="none" content={labelTemplate} />

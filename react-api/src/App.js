@@ -116,7 +116,7 @@ class App extends React.Component{
                     <Navbar.Collapse id="navbar-toggle">
                       <Nav className = "mr-auto">
                         <Link className = "nav-link" to ="/">Home</Link>
-                        <Link className = "nav-link" to ="/AccountInfo">Account Info</Link>
+                        {/*<Link className = "nav-link" to ="/AccountInfo">Account Info</Link>*/}
                         <Link className = "nav-link" to ="/AccountBalance">Account Balance </Link>
                         <Button variant="outline-primary" size = "sm" onClick={signOut}>Sign Out</Button>
                       </Nav>
@@ -127,7 +127,7 @@ class App extends React.Component{
                       <Route path="/AccountBalance" exact render ={(props) => <AccountBalance {...props} userEmail = {user.email}/>}/>
                       <Route path="/AccountInfo" exact render ={(props) => <AccountInfo {...props} userEmail = {user.email}/>} />
                     </Router>
-                    
+                    <br></br>
                     <Footer />
                   </Container>
               </>
@@ -232,7 +232,6 @@ class App extends React.Component{
                   </Card.Body>
                 </Card>
               </CardColumns>
-
               </div>
           }
         </header>
