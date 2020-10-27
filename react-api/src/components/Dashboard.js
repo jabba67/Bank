@@ -121,7 +121,8 @@ export default class Dashboard extends React.Component{
                 <p>Please enter the email address/es of the recipient/s.</p>
                 <Input placeholder="example@progress.com" />
                 <DialogActionsBar>
-                  <Button primary={true} onClick={this.handleShare}>Share</Button>
+                  {/*<Button primary={true} onClick={this.handleShare}>Share</Button>*/}
+                  <Button primary={true}><a href="mailto:arcowirexzs@gmail.com" target="_blank">Email</a></Button>
                   <Button onClick={this.handleShare}>Cancel</Button>
                 </DialogActionsBar>
               </Dialog>
