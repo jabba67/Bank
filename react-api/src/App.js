@@ -17,16 +17,16 @@ import AccountBalance from './components/AccountBalance';
 import AccountInfo from './components/AccountInfo';
 import Dashboard from './components/Dashboard';
 import Footer from './Footer';
-import GoogleSignIn from './googleLogin.png'
-import TitanBankDraft1 from './TitanBankDraft3.png'
+import GoogleSignIn from './assets/googleLogin.png'
+import TitanBankDraft1 from './assets/TitanBankDraft3.png'
 import SignUp from './components/signUp';
-import depositIcon from './deposit.svg';
-import creditIcon from './card3.svg'
-import account from './account4.svg';
-import contract from './contract.svg';
-import savings from './savings.svg';
-import loans from './loans.svg';
-import investment from './investment.svg';
+import depositIcon from './assets/deposit.svg';
+import creditIcon from './assets/card3.svg'
+import account from './assets/account4.svg';
+import contract from './assets/contract.svg';
+import savings from './assets/savings.svg';
+import loans from './assets/loans.svg';
+import investment from './assets/investment.svg';
 
 //Not Being Used
 //import TransHistory from './components/grabTransactionHistory';
@@ -116,7 +116,7 @@ class App extends React.Component{
                     <Navbar.Collapse id="navbar-toggle">
                       <Nav className = "mr-auto">
                         <Link className = "nav-link" to ="/">Home</Link>
-                        <Link className = "nav-link" to ="/AccountInfo">Account Info</Link>
+                        {/*<Link className = "nav-link" to ="/AccountInfo">Account Info</Link>*/}
                         <Link className = "nav-link" to ="/AccountBalance">Account Balance </Link>
                         <Button variant="outline-primary" size = "sm" onClick={signOut}>Sign Out</Button>
                       </Nav>
@@ -127,9 +127,11 @@ class App extends React.Component{
                       <Route path="/AccountBalance" exact render ={(props) => <AccountBalance {...props} userEmail = {user.email}/>}/>
                       <Route path="/AccountInfo" exact render ={(props) => <AccountInfo {...props} userEmail = {user.email}/>} />
                     </Router>
-                    {/*<Footer />*/}
+                    <br></br>
+                    <Footer />
                   </Container>
               </>
+
             : <div class = "SignIn">
                 <Particles
                   canvasClassName="example"
@@ -230,7 +232,6 @@ class App extends React.Component{
                   </Card.Body>
                 </Card>
               </CardColumns>
-
               </div>
           }
         </header>

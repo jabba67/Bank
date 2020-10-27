@@ -5,7 +5,7 @@ import React from 'react'
         <div>
          {Object.keys(checkingaccountbalance).filter(key => key === 'checkingAccountBalance').map((item,i) => (
             <div>
-                <h1 key={i} class="card-title">${checkingaccountbalance[item]}</h1>
+                <h2 key={i}>${checkingaccountbalance[item]}</h2>
             </div>
           ))}
         </div>

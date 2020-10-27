@@ -18,12 +18,12 @@ import '@progress/kendo-theme-material/dist/all.css';
 import '../App.css';
 
 //Import Components and Assets
-import CheckingAccountNumbers from "./grabCheckingAccountNumber";
-import AccountNumbers from "./grabAccountNumber";
+import CheckingAccountNumbers from "./data_retrieval/grabCheckingAccountNumber";
+import AccountNumbers from "./data_retrieval/grabAccountNumber";
 import { DonutChartContainer } from './DonutChartContainer';
 import { BarChartContainer } from './BarChartContainer';
-import moneySign from '../moneySign.png'
-import bankCover from '../bankCover.jpg'
+import moneySign from '../assets/moneySign.png'
+import bankCover from '../assets/bankCover.jpg'
 const axios = require('axios'); 
 
 export default class AccountInfo extends React.Component{

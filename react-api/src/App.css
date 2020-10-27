@@ -2,23 +2,18 @@
   text-align: center;
 }
 .AccountBalance{
+  border-radius: 5px 5px 5px 5px;
   padding:20px;
   cursor:auto;
   border-color: rgba(255, 255, 255, .15); 
-  color: "black";
-  position: absolute;
+  color: 'white';
+  min-height: 105vh;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  /*position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);*/
 }
-  /*
-  background-color: rgba(255, 255, 255, .15);
-  position: absolute;
-  top: 55%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  */
 .AccountInfo{
   background-color: #2b2b2b;
 }
@@ -40,22 +35,21 @@
   transform: translate(-50%, -50%);
   border-radius: 0 !important;
 }
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 .Footer{
-  color:white
+  color:white;
+  padding: 3px;
+  bottom:0;
+  left: 0;
+  right:0;
 }
-
 .Card{
   border-radius: 0 !important;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
-
 .App-header {
-  background-color: #2b2b2b;
-  min-height: 105vh;
+  background: rgb(2,0,36);
+  background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 78%, rgba(0,212,255,1) 100%);
+  min-height: 108vh;
   border-radius: 0 !important;
 }
 .example{
@@ -69,7 +63,6 @@ td{
   overflow: hidden; 
   width: 300px; 
 }
-  /*  border: 1px solid black; */
 h1{
   color:rgb(63, 81, 181);
   font-weight: bold;
@@ -79,10 +72,14 @@ h1{
   margin: 5px;
 }
 .app-container {
+  min-height: 110vh;
   border-radius: 5px 5px 5px 5px;
-  padding: 20px;
-  background-color: white;
-  ;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  /*background-color: white;*/
+}
+.app-container3 {
+  border-radius: 5px 5px 5px 5px;
+  padding: 5px;
 }
 .app-container2{
   padding: 15px;
@@ -90,12 +87,12 @@ h1{
   max-width:100vh;
 }
 .percentage-number{
-  color: rgb(63, 81, 181);
+  color:#00ff84;
   font-size: 50px;
   font-weight: bold;
 }
 .percentage-sign{
-  color: rgb(63, 81, 181);
+  color: #00ff84;
   font-size: 40px;
 }
 .percentage-container{
@@ -139,23 +136,21 @@ h1{
   max-width: 300px;
   margin: 0 auto;
 }
-
-/* Use this to show lines of each widegt on dashboard
-.container .row div {
-  outline: solid 1px black;
-}*/
-
-/*background-image: url(https://wallpapersite.com/images/pages/pic_w/18246.png);*/
-
 .App-link {
   color: #61dafb;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+/* Unused CSS for later */
+/*
+  background-color: rgba(255, 255, 255, .15);
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  */
+  /* Use this to show lines of each widegt on dashboard
+.container .row div {
+  outline: solid 1px black;
+}*/
+  /*  border: 1px solid black; */
+/*background-image: url(https://wallpapersite.com/images/pages/pic_w/18246.png);*/
