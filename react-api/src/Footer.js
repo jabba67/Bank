@@ -6,7 +6,7 @@ import {Col} from 'react-bootstrap';
 function Footer(){
     return(
     <div className="Footer">
-        <footer className = "mt-5">
+        <footer className = "mt-16 flex flex-col justify-center items-center">
             <Container fluid = {true}>
                <Row className = "border-top justify-content-between p-2">
                   <Col className = "p-0" md={3} sm={12}>

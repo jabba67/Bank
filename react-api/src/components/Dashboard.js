@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
+import { Card } from 'react-bootstrap';
 import { Dialog, DialogActionsBar } from '@progress/kendo-react-dialogs';
 import { Input } from '@progress/kendo-react-inputs'; 
 import { Button } from '@progress/kendo-react-buttons';
@@ -12,8 +13,8 @@ import '@progress/kendo-theme-material/dist/all.css';
 import '../App.css';
 
 //Import Components and Assets
-import CheckingAccountNumbers from "./grabCheckingAccountNumber";
-import AccountNumbers from "./grabAccountNumber";
+import CheckingAccountNumbers from "./data_retrieval/grabCheckingAccountNumber";
+import AccountNumbers from "./data_retrieval/grabAccountNumber";
 import { DonutChartContainer } from './DonutChartContainer';
 import { BarChartContainer } from './BarChartContainer';
 import { GridContainer } from './GridContainer';
@@ -81,11 +82,11 @@ export default class Dashboard extends React.Component{
             </div>
                 <div className="row">
                   <div className="col-xs-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                    <h4>Spending Summary</h4>
+                  <h4>Spending Summary</h4>
                     <DonutChartContainer />
                   </div>
                   <div className="col-xs-6 col-sm-6 col-md-5 col-lg-2 col-xl-2">
-                    <h4>Investment Summary</h4>
+                   <h4>Investment Summary</h4>
                     <div className="percentage-container">
                       <span className="percentage-number">94</span>
                       <span className="percentage-sign">%</span>
@@ -96,17 +97,18 @@ export default class Dashboard extends React.Component{
                       <span className="percentage-sign">%</span>
                       <p>Target Return</p>
                     </div>
+                    
                   </div>
                   <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <h4>Average Balance</h4>
-                    <BarChartContainer/>
+                      <BarChartContainer/>
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <center><h4>Transactions</h4>
+                  <br></br><Card bg={'dark'} text={'white'}><center><h4>Transactions</h4>
                     <TransactionGrid/></center>{/*<GridContainer /></center>*/}
-                  </div>
+                    </Card></div>
                 </div>
                 <div className="row">
                   <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-12">

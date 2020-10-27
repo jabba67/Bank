@@ -7,17 +7,17 @@ import { Sparkline } from '@progress/kendo-react-charts';
 import SkeletonCard from "./SkeletonCard";
 
 //Import Components and Assets
-import AccountBalance from './grabAccountBalance';
-import CheckingAccountBalance from './grabCheckingAccountBalance';
-import TransHistory from './grabTransactionHistory';
+import AccountBalance from './data_retrieval/grabAccountBalance'; 
+import CheckingAccountBalance from './data_retrieval/grabCheckingAccountBalance';
+import TransHistory from './data_retrieval/grabTransactionHistory';
 import TransactionGrid  from './TransactionsGridContainer';
 import { gridData } from './data/appData';
-import homeIcon from '../home-outline.svg';
-import cashIcon from '../cash-outline.svg';
-import successIcon from '../checked.svg';
-import depositIcon from '../deposit.svg';
-import withdrawIcon from '../withdraw2.svg';
-import accountIcon from '../account3.svg';
+import homeIcon from '../assets/home-outline.svg';
+import cashIcon from '../assets/cash-outline.svg';
+import successIcon from '../assets/checked.svg';
+import depositIcon from '../assets/deposit.svg';
+import withdrawIcon from '../assets/withdraw2.svg';
+import accountIcon from '../assets/account3.svg';
 
 
 const axios = require('axios');
@@ -208,16 +208,22 @@ export default class AccountBalanceGet extends React.Component {
       return <div> <SkeletonCard /></div>
     }
     return (
+      <div className="app-container container" ref={(el) => this.appContainer = el}>
       <div class = "AccountBalance" style={{ backgroundColor: "white"}}>
       <div className="bootstrap-wrapper">
           <div className="app-container2 container">
+          <h4>ACCOUNT BALANCES<br></br><img height={50} width={50}  src={accountIcon}/></h4>
           <div className="row">
-              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-4">
-                <h4>ACCOUNT BALANCES<br></br><img height={50} width={50}  src={accountIcon}/></h4>
-                  <img height={25} width={50}  src={homeIcon}/>Main Account Balance:<AccountBalance balance ={this.state.balance}/>
-                  <img height={25} width={50}  src={cashIcon}/>Checking Account Balance:<CheckingAccountBalance checkingaccountbalance ={this.state.checkingaccountbalance}/><br></br>
+              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <img height={25} width={50}  src={homeIcon}/>Main Account Balance:<AccountBalance balance ={this.state.balance}/>
               </div>
-              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-4">
+              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <img height={25} width={50}  src={cashIcon}/>Checking Account Balance:<CheckingAccountBalance checkingaccountbalance ={this.state.checkingaccountbalance}/><br></br>
+              </div>
+              </div>
+              <h4>ACCOUNT Transfer<br></br><img height={50} width={50}  src={accountIcon}/></h4>
+              <div className="row">
+              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                 <h4>DEPOSIT<br></br><img height={50} width={50}  src={depositIcon}/></h4>
                   <div align = "center"><form onSubmit ={this.handleSubmit}>
                     <Form.Label>Deposit to Main Account: 
@@ -234,7 +240,7 @@ export default class AccountBalanceGet extends React.Component {
                     </form>
                   </div><br></br>
                 </div>
-                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-4">
+                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                 <h4>WIDTHDRAW<br></br><img height={50} width={50}  src={withdrawIcon}/></h4>
                   <div align = "center"><form onSubmit ={this.handleSubmitWidthdraw}>
                     <Form.Label>   Withdraw from Main Account: 
@@ -260,6 +266,7 @@ export default class AccountBalanceGet extends React.Component {
                   </div>
                 </div>
             </div>
+        </div>
         </div>
         </div>
     );//End Return

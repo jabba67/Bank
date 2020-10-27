@@ -1,11 +1,11 @@
 //For Donut Chart
 export const donutChartData = [
-    { 'foodType': 'Online Shopping', 'percentSold': 16.5 },
-    { 'foodType': 'Dining', 'percentSold': 24 },
-    { 'foodType': 'Travel', 'percentSold': 13 },
-    { 'foodType': 'Medical', 'percentSold': 16.5 },
-    { 'foodType': 'Home Improvement', 'percentSold': 20 },
-    { 'foodType': 'Other', 'percentSold': 10 }
+    { 'foodType': 'Online Shopping', 'percentSold': 16.5, 'color':"pink"},
+    { 'foodType': 'Dining', 'percentSold': 24, 'color':"black" },
+    { 'foodType': 'Travel', 'percentSold': 13, 'color':"pink" },
+    { 'foodType': 'Medical', 'percentSold': 16.5 , 'color':"black"},
+    { 'foodType': 'Home Improvement', 'percentSold': 20, 'color':"pink" },
+    { 'foodType': 'Other', 'percentSold': 10, 'color':"black" }
   ];
 
 //For Bar Chart
