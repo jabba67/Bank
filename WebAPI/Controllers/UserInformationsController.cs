@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 namespace WebAPI.Controllers
 {
     [EnableCors]
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
     [ApiController]
     public class UserInformationsController : ControllerBase
     {
@@ -33,6 +33,7 @@ namespace WebAPI.Controllers
 
         // GET: api/UserInformations
         [HttpGet]
+        [Route("/")]
         //public async Task<IActionResult> GetUserInformation()
         public async Task<ActionResult<IEnumerable<UserInformation>>> GetUserInformation()
         {
@@ -43,6 +44,7 @@ namespace WebAPI.Controllers
         // GET: api/UserInformations/5
         
         [HttpGet("{id}")]
+        [Route("/")]
         public async Task<ActionResult<UserInformation>> GetUserInformation(string id)
         {
             var userInformation = await _context.UserInformation.FindAsync(id);
@@ -74,6 +76,7 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
+        [Route("/")]
         public async Task<IActionResult> PutUserInformation(string id, UserInformation userInformation)
         {
             if (id != userInformation.EmailAddress)
@@ -106,6 +109,7 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost("{id}")]
+        [Route("/")]
         public async Task<IActionResult> PostUserInformation(string id, UserInformation userInformation)
         {
             if (id != userInformation.EmailAddress)
@@ -165,6 +169,7 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPatch("{id}")]
+        [Route("/")]
         public async Task<IActionResult> PatchUserInformation(string id, UserInformationDeposit userInformation)
         {
             var userInformationDeposit = await _context.UserInformation.FindAsync(id);
@@ -235,6 +240,7 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
+        [Route("/")]
         public async Task<ActionResult<UserInformation>> PostUserInformation(UserInformation userInformation)
         {
             _context.UserInformation.Add(userInformation);
@@ -262,6 +268,7 @@ namespace WebAPI.Controllers
 
         // DELETE: api/UserInformations/5
         [HttpDelete("{id}")]
+        [Route("/")]
         public async Task<ActionResult<UserInformation>> DeleteUserInformation(string id)
         {
             var userInformation = await _context.UserInformation.FindAsync(id);

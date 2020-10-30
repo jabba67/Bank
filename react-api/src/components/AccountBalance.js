@@ -1,17 +1,16 @@
-import React, { Component } from "react";
-import {Container, Button, Form, FormControl,Card, CardColumns, Row,Col,Jumbotron} from 'react-bootstrap';
+// @flow
+
+import React from "react";
+import {Form,Card} from 'react-bootstrap';
 import { Alert } from "shards-react";
-import { Table, Tag, Space } from 'antd';
-import { Grid, GridColumn as Column } from '@progress/kendo-react-grid';
-import { Sparkline } from '@progress/kendo-react-charts';
 import SkeletonCard from "./SkeletonCard";
 
 //Import Components and Assets
 import AccountBalance from './data_retrieval/grabAccountBalance'; 
 import CheckingAccountBalance from './data_retrieval/grabCheckingAccountBalance';
-import TransHistory from './data_retrieval/grabTransactionHistory';
+import CheckingAccountNumbers from "./data_retrieval/grabCheckingAccountNumber";
+import AccountNumbers from "./data_retrieval/grabAccountNumber";
 import TransactionGrid  from './TransactionsGridContainer';
-import { gridData } from './data/appData';
 import homeIcon from '../assets/home-outline.svg';
 import cashIcon from '../assets/cash-outline.svg';
 import successIcon from '../assets/checked.svg';
@@ -20,10 +19,17 @@ import withdrawIcon from '../assets/withdraw2.svg';
 import accountIcon from '../assets/account3.svg';
 import transfer from '../assets/transfer.svg';
 
+//Unused Imports
+//import TransHistory from './data_retrieval/grabTransactionHistory';
+//import { gridData } from './data/appData';
+//import {Container, Button, Form, FormControl,Card, CardColumns, Row,Col,Jumbotron, Tabs, Tab} from 'react-bootstrap';
+//import { Sparkline } from '@progress/kendo-react-charts';
+//import { Table, Tag, Space } from 'antd';
+//import { Grid, GridColumn as Column } from '@progress/kendo-react-grid';
 
 const axios = require('axios');
 
-const SparkLineChartCell = (props) => <td><Sparkline data={props.dataItem.PriceHistory}/></td>
+/*const SparkLineChartCell = (props) => <td><Sparkline data={props.dataItem.PriceHistory}/></td>
 
 const processData = (data) => {
     data.forEach((item) => {
@@ -31,9 +37,7 @@ const processData = (data) => {
       return item;
     })
     return data;
-  }
-
-//Unused imports
+  }*/
 
 export default class AccountBalanceGet extends React.Component {
   constructor() {
@@ -57,6 +61,8 @@ export default class AccountBalanceGet extends React.Component {
   state = {
     balance: [],
     checkingaccountbalance: [],
+    accountnumber: [],
+    checkingaccountnumber: [],
     transHistory: [],
     visible: false,
     countdown: 0,
@@ -196,10 +202,24 @@ export default class AccountBalanceGet extends React.Component {
     })
     .catch(console.log)
 
-    fetch(`https://localhost:44358/api/TransactionTrackings/45505`)
+    fetch(`https://localhost:44358/api/TransactionTrackings/${this.state.accountnumber}`)
     .then(res => res.json())
     .then((data) =>  {
       this.setState({ transHistory: data })
+    })
+    .catch(console.log)
+
+    fetch(`https://localhost:44358/api/UserInformations/${this.props.userEmail}`)
+      .then(res => res.json())
+      .then((data) =>  {
+        this.setState({ accountnumber: data })
+      })
+      .catch(console.log)
+
+      fetch(`https://localhost:44358/api/UserInformations/${this.props.userEmail}`)
+    .then(res => res.json())
+    .then((data) =>  {
+      this.setState({checkingaccountnumber: data})
     })
     .catch(console.log)
   }
@@ -211,19 +231,91 @@ export default class AccountBalanceGet extends React.Component {
     return (
       <div className="app-container container" ref={(el) => this.appContainer = el}>
       <div class = "AccountBalance" style={{ backgroundColor: "#e8e8e8"}}>
-      <div className="bootstrap-wrapper">
-          <div className="app-container2 container">
-          <Card><h4>ACCOUNT BALANCES<br></br><img height={50} width={50}  src={accountIcon}/></h4>
+      {/*<div className="bootstrap-wrapper">*/}
+          {/*<div className="app-container2 container">*/}
+          <section id="accountBalances"><h4>ACCOUNT BALANCES<br></br><img height={50} width={50} alt="Account Icon" src={accountIcon}/></h4>
           <div className="row">
               <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                <img height={25} width={50}  src={homeIcon}/>Main Account Balance:<AccountBalance balance ={this.state.balance}/>
+                <img height={25} width={50} alt="Home Icon" src={homeIcon}/>Main Account Balance:
+                <AccountNumbers accountnumber ={this.state.accountnumber}/>
+                <AccountBalance balance ={this.state.balance}/>
               </div>
               <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                <img height={25} width={50}  src={cashIcon}/>Checking Account Balance:<CheckingAccountBalance checkingaccountbalance ={this.state.checkingaccountbalance}/><br></br>
+                <img height={25} width={50} alt="Cash Icon" src={cashIcon}/>Checking Account Balance:
+                <CheckingAccountNumbers checkingaccountnumber ={this.state.checkingaccountnumber}/>
+                <CheckingAccountBalance checkingaccountbalance ={this.state.checkingaccountbalance}/><br></br>
               </div>
               </div>
+              </section>
+              <section id="accountActions"><h4>ACCOUNT ACTIONS<br></br><img height={50} width={50} alt="Transfer Icon" src={transfer}/></h4>
+              <div className="row">
+              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <h4>DEPOSIT<br></br><img height={50} width={50} alt="Deposit Icon" src={depositIcon}/></h4>
+                  <div align = "center"><form onSubmit ={this.handleSubmit}>
+                    <Form.Label>Deposit to Main Account: 
+                      <br></br><input type="text" ref={this.input}  placeholder="        Main Account" />
+                    </Form.Label><br></br><br></br>
+                      <label>Deposit to Checking Account: 
+                        <br></br><input type="text" ref={this.input2}  placeholder="     Checking Account" />
+                      </label><br></br>
+                      <Alert className="mb-2" open={this.state.visible} theme="success" fade={true}>
+                      <img height={25} width={50} alt="Sucess Icon" src={successIcon}/>Deposit Success! This message will dissapear in {" "}
+                        {this.state.timeUntilDismissed - this.state.countdown} seconds!
+                      </Alert>
+                      <input type="submit" value="Deposit" onClick={this.showAlert} />
+                    </form>
+                  </div><br></br>
+                </div>
+                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <h4>WIDTHDRAW<br></br><img height={50} width={50} alt="Withdraw Icon" src={withdrawIcon}/></h4>
+                  <div align = "center"><form onSubmit ={this.handleSubmitWidthdraw}>
+                    <Form.Label>   Withdraw from Main Account: 
+                      <br></br><input type="text" ref={this.input3}  placeholder="        Main Account" />
+                    </Form.Label><br></br><br></br>
+                      <label> Withdraw from Checking Account: 
+                        <br></br><input type="text" ref={this.input4}  placeholder="     Checking Account" />
+                      </label><br></br>
+                      <Alert className="mb-2" open={this.state.visible2} theme="success" fade={true}>
+                      <img height={25} width={50} alt="Sucess Icon" src={successIcon}/>Withdraw Success! This message will dissapear in {" "}
+                        {this.state.timeUntilDismissed2 - this.state.countdown2} seconds!
+                      </Alert>
+                      <input type="submit" value="Withdraw" onClick={this.showAlert2} />
+                    </form>
+                  </div><br></br>
+                </div>
+                </div>
+                </section>
+                <div className="row">
+                  <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <section id="accountBalances"><center>
+                    <Card.Title><h4>RECENT TRANSACTIONS:</h4></Card.Title>
+                  <TransactionGrid/>
+                    </center></section>
+                  </div>
+                </div>
+            {/*</div>*/}
+        {/*</div>*/}
+        </div>
+        </div>
+    );//End Return
+  }
+}
+//Tabbed Navigation POC
+/*<Tabs defaultActiveKey="balances" id="uncontrolled-tab-example">
+            <Tab eventKey="balances" title="Balances">
+            <Card><h4>ACCOUNT BALANCES<br></br><img height={50} width={50}  src={accountIcon}/></h4>
+            <div className="row">
+                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                  <img height={25} width={50}  src={homeIcon}/>Main Account Balance:<AccountBalance balance ={this.state.balance}/>
+                </div>
+                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                  <img height={25} width={50}  src={cashIcon}/>Checking Account Balance:<CheckingAccountBalance checkingaccountbalance ={this.state.checkingaccountbalance}/><br></br>
+                </div>
+                </div>
               </Card>
-              <Card bg={"transparent"} border-color={"transparent"}><h4>ACCOUNT ACTIONS<br></br><img height={50} width={50}  src={transfer}/></h4>
+            </Tab>
+            <Tab eventKey="profile" title="Transfer Money">
+            <Card bg={"transparent"} border-color={"transparent"}><h4>ACCOUNT ACTIONS<br></br><img height={50} width={50}  src={transfer}/></h4>
               <div className="row">
               <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                 <h4>DEPOSIT<br></br><img height={50} width={50}  src={depositIcon}/></h4>
@@ -261,7 +353,9 @@ export default class AccountBalanceGet extends React.Component {
                 </div>
                 </div>
                 </Card>
-                <div className="row">
+            </Tab>
+            <Tab eventKey="transactions" title="Transaction History">
+            <div className="row">
                   <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-12">
                   <Card><center>
                     <Card.Title><h4>RECENT TRANSACTIONS:</h4></Card.Title>
@@ -269,10 +363,5 @@ export default class AccountBalanceGet extends React.Component {
                     </center></Card>
                   </div>
                 </div>
-            </div>
-        </div>
-        </div>
-        </div>
-    );//End Return
-  }
-}
+            </Tab>
+          </Tabs>*/

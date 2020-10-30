@@ -5,20 +5,26 @@ import {Col} from 'react-bootstrap';
 
 function Footer(){
     return(
+    
     <div className="Footer">
+    <section id="footer">
         <footer className = "mt-16 flex flex-col justify-center items-center">
             <Container fluid = {true}>
-               <Row className = "border-top justify-content-between p-2">
-                  <Col className = "p-0" md={3} sm={12}>
-                    Tyler Rubin
-                  </Col> 
-                  <Col className ="p-0 d-flex justify-content-end" md={3}>
+                    <br></br>
+                    <br></br>
+                    <br></br>
                     This site was made by Tyler Rubin
-                  </Col> 
-               </Row> 
+                    <br></br>
+                    <center>LinkedIn:</center>
+                    <center>Github:</center>
+                    <br></br>
+                    <br></br>
+                    <br></br>
             </Container>
         </footer>
+    </section>
     </div>
+    
     );
 }
 export default Footer;

@@ -53,6 +53,8 @@ namespace WebAPI
 
             services.AddMvc();
 
+            services.AddSwaggerGen();
+
             services.AddScoped<IUserInfoRepository, Repository>();
         }
 
@@ -71,6 +73,7 @@ namespace WebAPI
             //app.UseCors();
             app.UseCors("ApiCorsPolicy");
 
+            app.UseSwagger();
 
             app.UseAuthorization();
 

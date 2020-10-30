@@ -3,11 +3,11 @@
 }
 .AccountBalance{
   border-radius: 5px 5px 5px 5px;
-  padding:20px;
+  padding:1px;
   cursor:auto;
   border-color: rgba(255, 255, 255, .15); 
   color: 'white';
-  min-height: 105vh;
+  /*min-height: 105vh;*/
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   /*position: absolute;
   top: 50%;
@@ -37,7 +37,6 @@
 }
 .Footer{
   color:white;
-  padding: 3px;
   bottom:0;
   left: 0;
   right:0;
@@ -74,7 +73,7 @@ h1{
 .app-container {
   min-height: 110vh;
   border-radius: 5px 5px 5px 5px;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  
   /*background-color: white;*/
 }
 .app-container3 {
@@ -139,6 +138,22 @@ h1{
 .App-link {
   color: #61dafb;
 }
+
+#accountBalances
+{
+  background:white;
+}
+
+#accountActions
+{
+  background:"#e8e8e8";
+}
+
+#footer
+{
+  background:darkslategray;
+}
+
 /* Unused CSS for later */
 /*
   background-color: rgba(255, 255, 255, .15);

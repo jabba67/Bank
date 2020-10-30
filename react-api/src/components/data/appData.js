@@ -10,6 +10,7 @@ export const donutChartData = [
 
 //For Bar Chart
 export const barChartQ4Months =['October', 'November', 'December'];
+
 export const barChartMonthlyPercentages = [
   { name: 'Beverages', data: [14, 16, 19.5] },
   { name: 'Condiments', data: [24, 23.5, 24.5] },

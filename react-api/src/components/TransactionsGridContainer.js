@@ -3,6 +3,9 @@ import { Grid, GridColumn as Column } from '@progress/kendo-react-grid';
 import { Sparkline } from '@progress/kendo-react-charts';
 import SkeletonCard from "./SkeletonCard";
 
+import AccountNumbers from "./data_retrieval/grabAccountNumber";
+
+
 //const transactions = [100,1000,10000,9000,8000,5000,9000,7000,5000,1000,2000];
 //const SparkLineChartCell = (props) => <td><Sparkline data={transactions}/></td>
 
@@ -15,6 +18,11 @@ class TransactionGrid extends Component {
       isError: false,
     }
   }
+
+  state = {
+    accountnumber: [],
+  }
+
   processData = (users) => {
     this.state.users.forEach((item) => {
     this.state.users.PriceHistory = Array.from({ length: 20 }, () => Math.floor(Math.random() * 100));
@@ -27,8 +35,15 @@ class TransactionGrid extends Component {
   SparkLineChartCell = (props) => <td><Sparkline data={this.transactions}/></td>
 
   async componentDidMount() {
+    fetch(`https://localhost:44358/api/UserInformations/${this.props.userEmail}`)
+      .then(res => res.json())
+      .then((data) =>  {
+        this.setState({ accountnumber: data })
+      })
+      .catch(console.log)
+
     this.setState({ isLoading: true })
-    const response = await fetch('https://localhost:44358/api/TransactionTrackings')
+    const response = await fetch(`https://localhost:44358/api/TransactionTrackings`)
     if (response.ok) {
       const users = await response.json()
       this.setState({ users, isLoading: false })

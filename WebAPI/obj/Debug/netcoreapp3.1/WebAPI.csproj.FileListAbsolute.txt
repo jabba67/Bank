@@ -482,5 +482,11 @@ C:\Git\Bank\WebAPI\bin\Debug\netcoreapp3.1\MySql.Data.EntityFrameworkCore.dll
 C:\Git\Bank\WebAPI\bin\Debug\netcoreapp3.1\Renci.SshNet.dll
 C:\Git\Bank\WebAPI\bin\Debug\netcoreapp3.1\SshNet.Security.Cryptography.dll
 C:\Git\Bank\WebAPI\bin\Debug\netcoreapp3.1\System.Xml.XPath.XmlDocument.dll
+C:\Git\Bank\WebAPI\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.json
 C:\Git\Bank\WebAPI\obj\Debug\netcoreapp3.1\WebAPI.csproj.CoreCompileInputs.cache
 C:\Git\Bank\WebAPI\obj\Debug\netcoreapp3.1\WebAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Git\Bank\WebAPI\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
+C:\Git\Bank\WebAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
+C:\Git\Bank\WebAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Git\Bank\WebAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Git\Bank\WebAPI\obj\Debug\netcoreapp3.1\WebAPI.MvcApplicationPartsAssemblyInfo.cs

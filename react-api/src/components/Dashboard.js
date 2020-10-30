@@ -119,6 +119,44 @@ export default class Dashboard extends React.Component{
                     <AccountBalance balance ={this.state.balance}/></h4>
                     </Card>
                   </div>
+                  <div className="col-xs-6 col-sm-6 col-md-5 col-lg-2 col-xl-2">
+                   <Card bg={"dark"} text={"light"}><h4>Placeholder Here</h4>
+                    <div className="percentage-container">
+                      <span className="percentage-number">94</span>
+                      <span className="percentage-sign">%</span>
+                      <p>Total Return</p>
+                    </div>
+                    <div className="percentage-container">
+                      <span className="percentage-number">30</span>
+                      <span className="percentage-sign">%</span>
+                      <p>Target Return</p>
+                    </div></Card>
+                  </div>
+                  <div className="col-xs-6 col-sm-6 col-md-5 col-lg-2 col-xl-2">
+                   <Card bg={"primary"} text={"light"}><h4>Placeholder Here</h4><center><img height={30} width={30} src={moneyPic}/></center>
+                    <h4><CheckingAccountBalance checkingaccountbalance ={this.state.checkingaccountbalance}/>
+                    <AccountBalance balance ={this.state.balance}/></h4>
+                    </Card>
+                  </div>
+                  <div className="col-xs-6 col-sm-6 col-md-5 col-lg-2 col-xl-2">
+                   <Card bg={"dark"} text={"light"}><h4>Placeholder Here</h4>
+                    <div className="percentage-container">
+                      <span className="percentage-number">94</span>
+                      <span className="percentage-sign">%</span>
+                      <p>Total Return</p>
+                    </div>
+                    <div className="percentage-container">
+                      <span className="percentage-number">30</span>
+                      <span className="percentage-sign">%</span>
+                      <p>Target Return</p>
+                    </div></Card>
+                  </div>
+                  <div className="col-xs-6 col-sm-6 col-md-5 col-lg-2 col-xl-2">
+                   <Card bg={"primary"} text={"light"}><h4>Placeholder Here</h4><center><img height={30} width={30} src={moneyPic}/></center>
+                    <h4><CheckingAccountBalance checkingaccountbalance ={this.state.checkingaccountbalance}/>
+                    <AccountBalance balance ={this.state.balance}/></h4>
+                    </Card>
+                  </div>
                 </div>
                 <br></br>
                 <div className="row">
@@ -130,6 +168,7 @@ export default class Dashboard extends React.Component{
                   <Card bg={"white"} text={"dark"}><h4>Average Balance</h4>
                       <BarChartContainer/></Card>
                   </div>
+                  
                 </div>
                 <div className="row">
                   <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">

@@ -171,6 +171,7 @@ function SignUp(){
                 "PhoneNumber": String(phoneNumber),
                 "EmailAddress": String(email),
                 "AccountNumber": Math.floor(Math.random() * (99999-10000)+10000),
+                "CheckingAccountNumber": Math.floor(Math.random() * (99999-10000)+10000),
                 "Password": String(password)
             }
           });
@@ -197,7 +198,6 @@ function SignUp(){
                         <Form.Label>Password</Form.Label>
                         <Form.Control name="name" type="text" value={password} onChange={handlePasswordChange}  placeholder="Password"/>
                     </Form.Group>
-                    
                     <Form.Group as={Row} controlId="formPlaintextEmail">
                         <Form.Label>Age</Form.Label>
                         <Form.Control name="name" type="text" value={age} onChange={handleAgeChange}  placeholder="Age"/>

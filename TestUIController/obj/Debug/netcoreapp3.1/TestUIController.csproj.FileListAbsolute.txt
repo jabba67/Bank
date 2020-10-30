@@ -236,4 +236,5 @@ C:\Git\Bank\TestUIController\obj\Debug\netcoreapp3.1\TestUIController.pdb
 C:\Git\Bank\TestUIController\bin\Debug\netcoreapp3.1\Castle.Core.dll
 C:\Git\Bank\TestUIController\bin\Debug\netcoreapp3.1\Moq.dll
 C:\Git\Bank\TestUIController\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.InMemory.dll
-C:\Git\Bank\TestUIController\obj\Debug\netcoreapp3.1\TestUIController.csproj.CoreCompileInputs.cache
+C:\Git\Bank\TestUIController\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.json
+C:\Git\Bank\TestUIController\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.titan-bank - Web Deploy.json
