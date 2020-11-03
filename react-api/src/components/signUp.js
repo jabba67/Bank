@@ -233,8 +233,6 @@ function SignUp(){
                     </Router>
                         {formSent === true && <p className="d-inline success-msg"><br></br>Submit Success!</p>}
                         {formSent === false && <p className="d-inline err-msg">Form Not Sent</p>}
-                        
-                     
                 </Form>
                 </Container>
             </div>

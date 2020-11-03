@@ -25,6 +25,7 @@ import Footer from './Footer';
 import GoogleSignIn from './assets/googleLogin.png';
 import TitanBankDraft1 from './assets/TitanBankDraft3.png';
 import SignUp from './components/signUp';
+import ThankYou from './components/ThankYou';
 import creditIcon from './assets/card3.svg';
 import account from './assets/account4.svg';
 import contract from './assets/contract.svg';
@@ -121,7 +122,9 @@ class App extends React.Component {
               )
 
               : (
+                /*<div className = "exampleHomeScreenFull">*/
                 <div className="SignIn">
+                {/*<ThankYou/>*/}
                   <Particles
                     canvasClassName="example"
                     height={this.state.height}
@@ -225,6 +228,7 @@ class App extends React.Component {
                       </Card.Body>
                     </Card>
                   </CardColumns>
+                {/*</div>*/}
                 </div>
               )
           }

@@ -42,7 +42,7 @@ export default class AccountInfo extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     fetch(`https://localhost:44358/api/UserInformations/${this.props.userEmail}`)
       .then((res) => res.json())
       .then((data) => {
