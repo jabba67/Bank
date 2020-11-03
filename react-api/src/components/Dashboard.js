@@ -59,7 +59,7 @@ export default class Dashboard extends React.Component{
     }, () => console.log(this.state))
   }
 
-  componentWillMount() {
+  componentDidMount() {
       fetch(`https://localhost:44358/api/UserInformations/${this.props.userEmail}`)
       .then(res => res.json())
       .then((data) =>  {

@@ -30,7 +30,7 @@ describe("Basic App Tests", ()=>{
   });
 })
 
-describe("Main Component Screen Shot Tests",() =>{
+describe("Main Component Snapshot Tests",() =>{
   test('App Snapshot test', () => {
     const component = renderer.create(<App/>);
     const tree = component.toJSON();

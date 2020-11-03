@@ -40,8 +40,8 @@ const processData = (data) => {
   }*/
 
 export default class AccountBalanceGet extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSubmitWidthdraw = this.handleSubmitWidthdraw.bind(this);
     this.input = React.createRef();
@@ -233,6 +233,7 @@ export default class AccountBalanceGet extends React.Component {
       <div class = "AccountBalance" style={{ backgroundColor: "#e8e8e8"}}>
       {/*<div className="bootstrap-wrapper">*/}
           {/*<div className="app-container2 container">*/}
+          <h4>Weclome {this.props.userEmail}</h4>
           <section id="accountBalances"><h4>ACCOUNT BALANCES<br></br><img height={50} width={50} alt="Account Icon" src={accountIcon}/></h4>
           <div className="row">
               <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">

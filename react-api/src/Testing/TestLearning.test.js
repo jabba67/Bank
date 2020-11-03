@@ -94,9 +94,8 @@ describe("Data Mocking Tests", ()=>{
         expect(value).toEqual("arcowirexzs@yahoo.com");
     })
 
-    it("Renders correctly with no error message", ()=>{
+    it("Dashboard Renders correctly with no error message", ()=>{
         const wrapper = mount(<Dashboard accountnumber/>);
         expect(wrapper.state("error")).toEqual(undefined)
     })
-
 })
