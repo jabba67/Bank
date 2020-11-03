@@ -1,7 +1,12 @@
-//import React, { Component } from 'react';
-//import ReactDOM from 'react-dom';
-
+import React, { Component } from 'react';
+import Enzyme from "enzyme";
+import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import Adapter from "enzyme-adapter-react-16";
 import renderer from 'react-test-renderer';
+import Dashboard from '../components/Dashboard';
+Enzyme.configure({adapter: new Adapter() });
+
 const testingthisArray=[
     {
         item1:"item1 is the priority it is very important",
@@ -69,4 +74,29 @@ describe("Objects Testing", ()=>{
     test('The third item in the list has the property item3 and value of 31,266', ()=>{
         expect(testingthisArray[0]).toHaveProperty('item3', '31,266');
     });
+})
+
+describe("Data Mocking Tests", ()=>{
+    const user={
+        name: "Tyler Rubin",
+        email: "arcowirexzs@yahoo.com",
+        username: "Jabba67"
+    }
+
+    it("Accepts user account props",() =>{
+        const wrapper = mount(<Dashboard user={user}/>);
+        expect(wrapper.props().user).toEqual(user);
+    })
+
+    it.skip("Contains users account email", ()=>{
+        const wrapper = mount(<Dashboard user={user}/>);
+        const value = wrapper.find("p").first().text();
+        expect(value).toEqual("arcowirexzs@yahoo.com");
+    })
+
+    it("Renders correctly with no error message", ()=>{
+        const wrapper = mount(<Dashboard accountnumber/>);
+        expect(wrapper.state("error")).toEqual(undefined)
+    })
+
 })
